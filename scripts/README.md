@@ -22,3 +22,13 @@ is_white_image
 ## Outputs
 
 Generated images, logs, API responses, and intermediate files should be written to `outputs/`. The directory is ignored by Git except for `.gitkeep`.
+
+## Current Script
+
+Use `scripts/generate_images/generate_from_csv.py` to read product rows, download the white-background image from `creative_id_image`, render a prompt template, and send the image plus prompt to the OpenAI Images Edit API.
+
+Start safely with:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --dry-run --limit 1
+```

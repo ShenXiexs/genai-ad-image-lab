@@ -1,6 +1,6 @@
 # Generate Images
 
-Placeholder for future GenAI image generation scripts.
+Generate advertising images from white-background product images listed in the CSV files.
 
 Expected workflow:
 
@@ -18,3 +18,54 @@ Recommended output naming:
 ```text
 {id}_{orientation}_{variant}.png
 ```
+
+## Usage
+
+Preview selected rows and rendered prompts without network calls:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --dry-run --limit 1
+```
+
+Download white-background source images without calling the image API:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --download-only --limit 3
+```
+
+Generate one image using the experiment CSV:
+
+```bash
+export OPENAI_API_KEY="your_api_key"
+python3 scripts/generate_images/generate_from_csv.py \
+  --csv data/experiment/white_bg_product_catalog_experiment.csv \
+  --prompt-file prompts/ad_image_prompt.txt \
+  --orientation Product-oriented \
+  --limit 1
+```
+
+Use a different orientation:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --orientation Context-oriented --limit 1
+python3 scripts/generate_images/generate_from_csv.py --orientation Affect-oriented --limit 1
+```
+
+## Important Arguments
+
+- `--csv`: input product CSV.
+- `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`.
+- `--prompt`: inline prompt template; overrides `--prompt-file`.
+- `--orientation`: one of `Product-oriented`, `Context-oriented`, `Affect-oriented`.
+- `--limit`: maximum rows to process.
+- `--ids`: comma-separated product ids to process.
+- `--dry-run`: render prompts only.
+- `--download-only`: download source images only.
+- `--model`: image model, defaults to `OPENAI_IMAGE_MODEL` or `gpt-image-1.5`.
+- `--output-dir`: generated image destination, defaults to `outputs/generated`.
+
+## Outputs
+
+- Generated images: `outputs/generated/{orientation}/{id}_{orientation}.png`
+- Downloaded source images: `outputs/source_images/{id}.{ext}`
+- Manifest JSONL: `outputs/generation_manifest.jsonl`

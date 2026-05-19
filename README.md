@@ -11,6 +11,7 @@ The core research question is not only whether GenAI-generated ad images work, b
 - `docs/literature/`: literature matrices and theory notes.
 - `docs/figures/`: SVG theory diagrams and figure index.
 - `references/`: BibTeX references that can be versioned.
+- `prompts/`: prompt templates used by image generation scripts.
 - `scripts/`: scaffold for future data preparation and image generation scripts.
 - `outputs/`: default destination for generated images, logs, and intermediate results. Contents are ignored by Git.
 
@@ -35,6 +36,33 @@ Future scripts should:
 3. Generate prompts by product category and creative orientation.
 4. Support `Product-oriented`, `Context-oriented`, and `Affect-oriented` ad image variants.
 5. Write generated images and logs to `outputs/`.
+
+## Generate Images
+
+The first generation script is:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --dry-run --limit 1
+```
+
+To download source white-background images without calling the API:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --download-only --limit 3
+```
+
+To call the OpenAI Images Edit API:
+
+```bash
+export OPENAI_API_KEY="your_api_key"
+python3 scripts/generate_images/generate_from_csv.py \
+  --csv data/experiment/white_bg_product_catalog_experiment.csv \
+  --prompt-file prompts/ad_image_prompt.txt \
+  --orientation Product-oriented \
+  --limit 1
+```
+
+Generated images and manifests are written to `outputs/`, which is ignored by Git.
 
 ## Copyright and Local Files
 

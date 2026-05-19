@@ -1,0 +1,20 @@
+Use the provided white-background product image as the source product.
+
+Create a polished advertising image for this product while preserving the product's core appearance, shape, color, and visible packaging details.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+- Creative orientation: {orientation}
+
+Creative requirements:
+- Make the product visually clear and commercially appealing.
+- Keep the product recognizable and avoid changing product identity.
+- Build an advertising composition that fits the creative orientation.
+- Do not add incorrect text, fake brand claims, unsupported certifications, or misleading product details.
+- Avoid distorted hands, broken product geometry, unrealistic packaging, and cluttered backgrounds.
+
+Output a high-quality advertising image suitable for an e-commerce or social media ad.
