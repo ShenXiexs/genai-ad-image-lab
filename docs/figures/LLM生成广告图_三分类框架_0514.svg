@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="780" viewBox="0 0 1280 780">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1A2433" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#667085"/>
+    </marker>
+    <style>
+      .bg { fill: #F7F8FA; }
+      .title { font: 700 34px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #162033; }
+      .subtitle { font: 400 16px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #667085; }
+      .root { fill: #172033; filter: url(#shadow); }
+      .root-title { font: 700 20px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #FFFFFF; }
+      .root-sub { font: 400 13px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #D6DCE8; }
+      .card { fill: #FFFFFF; stroke-width: 1.2; filter: url(#shadow); }
+      .header { font: 700 20px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; }
+      .header-cn { font: 600 15px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; }
+      .label { font: 700 13px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #344054; }
+      .body { font: 400 13px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #475467; }
+      .small { font: 400 12px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #667085; }
+      .divider { stroke: #EAECF0; stroke-width: 1; }
+      .arrow { stroke: #667085; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+      .tool { fill: #FFFFFF; stroke: #D0D5DD; stroke-width: 1; stroke-dasharray: 5 5; }
+      .tool-title { font: 700 14px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #344054; }
+      .tool-text { font: 400 12px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #667085; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1280" height="780"/>
+
+  <text x="640" y="54" text-anchor="middle" class="title">LLM 生成广告图的三类创意维度</text>
+  <text x="640" y="82" text-anchor="middle" class="subtitle">从图片内容设计到消费者反应的研究框架：产品理解、场景代入、情感态度</text>
+
+  <rect x="440" y="112" width="400" height="72" rx="18" class="root"/>
+  <text x="640" y="143" text-anchor="middle" class="root-title">Creative Dimension Framework</text>
+  <text x="640" y="166" text-anchor="middle" class="root-sub">生成目标 → 图片特征 → 心理机制 → 广告效果</text>
+
+  <path d="M640 184 C640 214, 232 210, 232 238" class="arrow"/>
+  <path d="M640 184 C640 214, 640 210, 640 238" class="arrow"/>
+  <path d="M640 184 C640 214, 1048 210, 1048 238" class="arrow"/>
+
+  <rect x="70" y="238" width="324" height="402" rx="18" class="card" stroke="#5E8D89"/>
+  <rect x="70" y="238" width="324" height="70" rx="18" fill="#DDEDEC"/>
+  <path d="M70 290 H394 V308 H70 Z" fill="#DDEDEC"/>
+  <text x="232" y="270" text-anchor="middle" class="header" fill="#16423F">Product-oriented</text>
+  <text x="232" y="292" text-anchor="middle" class="header-cn" fill="#16423F">产品导向型素材</text>
+
+  <text x="96" y="338" class="label">说服路径</text>
+  <text x="96" y="360" class="body">产品价值理解：用户知道产品是什么、</text>
+  <text x="96" y="379" class="body">有什么功能、为什么值得买。</text>
+  <line x1="96" y1="398" x2="368" y2="398" class="divider"/>
+  <text x="96" y="426" class="label">核心操控</text>
+  <text x="96" y="448" class="body">产品展示、促销转化、对比证据、信息图。</text>
+  <line x1="96" y1="467" x2="368" y2="467" class="divider"/>
+  <text x="96" y="495" class="label">关键机制</text>
+  <text x="96" y="517" class="body">informational content、AIDA funnel、</text>
+  <text x="96" y="536" class="body">图文一致性、processing fluency。</text>
+  <line x1="96" y1="555" x2="368" y2="555" class="divider"/>
+  <text x="96" y="583" class="label">可测变量</text>
+  <text x="96" y="605" class="body">产品清晰度、语义忠实度、功能信息量、</text>
+  <text x="96" y="624" class="body">促销信息可读性。</text>
+
+  <rect x="478" y="238" width="324" height="402" rx="18" class="card" stroke="#B8914C"/>
+  <rect x="478" y="238" width="324" height="70" rx="18" fill="#EFE5D0"/>
+  <path d="M478 290 H802 V308 H478 Z" fill="#EFE5D0"/>
+  <text x="640" y="270" text-anchor="middle" class="header" fill="#654514">Context-oriented</text>
+  <text x="640" y="292" text-anchor="middle" class="header-cn" fill="#654514">场景导向型素材</text>
+
+  <text x="504" y="338" class="label">说服路径</text>
+  <text x="504" y="360" class="body">使用场景想象：用户把自己代入</text>
+  <text x="504" y="379" class="body">产品使用情境。</text>
+  <line x1="504" y1="398" x2="776" y2="398" class="divider"/>
+  <text x="504" y="426" class="label">核心操控</text>
+  <text x="504" y="448" class="body">生活方式、人物画像、社交原生、沉浸互动。</text>
+  <line x1="504" y1="467" x2="776" y2="467" class="divider"/>
+  <text x="504" y="495" class="label">关键机制</text>
+  <text x="504" y="517" class="body">self-reference、guided personalization、</text>
+  <text x="504" y="536" class="body">attention capture、perceived realism。</text>
+  <line x1="504" y1="555" x2="776" y2="555" class="divider"/>
+  <text x="504" y="583" class="label">可测变量</text>
+  <text x="504" y="605" class="body">场景代入感、人物出镜方式、色彩复杂度、</text>
+  <text x="504" y="624" class="body">场景真实感、用户状态匹配度。</text>
+
+  <rect x="886" y="238" width="324" height="402" rx="18" class="card" stroke="#B86F8D"/>
+  <rect x="886" y="238" width="324" height="70" rx="18" fill="#F2DDE6"/>
+  <path d="M886 290 H1210 V308 H886 Z" fill="#F2DDE6"/>
+  <text x="1048" y="270" text-anchor="middle" class="header" fill="#71324C">Affect-oriented</text>
+  <text x="1048" y="292" text-anchor="middle" class="header-cn" fill="#71324C">情感导向型素材</text>
+
+  <text x="912" y="338" class="label">说服路径</text>
+  <text x="912" y="360" class="body">情绪态度形成：通过审美、品牌调性、</text>
+  <text x="912" y="379" class="body">真诚感影响广告与品牌评价。</text>
+  <line x1="912" y1="398" x2="1184" y2="398" class="divider"/>
+  <text x="912" y="426" class="label">核心操控</text>
+  <text x="912" y="448" class="body">情绪氛围、品牌视觉、人格化情绪表达。</text>
+  <line x1="912" y1="467" x2="1184" y2="467" class="divider"/>
+  <text x="912" y="495" class="label">关键机制</text>
+  <text x="912" y="517" class="body">brand fit、aesthetic appeal、creator effort、</text>
+  <text x="912" y="536" class="body">AI disclosure、parasocial connection。</text>
+  <line x1="912" y1="555" x2="1184" y2="555" class="divider"/>
+  <text x="912" y="583" class="label">可测变量</text>
+  <text x="912" y="605" class="body">情绪氛围、品牌视觉个性、AI 披露方式、</text>
+  <text x="912" y="624" class="body">感知创作努力、品牌真诚感。</text>
+
+  <rect x="112" y="676" width="1056" height="58" rx="14" class="tool"/>
+  <text x="640" y="699" text-anchor="middle" class="tool-title">Pre-screening and Coding Infrastructure</text>
+  <text x="640" y="721" text-anchor="middle" class="tool-text">TIFA / MPS 用于语义忠实度与多维偏好；PickScore / ImageReward 用于候选图筛选；多模态编码用于图像情绪、文案情绪与图文一致性。</text>
+
+  <text x="232" y="666" text-anchor="middle" class="small">Tsai &amp; Honka; Heitmann; Dang; Ceylan; Hu; Zhang</text>
+  <text x="640" y="666" text-anchor="middle" class="small">Hartmann; Kapoor &amp; Kumar; Kanuri; Miller; Kirstain; Xu</text>
+  <text x="1048" y="666" text-anchor="middle" class="small">Carney; Daviet &amp; Nishimura; Liu; Burnap; Grewal</text>
+</svg>

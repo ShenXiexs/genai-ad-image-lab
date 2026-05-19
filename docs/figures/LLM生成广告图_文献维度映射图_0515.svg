@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1180" viewBox="0 0 1600 1180">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,8 L10,4 z" fill="#D9D9D9"/>
+    </marker>
+    <style>
+      .bg { fill: #171717; }
+      .title { font: 700 34px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #F3F4F6; }
+      .subtitle { font: 400 18px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #BDBDBD; }
+      .note { font: 400 17px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #C8C8C8; }
+      .paper { fill: #232323; stroke: #E5E7EB; stroke-width: 2.2; rx: 18; }
+      .paper-text { font: 600 23px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #F3F4F6; }
+      .paper-sub { font: 500 21px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #E5E7EB; }
+      .chip { fill: #6B6B6B; fill-opacity: 0.62; rx: 6; }
+      .chip-text { font: 600 18px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #F5F5F5; }
+      .cat { fill: #242424; stroke: #E5E7EB; stroke-width: 2.4; rx: 4; }
+      .cat-text { font: 700 30px "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #F3F4F6; }
+      .line { fill: none; stroke: #D9D9D9; stroke-width: 2.1; marker-end: url(#arrow); }
+      .line2 { fill: none; stroke: #BFBFBF; stroke-width: 1.8; marker-end: url(#arrow); opacity: 0.9; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="1180"/>
+
+  <text x="800" y="62" text-anchor="middle" class="title">LLM 生成广告图相关文献：内容维度到三分类的映射图</text>
+  <text x="800" y="96" text-anchor="middle" class="subtitle">不是把每篇文献硬塞进单一类别，而是提取文献中的主要内容维度，再映射到产品导向、场景导向、情感导向</text>
+
+  <!-- Left paper boxes -->
+  <rect x="60" y="130" width="520" height="90" class="paper"/>
+  <text x="320" y="168" text-anchor="middle" class="paper-text">Park et al. 1986 / Keller 1993</text>
+  <text x="320" y="204" text-anchor="middle" class="paper-sub">functional / experiential / symbolic</text>
+
+  <rect x="60" y="255" width="520" height="90" class="paper"/>
+  <text x="320" y="293" text-anchor="middle" class="paper-text">Tsai &amp; Honka 2021</text>
+  <text x="320" y="329" text-anchor="middle" class="paper-sub">informational / noninformational</text>
+
+  <rect x="60" y="380" width="520" height="90" class="paper"/>
+  <text x="320" y="418" text-anchor="middle" class="paper-text">Hartmann et al. 2021</text>
+  <text x="320" y="454" text-anchor="middle" class="paper-sub">packshot / brand selfie / consumer selfie</text>
+
+  <rect x="60" y="505" width="520" height="90" class="paper"/>
+  <text x="320" y="543" text-anchor="middle" class="paper-text">Miniard et al. 1991</text>
+  <text x="320" y="579" text-anchor="middle" class="paper-sub">product-relevant / affect-laden pictures</text>
+
+  <rect x="60" y="630" width="520" height="90" class="paper"/>
+  <text x="320" y="668" text-anchor="middle" class="paper-text">Elder &amp; Krishna 2012</text>
+  <text x="320" y="704" text-anchor="middle" class="paper-sub">product orientation / embodied simulation</text>
+
+  <rect x="60" y="755" width="520" height="90" class="paper"/>
+  <text x="320" y="793" text-anchor="middle" class="paper-text">McQuarrie &amp; Mick 1999 / Liu et al. 2020</text>
+  <text x="320" y="829" text-anchor="middle" class="paper-sub">visual rhetoric / brand personality</text>
+
+  <rect x="60" y="880" width="520" height="90" class="paper"/>
+  <text x="320" y="918" text-anchor="middle" class="paper-text">Ceylan 2024 / Dang 2026</text>
+  <text x="320" y="954" text-anchor="middle" class="paper-sub">congruency / fluency / TIR</text>
+
+  <!-- Right category boxes -->
+  <rect x="1245" y="245" width="270" height="120" class="cat"/>
+  <text x="1380" y="318" text-anchor="middle" class="cat-text">产品导向</text>
+
+  <rect x="1245" y="520" width="270" height="120" class="cat"/>
+  <text x="1380" y="593" text-anchor="middle" class="cat-text">场景导向</text>
+
+  <rect x="1245" y="795" width="270" height="120" class="cat"/>
+  <text x="1380" y="868" text-anchor="middle" class="cat-text">情感导向</text>
+
+  <!-- Middle chips -->
+  <rect x="820" y="136" width="126" height="38" class="chip"/><text x="883" y="161" text-anchor="middle" class="chip-text">functional</text>
+  <rect x="820" y="180" width="145" height="38" class="chip"/><text x="892" y="205" text-anchor="middle" class="chip-text">experiential</text>
+  <rect x="820" y="224" width="116" height="38" class="chip"/><text x="878" y="249" text-anchor="middle" class="chip-text">symbolic</text>
+
+  <rect x="830" y="284" width="160" height="38" class="chip"/><text x="910" y="309" text-anchor="middle" class="chip-text">informational</text>
+  <rect x="830" y="328" width="213" height="38" class="chip"/><text x="936" y="353" text-anchor="middle" class="chip-text">noninformational</text>
+
+  <rect x="855" y="395" width="112" height="38" class="chip"/><text x="911" y="420" text-anchor="middle" class="chip-text">packshot</text>
+  <rect x="855" y="439" width="148" height="38" class="chip"/><text x="929" y="464" text-anchor="middle" class="chip-text">brand selfie</text>
+  <rect x="855" y="483" width="182" height="38" class="chip"/><text x="946" y="508" text-anchor="middle" class="chip-text">consumer selfie</text>
+
+  <rect x="805" y="532" width="204" height="38" class="chip"/><text x="907" y="557" text-anchor="middle" class="chip-text">product-relevant</text>
+  <rect x="805" y="576" width="170" height="38" class="chip"/><text x="890" y="601" text-anchor="middle" class="chip-text">affect-laden</text>
+
+  <rect x="775" y="664" width="242" height="38" class="chip"/><text x="896" y="689" text-anchor="middle" class="chip-text">embodied simulation</text>
+
+  <rect x="812" y="782" width="176" height="38" class="chip"/><text x="900" y="807" text-anchor="middle" class="chip-text">visual rhetoric</text>
+  <rect x="812" y="826" width="197" height="38" class="chip"/><text x="911" y="851" text-anchor="middle" class="chip-text">brand personality</text>
+
+  <rect x="780" y="905" width="188" height="38" class="chip"/><text x="874" y="930" text-anchor="middle" class="chip-text">congruency / fluency</text>
+  <rect x="780" y="949" width="230" height="38" class="chip"/><text x="895" y="974" text-anchor="middle" class="chip-text">TIR / text-picture balance</text>
+
+  <!-- Paper to chips -->
+  <path d="M580 162 C650 162, 715 155, 820 155" class="line2"/>
+  <path d="M580 176 C660 182, 725 193, 820 199" class="line2"/>
+  <path d="M580 198 C660 220, 735 234, 820 243" class="line2"/>
+
+  <path d="M580 292 C665 295, 745 300, 830 303" class="line2"/>
+  <path d="M580 316 C660 332, 735 343, 830 347" class="line2"/>
+
+  <path d="M580 412 C670 409, 760 408, 855 414" class="line2"/>
+  <path d="M580 428 C670 442, 760 452, 855 458" class="line2"/>
+  <path d="M580 446 C675 470, 768 490, 855 502" class="line2"/>
+
+  <path d="M580 540 C655 544, 730 549, 805 551" class="line2"/>
+  <path d="M580 563 C655 578, 727 589, 805 595" class="line2"/>
+
+  <path d="M580 676 C650 679, 715 683, 775 683" class="line2"/>
+
+  <path d="M580 792 C662 795, 735 800, 812 801" class="line2"/>
+  <path d="M580 820 C662 832, 735 845, 812 845" class="line2"/>
+
+  <path d="M580 916 C650 920, 715 925, 780 924" class="line2"/>
+  <path d="M580 942 C650 952, 715 966, 780 968" class="line2"/>
+
+  <!-- Chips to categories -->
+  <path d="M946 155 C1080 155, 1142 208, 1245 286" class="line"/>
+  <path d="M990 303 C1090 303, 1160 305, 1245 305" class="line"/>
+  <path d="M967 414 C1080 414, 1147 368, 1245 322" class="line"/>
+  <path d="M1009 551 C1100 551, 1165 432, 1245 334" class="line"/>
+  <path d="M968 924 C1080 924, 1148 612, 1245 345" class="line"/>
+  <path d="M1010 968 C1110 968, 1172 650, 1245 350" class="line"/>
+
+  <path d="M965 199 C1080 199, 1150 395, 1245 556" class="line"/>
+  <path d="M1003 458 C1088 458, 1155 487, 1245 570" class="line"/>
+  <path d="M1037 502 C1098 502, 1166 527, 1245 584" class="line"/>
+  <path d="M1017 683 C1098 683, 1165 642, 1245 602" class="line"/>
+
+  <path d="M936 243 C1070 243, 1140 667, 1245 840" class="line"/>
+  <path d="M1043 347 C1106 347, 1173 624, 1245 830" class="line"/>
+  <path d="M975 595 C1075 595, 1145 722, 1245 846" class="line"/>
+  <path d="M988 801 C1080 801, 1150 820, 1245 850" class="line"/>
+  <path d="M1009 845 C1095 845, 1160 850, 1245 858" class="line"/>
+
+  <!-- Bottom note -->
+  <text x="800" y="1046" text-anchor="middle" class="note">注：箭头表示“主要映射”而非唯一映射。某些维度可以跨类发挥作用，例如 brand selfie 也可能服务产品导向，consumer selfie 也可能激活情感反应。</text>
+  <text x="800" y="1080" text-anchor="middle" class="note">这张图的作用不是证明每篇文献都直接提出三分类，而是说明：既有文献中的主要内容维度，已经可以系统地支撑并细化你们的三大类框架。</text>
+</svg>

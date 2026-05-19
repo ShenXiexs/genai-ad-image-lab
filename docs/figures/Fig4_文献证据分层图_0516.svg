@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="bg4" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="50%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </linearGradient>
+    <filter id="shadow4" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#111827" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .title { font: 800 44px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 23px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .layer-title { font: 800 27px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #172033; }
+      .body { font: 400 20px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .paper { font: 700 18px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #334155; }
+      .tag { font: 700 16px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg4)"/>
+  <circle cx="1320" cy="820" r="210" fill="#bfdbfe" opacity="0.35"/>
+  <circle cx="230" cy="210" r="160" fill="#fed7aa" opacity="0.34"/>
+  <text x="78" y="88" class="title">文献证据分层：哪些最能支撑“AI 图不同于人图”</text>
+  <text x="80" y="130" class="subtitle">主文优先引用上层证据；下层文献用于解释机制、方法和边界条件</text>
+
+  <g filter="url(#shadow4)">
+    <rect x="140" y="200" width="1320" height="150" rx="30" fill="#dcfce7" stroke="#22c55e" stroke-width="2.5"/>
+    <rect x="140" y="390" width="1320" height="150" rx="30" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="140" y="580" width="1320" height="150" rx="30" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="140" y="770" width="1320" height="150" rx="30" fill="#fce7f3" stroke="#ec4899" stroke-width="2.5"/>
+  </g>
+
+  <rect x="178" y="228" width="120" height="38" rx="19" fill="#16a34a"/>
+  <text x="206" y="253" class="tag">主文核心</text>
+  <text x="330" y="250" class="layer-title">A. 直接图像 / 视觉广告对比</text>
+  <text x="330" y="288" class="body">AI 图、AI 人脸、AI 艺术、AI 视觉广告与人类/真实图像的直接差异</text>
+  <text x="330" y="324" class="paper">Grassini &amp; Koivisto; Eiserbeck et al.; Carney et al.; Daviet &amp; Nishimura; Heitmann et al.</text>
+
+  <rect x="178" y="418" width="120" height="38" rx="19" fill="#2563eb"/>
+  <text x="206" y="443" class="tag">理论发展</text>
+  <text x="330" y="440" class="layer-title">B. GenAI 创意内容特点</text>
+  <text x="330" y="478" class="body">单件质量可能提高，但创意池多样性、独特性、组合距离可能下降</text>
+  <text x="330" y="514" class="paper">Doshi &amp; Hauser; Lee &amp; Chung; Meincke et al.; Zhang et al.</text>
+
+  <rect x="178" y="608" width="120" height="38" rx="19" fill="#d97706"/>
+  <text x="206" y="633" class="tag">机制解释</text>
+  <text x="330" y="630" class="layer-title">C. AI 来源心理机制</text>
+  <text x="330" y="668" class="body">消费者认为 AI 缺少努力、情感、主观判断与人类意图；该机制对情感象征型更关键</text>
+  <text x="330" y="704" class="paper">Longoni &amp; Cian; Castelo et al.; Clegg et al.; Garvey et al.; Longoni et al.</text>
+
+  <rect x="178" y="798" width="120" height="38" rx="19" fill="#db2777"/>
+  <text x="206" y="823" class="tag">方法补强</text>
+  <text x="330" y="820" class="layer-title">D. 技术检测与模型痕迹</text>
+  <text x="330" y="858" class="body">即使高度逼真，生成图仍可能具有重构误差、模型指纹、跨模型可检测规律</text>
+  <text x="330" y="894" class="paper">Ojha et al.; Wang et al.; Ricker et al.; Sha et al.</text>
+</svg>

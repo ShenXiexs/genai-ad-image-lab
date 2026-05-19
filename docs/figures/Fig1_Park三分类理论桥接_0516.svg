@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7f1e6"/>
+      <stop offset="55%" stop-color="#eef3ef"/>
+      <stop offset="100%" stop-color="#e7eef7"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1f2937" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 44px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #172033; }
+      .subtitle { font: 400 23px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .section { font: 700 27px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #1e293b; }
+      .card-title { font: 700 28px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #172033; }
+      .card-sub { font: 600 19px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #334155; }
+      .body { font: 400 20px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .note { font: 500 19px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #5b5244; }
+      .small { font: 500 17px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="1330" cy="160" r="180" fill="#e0f2fe" opacity="0.55"/>
+  <circle cx="230" cy="850" r="210" fill="#fde68a" opacity="0.32"/>
+  <path d="M0,220 C350,125 470,320 760,220 C1050,120 1190,210 1600,120 L1600,0 L0,0 Z" fill="#ffffff" opacity="0.38"/>
+
+  <text x="80" y="88" class="title">从 Park et al. (1986) 到 GenAI 广告图三分类</text>
+  <text x="82" y="128" class="subtitle">用品牌概念理论作为上位基础，再把它转译为可生成、可操控、可实验检验的广告图创意取向</text>
+
+  <rect x="70" y="178" width="1460" height="742" rx="36" fill="#ffffff" opacity="0.86" filter="url(#shadow)"/>
+
+  <text x="125" y="240" class="section">Park, Jaworski &amp; MacInnis: Brand Concept-Image Management</text>
+  <text x="990" y="240" class="section">本文：LLM / GenAI 广告图创意取向</text>
+
+  <line x1="770" y1="294" x2="830" y2="294" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="709" y="274" class="small">理论转译</text>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="300" width="510" height="145" rx="26" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <text x="150" y="352" class="card-title">Functional Concept</text>
+    <text x="150" y="386" class="card-sub">消费问题解决 / 功能利益</text>
+    <text x="150" y="421" class="body">解决外部消费问题，降低购买不确定性</text>
+
+    <rect x="120" y="485" width="510" height="145" rx="26" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+    <text x="150" y="537" class="card-title">Experiential Concept</text>
+    <text x="150" y="571" class="card-sub">感官愉悦 / 变化 / 认知刺激</text>
+    <text x="150" y="606" class="body">让消费者获得体验、刺激与使用想象</text>
+
+    <rect x="120" y="670" width="510" height="145" rx="26" fill="#fdf2f8" stroke="#f9a8d4" stroke-width="2"/>
+    <text x="150" y="722" class="card-title">Symbolic Concept</text>
+    <text x="150" y="756" class="card-sub">自我提升 / 角色 / 群体归属</text>
+    <text x="150" y="791" class="body">通过品牌意义表达身份与社会象征</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="930" y="300" width="510" height="145" rx="26" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+    <text x="960" y="352" class="card-title">Product-Oriented</text>
+    <text x="960" y="386" class="card-sub">Product-diagnostic creatives</text>
+    <text x="960" y="421" class="body">产品属性、卖点、证据、价格与购买理由</text>
+
+    <rect x="930" y="485" width="510" height="145" rx="26" fill="#ecfdf5" stroke="#22c55e" stroke-width="2"/>
+    <text x="960" y="537" class="card-title">Context-Oriented</text>
+    <text x="960" y="571" class="card-sub">Usage-simulation creatives</text>
+    <text x="960" y="606" class="body">使用场景、生活方式、第一人称与自我代入</text>
+
+    <rect x="930" y="670" width="510" height="145" rx="26" fill="#fdf2f8" stroke="#ec4899" stroke-width="2"/>
+    <text x="960" y="722" class="card-title">Affect-Oriented</text>
+    <text x="960" y="756" class="card-sub">Affective-symbolic creatives</text>
+    <text x="960" y="791" class="body">情绪氛围、审美风格、品牌人格与视觉修辞</text>
+  </g>
+
+  <line x1="645" y1="372" x2="905" y2="372" stroke="#fb923c" stroke-width="4" marker-end="url(#arrow)" opacity="0.85"/>
+  <line x1="645" y1="557" x2="905" y2="557" stroke="#22c55e" stroke-width="4" marker-end="url(#arrow)" opacity="0.85"/>
+  <line x1="645" y1="742" x2="905" y2="742" stroke="#ec4899" stroke-width="4" marker-end="url(#arrow)" opacity="0.85"/>
+
+  <rect x="160" y="850" width="1280" height="48" rx="24" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="190" y="881" class="note">写作提醒：Park 的 experiential 比“场景图”更宽；转译为 Context-oriented 时，建议接 mental imagery / embodied simulation 文献收紧为 usage simulation。</text>
+</svg>

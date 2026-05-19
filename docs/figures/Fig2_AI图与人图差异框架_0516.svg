@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="bg2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="45%" stop-color="#eef6ff"/>
+      <stop offset="100%" stop-color="#f7efe7"/>
+    </linearGradient>
+    <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+    <marker id="arrow2" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 800 45px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 23px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .label { font: 700 30px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #172033; }
+      .card-title { font: 700 24px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #172033; }
+      .body { font: 400 19px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+      .small { font: 600 17px "Avenir Next", "PingFang SC", "Helvetica Neue", Arial, sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg2)"/>
+  <path d="M0,760 C320,690 510,820 780,735 C1080,640 1260,720 1600,620 L1600,1000 L0,1000 Z" fill="#dbeafe" opacity="0.45"/>
+  <circle cx="1280" cy="185" r="165" fill="#fed7aa" opacity="0.35"/>
+  <circle cx="220" cy="190" r="130" fill="#bfdbfe" opacity="0.45"/>
+
+  <text x="76" y="88" class="title">AI 生成图相对人类图的四类差异</text>
+  <text x="78" y="129" class="subtitle">不是“AI 图更好/更差”，而是来源推断、内容结构、媒介痕迹和组合动态都不同</text>
+
+  <g filter="url(#shadow2)">
+    <rect x="90" y="195" width="520" height="650" rx="34" fill="#ffffff" opacity="0.92"/>
+    <rect x="990" y="195" width="520" height="650" rx="34" fill="#ffffff" opacity="0.92"/>
+  </g>
+
+  <text x="220" y="260" class="label">Human-Created Images</text>
+  <text x="1090" y="260" class="label">GenAI-Generated Images</text>
+
+  <rect x="180" y="310" width="340" height="230" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <path d="M240,480 C255,410 300,385 350,385 C400,385 446,410 460,480 Z" fill="#cbd5e1"/>
+  <circle cx="350" cy="365" r="56" fill="#94a3b8"/>
+  <rect x="250" y="570" width="200" height="28" rx="14" fill="#94a3b8" opacity="0.45"/>
+  <text x="208" y="640" class="body">消费者默认有人类努力、意图、审美判断与品牌理解</text>
+  <text x="208" y="680" class="body">更容易支持真实感、温暖感、身份与情绪意义</text>
+
+  <rect x="1080" y="310" width="340" height="230" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="1168" y="364" width="164" height="116" rx="24" fill="#60a5fa" opacity="0.9"/>
+  <circle cx="1218" cy="410" r="13" fill="#eff6ff"/>
+  <circle cx="1282" cy="410" r="13" fill="#eff6ff"/>
+  <path d="M1210,450 Q1250,480 1290,450" fill="none" stroke="#eff6ff" stroke-width="8" stroke-linecap="round"/>
+  <line x1="1250" y1="330" x2="1250" y2="364" stroke="#60a5fa" stroke-width="8"/>
+  <circle cx="1250" cy="320" r="12" fill="#60a5fa"/>
+  <text x="1108" y="640" class="body">消费者会额外推断：是否低努力、低意图、低情感能力</text>
+  <text x="1108" y="680" class="body">也可能因高可控、可搜索、可优化而提高局部质量</text>
+
+  <line x1="620" y1="500" x2="980" y2="500" stroke="#334155" stroke-width="4" marker-end="url(#arrow2)"/>
+  <text x="678" y="470" class="small">不是简单替代，而是媒介属性改变</text>
+
+  <g filter="url(#shadow2)">
+    <rect x="645" y="195" width="310" height="126" rx="24" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <text x="674" y="240" class="card-title">1. Source Inference</text>
+    <text x="674" y="274" class="body">努力、真实性、意图性</text>
+
+    <rect x="645" y="350" width="310" height="126" rx="24" fill="#ecfdf5" stroke="#86efac" stroke-width="2"/>
+    <text x="674" y="395" class="card-title">2. Content Pattern</text>
+    <text x="674" y="429" class="body">高平均质量、低多样性</text>
+
+    <rect x="645" y="505" width="310" height="126" rx="24" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="674" y="550" class="card-title">3. Visual Trace</text>
+    <text x="674" y="584" class="body">重构痕迹、模型指纹</text>
+
+    <rect x="645" y="660" width="310" height="126" rx="24" fill="#fdf2f8" stroke="#f9a8d4" stroke-width="2"/>
+    <text x="674" y="705" class="card-title">4. Portfolio Dynamic</text>
+    <text x="674" y="739" class="body">best-of-N、创意空间搜索</text>
+  </g>
+
+  <rect x="120" y="885" width="1360" height="52" rx="26" fill="#ffffff" opacity="0.88" stroke="#cbd5e1"/>
+  <text x="154" y="919" class="body">论文主张：GenAI 广告图是一类理论上不同的视觉刺激，而不是人类广告图的低成本复制。</text>
+</svg>

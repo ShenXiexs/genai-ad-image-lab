@@ -1,0 +1,17 @@
+.DS_Store
+.vscode/
+.claude/
+
+*.pdf
+*.docx
+*.xlsx
+
+extracted_pdf_texts/
+local_only/
+outputs/*
+!outputs/.gitkeep
+
+__pycache__/
+*.pyc
+.env
+.env.*
