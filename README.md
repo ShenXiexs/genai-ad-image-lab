@@ -10,6 +10,7 @@ The core research question is not only whether GenAI-generated ad images work, b
 - `data/experiment/white_bg_product_catalog_experiment.csv`: smaller experiment-oriented product sample.
 - `docs/literature/`: literature matrices and theory notes.
 - `docs/figures/`: SVG theory diagrams and figure index.
+- `docs/image_api_call_spec.md`: current image API call, model defaults, prompt fields, and test commands.
 - `references/`: BibTeX references that can be versioned.
 - `prompts/`: prompt templates used by image generation scripts.
 - `scripts/`: scaffold for future data preparation and image generation scripts.
