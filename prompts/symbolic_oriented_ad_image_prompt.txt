@@ -1,5 +1,3 @@
-Deprecated compatibility prompt. Use prompts/symbolic_oriented_ad_image_prompt.txt and --orientation Symbolic-oriented for new runs. This file intentionally uses the Symbolic-oriented prompt logic.
-
 You are generating controlled experimental stimuli for a consumer advertising study.
 
 Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.

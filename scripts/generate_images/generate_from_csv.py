@@ -16,6 +16,7 @@ import json
 import mimetypes
 import os
 import pathlib
+import random
 import re
 import sys
 import time
@@ -39,8 +40,12 @@ REQUIRED_COLUMNS = [
     "is_white_image",
 ]
 
-DEFAULT_MODEL = "gpt-image-1.5"
+DEFAULT_MODEL = "gpt-image-2"
 DEFAULT_ENDPOINT = "https://api.openai.com/v1/images/edits"
+DEFAULT_RANDOM_SEED = 20260523
+CANONICAL_ORIENTATIONS = ["Product-oriented", "Context-oriented", "Symbolic-oriented"]
+ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
+ORIENTATION_CHOICES = CANONICAL_ORIENTATIONS + sorted(ORIENTATION_ALIASES)
 
 
 def parse_args() -> argparse.Namespace:
@@ -65,8 +70,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--orientation",
         default="Product-oriented",
-        choices=["Product-oriented", "Context-oriented", "Affect-oriented"],
-        help="Creative orientation inserted into the prompt template.",
+        choices=ORIENTATION_CHOICES,
+        help="Creative orientation inserted into the prompt template. Affect-oriented is a deprecated alias for Symbolic-oriented.",
     )
     parser.add_argument("--output-dir", default="outputs/generated", help="Output directory.")
     parser.add_argument("--source-dir", default="outputs/source_images", help="Downloaded source image directory.")
@@ -79,6 +84,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n", type=int, default=1, help="Images to generate per row.")
     parser.add_argument("--limit", type=int, default=1, help="Maximum rows to process after filtering.")
     parser.add_argument("--start", type=int, default=0, help="Number of matching rows to skip before processing.")
+    parser.add_argument("--sample-size", type=int, default=None, help="Randomly sample this many rows after filtering.")
+    parser.add_argument(
+        "--random-seed",
+        type=int,
+        default=int(os.environ.get("GENAI_AD_IMAGE_RANDOM_SEED", DEFAULT_RANDOM_SEED)),
+        help=f"Random seed for --sample-size. Defaults to {DEFAULT_RANDOM_SEED}.",
+    )
     parser.add_argument("--ids", default=None, help="Comma-separated product ids to process. Overrides --start filtering order.")
     parser.add_argument("--only-white", action="store_true", default=True, help="Only process rows where is_white_image == 1.")
     parser.add_argument("--include-non-white", dest="only_white", action="store_false", help="Allow rows where is_white_image != 1.")
@@ -111,6 +123,12 @@ def select_rows(rows: list[dict[str, str]], args: argparse.Namespace) -> list[di
     else:
         selected = selected[args.start :]
 
+    if args.sample_size is not None:
+        if args.sample_size < 0:
+            raise ValueError("--sample-size must be non-negative.")
+        sample_size = min(args.sample_size, len(selected))
+        selected = random.Random(args.random_seed).sample(selected, sample_size)
+
     if args.limit is not None and args.limit >= 0:
         selected = selected[: args.limit]
     return selected
@@ -121,6 +139,10 @@ def load_prompt_template(args: argparse.Namespace) -> str:
         return args.prompt
     prompt_path = pathlib.Path(args.prompt_file)
     return prompt_path.read_text(encoding="utf-8")
+
+
+def canonical_orientation(orientation: str) -> str:
+    return ORIENTATION_ALIASES.get(orientation, orientation)
 
 
 def render_prompt(template: str, row: dict[str, str], orientation: str) -> str:
@@ -297,6 +319,8 @@ def iter_records(rows: Iterable[dict[str, str]], args: argparse.Namespace, templ
 
 def main() -> int:
     args = parse_args()
+    requested_orientation = args.orientation
+    args.orientation = canonical_orientation(args.orientation)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
     template = load_prompt_template(args)
 
@@ -319,6 +343,7 @@ def main() -> int:
             "category": row.get("level_one_category_name"),
             "brand": row.get("creative_id_brand"),
             "orientation": args.orientation,
+            "requested_orientation": requested_orientation,
             "source_url": record["source_url"],
             "source_path": str(record["source_path"]),
             "output_prefix": str(output_prefix),
@@ -326,6 +351,8 @@ def main() -> int:
             "size": args.size,
             "quality": args.quality,
             "output_format": args.output_format,
+            "sample_size": args.sample_size,
+            "random_seed": args.random_seed,
             "status": "planned",
             "prompt": record["prompt"],
         }

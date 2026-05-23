@@ -10,10 +10,10 @@ Avoid screenshot-like layouts, banner-template look, low-quality collage, meme s
 
 Generate a Product-oriented advertising image.
 
-Primary route of persuasion: product information, clarity, and diagnosticity. Do not rely on lifestyle context or emotional atmosphere as the main persuasive route.
+Primary route of persuasion: functional product value, product clarity, and visual information diagnosticity. Do not rely on lifestyle context, abstract mood, or symbolic atmosphere as the main persuasive route.
 
 Advertising mechanism:
-The image should help viewers clearly understand the product itself: what it is, what it looks like, what visible features it has, and why it appears valuable or worth considering.
+The image should help viewers quickly infer what the product is, what visible attributes it has, how it creates value, and why it may be worth considering. Use the product title, brand, category, price, and promotion metadata to infer plausible functional value cues, then translate those cues into non-text visual evidence.
 
 Product metadata:
 - Title: {ori_title}
@@ -22,26 +22,30 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
+Metadata reasoning instruction:
+- First infer the product type, material, structure, target user, purchase occasion, and likely value drivers from the title and category.
+- For jewelry, fashion, beauty, accessories, home goods, electronics, sports, toys, books, food, or other categories, infer category-appropriate diagnostic cues such as craftsmanship, material finish, fit, scale, portability, durability, gift suitability, storage, compatibility, freshness, care, performance, or ease of use.
+- Do not invent claims that are not visually supported. The inference should guide visual composition, not create fake text, badges, certifications, or product features.
+
 Visual direction:
-- Make the product the dominant subject of the image.
-- Keep the product large, sharp, well-lit, and easy to inspect.
-- Use a clean commercial background that improves product clarity rather than lifestyle storytelling.
-- Visualize specific product attributes, materials, structural features, packaging details, craftsmanship, size impression, freshness, durability, or premium finish, depending on the product category.
-- If the product title or category implies a key functional benefit, make that benefit visually deducible from the image alone without adding text or claims.
-- Use composition, lighting, shadow, reflection, and spacing to make the product look trustworthy and professionally presented.
-- Ensure the visual content is semantically consistent with the product title and category.
+- Make the product the dominant subject, but make the image visibly more informative than the original white-background packshot.
+- Add non-text visual evidence of functional value: material texture, structural details, craftsmanship, size/scale impression, accessory components, packaging, gift box, display stand, neutral holder, clasp/closure, interface, mechanism, freshness cue, durability cue, or category-relevant use affordance.
+- For wearable or giftable products, neutral studio props such as a mannequin bust, hand form, jewelry stand, case, box, tray, or scale reference may be used if they clarify wearing, gifting, size, or craftsmanship without becoming a lifestyle story.
+- Use a coherent studio composition with purposeful lighting, shadows, reflections, and close detail emphasis. A secondary close-detail area is acceptable if it feels integrated into one commercial product photograph and contains no labels, arrows, or text.
+- Avoid a plain white or near-white packshot as the dominant visual solution. The background may be clean, but it should help reveal function, material, structure, scale, or purchase value.
+- Ensure the visual content is semantically consistent with the product title, brand tier, category, price level, and promotion context.
 - Leave clean negative space for possible controlled text overlay in later editing.
 
 Strict boundaries:
-- Do not create a lifestyle story or a specific usage scene.
-- Do not make emotion, atmosphere, or symbolic mood the main persuasive route.
-- Do not let emotional atmosphere or usage scene become the dominant visual impression, even if they appear as secondary elements.
+- Do not create a lifestyle story or a specific everyday usage scene.
+- Do not let emotional atmosphere, symbolic mood, or usage scene become the dominant visual impression, even if they appear as secondary elements.
 - Do not add generated text, slogans, fake labels, fake badges, certifications, prices, ratings, charts, arrows, or comparison claims inside the image.
 - Do not invent product functions, ingredients, awards, or brand messages.
 - Do not alter the product's shape, color, logo, packaging, or physical structure.
+- If the image could be described as merely the same white-background product photo with nicer lighting, larger scale, or minor retouching, the generation has failed.
 
 Verification standard:
-A viewer should be able to rate this image highly on "This image helps me understand what the product is and what it offers" and "This image makes the product features clear." The image should pass the 3-second diagnostic test: a viewer who has never heard of this product should quickly understand what it is and why it may be worth buying, while not primarily feeling that the image is about lifestyle imagination or emotional mood.
+A viewer should be able to rate this image highly on "This image helps me understand what the product is and what it offers" and "This image makes the product features and value cues clear." The image should pass the 3-second diagnostic test: a viewer who has never heard of this product should quickly understand what it is, what visible attributes matter, and why it may be worth buying, while not primarily feeling that the image is about lifestyle imagination or symbolic mood.
 
 Output:
-One advertising image where product clarity and information diagnosticity are the primary goals. Aesthetic quality should serve product understanding, not replace it.
+One advertising image where functional product value and information diagnosticity are the primary goals. Aesthetic quality should serve product understanding, not replace it.

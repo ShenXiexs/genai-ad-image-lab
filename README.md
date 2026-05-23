@@ -35,7 +35,7 @@ Future scripts should:
 1. Read product metadata from `data/raw/` or `data/experiment/`.
 2. Filter to `is_white_image == 1`.
 3. Generate prompts by product category and creative orientation.
-4. Support `Product-oriented`, `Context-oriented`, and `Affect-oriented` ad image variants.
+4. Support `Product-oriented`, `Context-oriented`, and `Symbolic-oriented` ad image variants.
 5. Write generated images and logs to `outputs/`.
 
 ## Generate Images
@@ -45,6 +45,8 @@ The first generation script is:
 ```bash
 python3 scripts/generate_images/generate_from_csv.py --dry-run --limit 1
 ```
+
+Canonical creative orientations are `Product-oriented`, `Context-oriented`, and `Symbolic-oriented`. The older `Affect-oriented` value is accepted only as a deprecated alias for `Symbolic-oriented`.
 
 To download source white-background images without calling the API:
 
@@ -58,12 +60,12 @@ To call the OpenAI Images Edit API:
 export OPENAI_API_KEY="your_api_key"
 python3 scripts/generate_images/generate_from_csv.py \
   --csv data/experiment/white_bg_product_catalog_experiment.csv \
-  --prompt-file prompts/ad_image_prompt.txt \
+  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
   --orientation Product-oriented \
   --limit 1
 ```
 
-Generated images and manifests are written to `outputs/`, which is ignored by Git.
+Generated images and manifests are written to `outputs/`, which is ignored by Git. Random experimental batches can use `--sample-size`; the default reproducibility seed is `20260523`.
 
 ## Copyright and Local Files
 

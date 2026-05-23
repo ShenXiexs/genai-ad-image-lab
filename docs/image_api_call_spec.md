@@ -28,49 +28,64 @@ Source image column:
 creative_id_image
 ```
 
-The script reads each selected product row, downloads the white-background product image from `creative_id_image`, renders the prompt template with product metadata, and sends both the image and prompt to the OpenAI Image API edit endpoint.
+The script reads each selected product row, downloads the white-background product image from `creative_id_image`, renders the prompt template with product metadata, and sends both the image and prompt to the Images Edit endpoint.
 
 ## API Endpoint And Model
 
-Current endpoint:
+Default endpoint:
 
 ```text
 POST https://api.openai.com/v1/images/edits
 ```
 
-Current default model:
+Default model:
 
 ```text
-gpt-image-1.5
+gpt-image-2
 ```
 
-The model can be overridden by either:
+The model and endpoint can be overridden:
 
 ```bash
-export OPENAI_IMAGE_MODEL="gpt-image-1"
+export OPENAI_IMAGE_MODEL="gpt-image-2"
+export OPENAI_IMAGES_EDIT_ENDPOINT="https://api.vectorengine.cn/v1/images/edits"
 ```
 
 or:
 
 ```bash
-python3 scripts/generate_images/generate_from_csv.py --model gpt-image-1
+python3 scripts/generate_images/generate_from_csv.py \
+  --model gpt-image-2 \
+  --endpoint https://api.vectorengine.cn/v1/images/edits
 ```
 
-The endpoint can be overridden with:
+
+## Row Selection And Reproducibility
+
+By default, the script processes rows in CSV order and applies `--limit` after filtering. For randomized experimental batches, use `--sample-size` with the fixed default seed:
 
 ```bash
-export OPENAI_IMAGES_EDIT_ENDPOINT="https://api.openai.com/v1/images/edits"
+python3 scripts/generate_images/generate_from_csv.py \
+  --csv data/experiment/white_bg_product_catalog_experiment.csv \
+  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
+  --orientation Product-oriented \
+  --sample-size 10 \
+  --limit 10 \
+  --random-seed 20260523 \
+  --dry-run
 ```
+
+`--random-seed` defaults to `20260523` and can also be set with `GENAI_AD_IMAGE_RANDOM_SEED`. The manifest records both `sample_size` and `random_seed` for reproducibility.
 
 ## Request Parameters
 
 The script sends a multipart/form-data request with:
 
 | Field | Current value / source | Meaning |
-|---|---|---|
+| --- | --- | --- |
 | `image` | downloaded file from `creative_id_image` | The white-background product image to edit. |
-| `prompt` | rendered from `prompts/ad_image_prompt.txt` | Instruction for creating the advertising image. |
-| `model` | default `gpt-image-1.5` | Image generation/editing model. |
+| `prompt` | rendered from the selected prompt file | Instruction for creating the advertising image. |
+| `model` | default `gpt-image-2` | Image generation/editing model. |
 | `size` | default `1024x1024` | Output image size. |
 | `quality` | default `medium` | Output quality level. |
 | `output_format` | default `png` | Saved image format. |
@@ -84,13 +99,15 @@ export OPENAI_API_KEY="your_api_key"
 
 ## Prompt Template
 
-Current template file:
+Recommended orientation-specific prompt files:
 
 ```text
-prompts/ad_image_prompt.txt
+prompts/product_oriented_ad_image_prompt.txt
+prompts/context_oriented_ad_image_prompt.txt
+prompts/symbolic_oriented_ad_image_prompt.txt
 ```
 
-The template uses CSV placeholders:
+The templates use CSV placeholders:
 
 ```text
 {ori_title}
@@ -101,34 +118,38 @@ The template uses CSV placeholders:
 {orientation}
 ```
 
-The rendered prompt currently tells the model to:
-
-- Use the white-background product image as the source product.
-- Preserve product appearance, shape, color, and visible packaging details.
-- Use product title, brand, category, price, promotion, and creative orientation.
-- Make the image commercially appealing.
-- Avoid incorrect text, fake claims, unsupported certifications, distorted hands, broken product geometry, unrealistic packaging, and cluttered backgrounds.
-- Output an e-commerce or social media advertising image.
+The rendered prompt tells the model to preserve product identity, avoid new generated text or unsupported claims, and generate one controlled advertising image based on the selected orientation.
 
 ## Creative Orientation
 
-The script supports three controlled values:
+The script supports three canonical values:
 
 ```text
 Product-oriented
 Context-oriented
-Affect-oriented
+Symbolic-oriented
 ```
+
+`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`.
 
 Usage:
 
 ```bash
-python3 scripts/generate_images/generate_from_csv.py --orientation Product-oriented --limit 1
-python3 scripts/generate_images/generate_from_csv.py --orientation Context-oriented --limit 1
-python3 scripts/generate_images/generate_from_csv.py --orientation Affect-oriented --limit 1
-```
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
+  --orientation Product-oriented \
+  --limit 1
 
-At the moment, `orientation` is inserted into the same base prompt. If stronger experimental manipulation is needed later, create separate prompt templates for each orientation.
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-file prompts/context_oriented_ad_image_prompt.txt \
+  --orientation Context-oriented \
+  --limit 1
+
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-file prompts/symbolic_oriented_ad_image_prompt.txt \
+  --orientation Symbolic-oriented \
+  --limit 1
+```
 
 ## Output Files
 
@@ -150,7 +171,7 @@ Manifest log:
 outputs/generation_manifest.jsonl
 ```
 
-The manifest records product id, category, brand, orientation, source URL, local source path, output prefix, model, size, quality, output format, status, prompt, API usage when returned, and errors if any.
+The manifest records product id, category, brand, canonical orientation, requested orientation, source URL, local source path, output prefix, model, size, quality, output format, status, prompt, API usage when returned, and errors if any.
 
 `outputs/` is ignored by Git except for `outputs/.gitkeep`.
 
@@ -174,13 +195,7 @@ Run one actual API call:
 export OPENAI_API_KEY="your_api_key"
 python3 scripts/generate_images/generate_from_csv.py \
   --csv data/experiment/white_bg_product_catalog_experiment.csv \
-  --prompt-file prompts/ad_image_prompt.txt \
+  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
   --orientation Product-oriented \
   --limit 1
 ```
-
-## Official References
-
-- OpenAI Image generation guide: https://platform.openai.com/docs/guides/images/image-generation
-- OpenAI Images API reference: https://platform.openai.com/docs/api-reference/images
-- OpenAI GPT Image 1 model page: https://platform.openai.com/docs/models/gpt-image-1

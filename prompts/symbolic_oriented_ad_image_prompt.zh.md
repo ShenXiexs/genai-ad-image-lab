@@ -1,7 +1,3 @@
-# Deprecated compatibility prompt
-
-请优先使用 `prompts/symbolic_oriented_ad_image_prompt.zh.md` 和 `--orientation Symbolic-oriented`。本文件仅为旧 Affect 命名兼容，内容已同步为 Symbolic-oriented 逻辑。
-
 # Symbolic-oriented Advertising Image Prompt 中文说明
 
 ## 共享实验指令
