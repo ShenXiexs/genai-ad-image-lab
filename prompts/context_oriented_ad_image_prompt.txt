@@ -1,0 +1,52 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, and unrealistic product geometry.
+
+Generate a Context-oriented advertising image.
+
+Primary route of persuasion: usage imagination and self-reference. Do not rely on product-information labels or abstract emotional symbolism as the main persuasive route.
+
+Advertising mechanism:
+The image should help viewers imagine using, owning, holding, wearing, gifting, consuming, or placing the product in a realistic everyday situation.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Visual direction:
+- Place the product in a plausible, category-appropriate usage context.
+- The scene should answer: where, when, or how would a consumer naturally use or encounter this product?
+- Infer the single most plausible usage occasion for this specific product title and category, and commit to that one occasion throughout the entire composition. Do not blend multiple occasions in one image.
+- Ground the scene in a specific usage occasion that matches the product category, such as morning routine, commute, workout, gifting moment, dining occasion, beauty routine, home cleaning, pet care, office use, outdoor activity, or a similarly concrete situation.
+- Make the product clearly visible and recognizable within the scene.
+- Use environmental cues that match the product category, likely use occasion, and consumer situation.
+- Prefer natural social-media-native composition rather than a staged catalog layout.
+- Prefer a first-person, hand-holding, partial body, over-the-shoulder, or back-view perspective where the consumer implicitly becomes the product user.
+- Avoid showing a full frontal face unless the product category clearly requires facial expression or identity.
+- If a human face appears, keep it partial, naturally angled, or softly out of focus. Do not generate hyperrealistic frontal AI faces that may trigger authenticity concerns.
+- Keep any human-object interaction physically realistic, with correct scale, grip, posture, and placement.
+- Ensure the background environment and foreground objects are semantically consistent with the product title and category.
+
+Strict boundaries:
+- Do not make the image mainly about abstract mood or symbolic emotion.
+- Do not let clean product display or abstract brand mood become the dominant visual impression.
+- Do not reduce the product to a small decorative object in the background.
+- Do not add generated text, slogans, fake labels, fake badges, ratings, or unsupported claims.
+- Do not use generic backgrounds unrelated to the product category.
+- Do not create unrealistic hands, distorted bodies, impossible product scale, or physically implausible interaction.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate this image highly on "This image helps me imagine myself using this product" and "This image shows a realistic usage situation." The usage occasion should be concrete enough that viewers can infer where, when, or how the product would be used, while not primarily reading the image as a clean product display or abstract mood piece.
+
+Output:
+One advertising image optimized for usage imagination, self-reference, realistic usage situation, product-context fit, and engagement.

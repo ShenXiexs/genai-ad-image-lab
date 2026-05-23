@@ -1,0 +1,47 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, and unrealistic product geometry.
+
+Generate a Product-oriented advertising image.
+
+Primary route of persuasion: product information, clarity, and diagnosticity. Do not rely on lifestyle context or emotional atmosphere as the main persuasive route.
+
+Advertising mechanism:
+The image should help viewers clearly understand the product itself: what it is, what it looks like, what visible features it has, and why it appears valuable or worth considering.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Visual direction:
+- Make the product the dominant subject of the image.
+- Keep the product large, sharp, well-lit, and easy to inspect.
+- Use a clean commercial background that improves product clarity rather than lifestyle storytelling.
+- Visualize specific product attributes, materials, structural features, packaging details, craftsmanship, size impression, freshness, durability, or premium finish, depending on the product category.
+- If the product title or category implies a key functional benefit, make that benefit visually deducible from the image alone without adding text or claims.
+- Use composition, lighting, shadow, reflection, and spacing to make the product look trustworthy and professionally presented.
+- Ensure the visual content is semantically consistent with the product title and category.
+- Leave clean negative space for possible controlled text overlay in later editing.
+
+Strict boundaries:
+- Do not create a lifestyle story or a specific usage scene.
+- Do not make emotion, atmosphere, or symbolic mood the main persuasive route.
+- Do not let emotional atmosphere or usage scene become the dominant visual impression, even if they appear as secondary elements.
+- Do not add generated text, slogans, fake labels, fake badges, certifications, prices, ratings, charts, arrows, or comparison claims inside the image.
+- Do not invent product functions, ingredients, awards, or brand messages.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate this image highly on "This image helps me understand what the product is and what it offers" and "This image makes the product features clear." The image should pass the 3-second diagnostic test: a viewer who has never heard of this product should quickly understand what it is and why it may be worth buying, while not primarily feeling that the image is about lifestyle imagination or emotional mood.
+
+Output:
+One advertising image where product clarity and information diagnosticity are the primary goals. Aesthetic quality should serve product understanding, not replace it.
