@@ -1,5 +1,3 @@
-Deprecated compatibility prompt. Use prompts/symbolic_oriented_ad_image_prompt.txt and --orientation Symbolic-oriented for new runs. This file intentionally uses the Symbolic-oriented prompt logic.
-
 You are generating controlled experimental stimuli for a consumer advertising study.
 
 Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
@@ -12,10 +10,10 @@ Avoid screenshot-like layouts, banner-template look, low-quality collage, meme s
 
 Generate a Symbolic-oriented advertising image.
 
-Primary route of persuasion: symbolic meaning, brand personality, self-expression, identity signaling, visual rhetoric, and mood. Do not rely on functional explanation, dense product information, or concrete usage demonstration as the main persuasive route.
+Primary route of persuasion: symbolic meaning, brand personality, self-expression, identity signaling, and visual rhetoric. The image must communicate what the product MEANS or says about the owner, not what the product does, how it works, or which visible features it has.
 
 Advertising mechanism:
-The image should shape viewers' attitude toward the product or brand by making the product feel meaningful: a symbol of status, care, taste, intimacy, aspiration, celebration, expertise, naturalness, vitality, individuality, or another brand-compatible meaning. Aesthetics and emotion are execution tools for symbolic meaning, not the final classification by themselves.
+The image should shape viewers' attitude toward the product or brand by turning the product into a meaningful symbol: status, care, taste, intimacy, aspiration, celebration, expertise, naturalness, vitality, individuality, belonging, transformation, confidence, or another brand-compatible meaning. Aesthetics and mood are execution tools for symbolic meaning, not the classification by themselves.
 
 Product metadata:
 - Title: {ori_title}
@@ -31,25 +29,25 @@ Symbolic reasoning instruction:
 - State the chosen symbolic territory and personality implicitly through visual treatment only. Do not write the personality word, slogan, or mood label as text in the image.
 
 Visual direction:
-- Keep the product as the visual anchor of the composition, but present it as a symbolic object rather than an information object.
-- Use lighting, color palette, background texture, depth, shadow, reflection, composition, and visual metaphor to communicate the chosen symbolic meaning.
-- Use visual rhetoric deliberately: symmetry for prestige, soft radiance for intimacy or care, dramatic contrast for luxury or aspiration, organic textures for naturalness, precise geometry for expertise or futurism, or other category-compatible symbolism.
-- Use color complexity deliberately: rich, layered palettes for expressive, playful, fun, glamorous, or celebratory meanings; minimal, monochromatic, or restrained palettes for premium, sophisticated, refined, sincere, or calm meanings.
-- Make the product desirable through symbolic association, brand personality, and self-expression rather than explicit information or usage demonstration.
-- The image should evoke a felt response and a clear brand impression in 2 seconds without requiring the viewer to read any text.
-- The image may resemble a premium brand visual, symbolic product portrait, visual metaphor, luxury still life, or high-end social media campaign image.
+- Keep the product recognizable as the visual anchor, but present it as an identity symbol or meaning carrier rather than an information object.
+- Use atmosphere, composition, color, light, shadow, texture, depth, reflection, scale, negative space, and visual metaphor to communicate the chosen symbolic meaning.
+- Include a clear symbolic visual device or metaphor. Examples: symmetry for prestige, horizon or elevation for aspiration, soft radiance for care or intimacy, organic forms for naturalness, precise geometry for futurism or expertise, celebratory light for joy, rugged terrain texture for resilience, or another category-compatible symbolic device.
+- The image may be atmospheric, editorial, cinematic, surreal-but-plausible, or campaign-like, as long as the product remains recognizable and the meaning is brand-compatible.
+- Premium beauty alone is not enough. A clean luxury still life that only shows material quality, craft, packaging, or display has failed unless it clearly communicates a symbolic territory.
+- Leave clean negative space for possible controlled text overlay in later editing.
 
 Strict boundaries:
-- Do not create a detailed concrete usage scene as the main focus.
-- Do not use functional labels, comparison charts, dense information design, feature exposition, or promotion-heavy layout.
-- Do not let product feature explanation or concrete usage demonstration become the dominant visual impression.
+- Do not explain product function, mechanism, setup, fit, compatibility, durability, storage, freshness, care, or ease of use as the main visual message.
+- Do not use component layouts, close-detail diagnostic areas, neutral demonstration props, scale references, feature exposition, comparison charts, labels, arrows, or product-information design.
+- Do not create a concrete everyday usage scene as the main focus.
+- Do not let visible functional evidence or practical use affordance become the dominant visual impression.
 - Do not add generated text, slogans, fake labels, fake badges, ratings, or unsupported claims.
 - Do not make the product hard to recognize, too small, overly abstract, or hidden in the atmosphere.
 - Do not use human faces or identity cues unless explicitly required by the symbolic meaning and product category.
 - Do not alter the product's shape, color, logo, packaging, or core appearance.
 
 Verification standard:
-A viewer should be able to rate this image highly on "This image gives me a clear sense of the brand's symbolic meaning" and "This image communicates a distinctive brand personality or self-expressive mood." The symbolic impact should come from atmosphere, composition, visual metaphor, and brand-compatible aesthetics, not from ad copy, product feature exposition, or a concrete usage demonstration.
+A viewer should be able to rate this image highly on "This image gives me a clear sense of the brand's symbolic meaning" and "This image communicates a distinctive brand personality or self-expressive mood." The image should pass the 3-second meaning test: viewers should infer what the product stands for or what owning it expresses, while not primarily learning what the product does or imagining a concrete usage situation.
 
 Output:
 One advertising image where symbolic meaning, brand personality perception, self-expression, desire, and attitude toward the ad are the primary goals. Aesthetic appeal should support symbolic persuasion, not replace it.

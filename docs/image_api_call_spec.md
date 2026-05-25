@@ -19,7 +19,7 @@ data/experiment/white_bg_product_catalog_experiment.csv
 Default prompt template:
 
 ```text
-prompts/ad_image_prompt.txt
+orientation-specific prompt files under prompts/
 ```
 
 Source image column:
@@ -28,14 +28,14 @@ Source image column:
 creative_id_image
 ```
 
-The script reads each selected product row, downloads the white-background product image from `creative_id_image`, renders the prompt template with product metadata, and sends both the image and prompt to the Images Edit endpoint.
+The script reads each selected product row, downloads the white-background product image from `creative_id_image`, renders the orientation-specific prompt template with product metadata, and sends both the image and prompt to the Images Edit endpoint.
 
 ## API Endpoint And Model
 
 Default endpoint:
 
 ```text
-POST https://api.openai.com/v1/images/edits
+POST https://api.vectorengine.cn/v1/images/edits
 ```
 
 Default model:
@@ -56,26 +56,47 @@ or:
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
   --model gpt-image-2 \
+  --api-base-url https://api.vectorengine.cn/v1 \
   --endpoint https://api.vectorengine.cn/v1/images/edits
 ```
 
 
 ## Row Selection And Reproducibility
 
-By default, the script processes rows in CSV order and applies `--limit` after filtering. For randomized experimental batches, use `--sample-size` with the fixed default seed:
+By default, the script processes the previous fixed random-10 sample and generates all three canonical orientations. The fixed sample ids are:
+
+```text
+79469, 1562371, 1241251, 103728, 1235091, 1557798, 1544158, 1251674, 28257, 104207
+```
+
+The default actual run is:
 
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
-  --csv data/experiment/white_bg_product_catalog_experiment.csv \
-  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
-  --orientation Product-oriented \
-  --sample-size 10 \
-  --limit 10 \
-  --random-seed 20260523 \
-  --dry-run
+  --api-key "sk-xxx"
 ```
 
-`--random-seed` defaults to `20260523` and can also be set with `GENAI_AD_IMAGE_RANDOM_SEED`. The manifest records both `sample_size` and `random_seed` for reproducibility.
+For CSV-order rows:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --selection-mode sequential \
+  --start 0 \
+  --limit 20 \
+  --api-key "sk-xxx"
+```
+
+For randomized experimental batches:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --selection-mode random \
+  --sample-size 20 \
+  --random-seed 20260523 \
+  --api-key "sk-xxx"
+```
+
+`--random-seed` defaults to `20260523` and can also be set with `GENAI_AD_IMAGE_RANDOM_SEED`. The manifest records selection mode, `sample_size`, and `random_seed` for reproducibility.
 
 ## Request Parameters
 
@@ -97,6 +118,14 @@ Authentication uses:
 export OPENAI_API_KEY="your_api_key"
 ```
 
+or the runtime argument:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py --api-key "sk-xxx"
+```
+
+The key is read at runtime and is not written to repository files or the manifest.
+
 ## Prompt Template
 
 Recommended orientation-specific prompt files:
@@ -105,6 +134,14 @@ Recommended orientation-specific prompt files:
 prompts/product_oriented_ad_image_prompt.txt
 prompts/context_oriented_ad_image_prompt.txt
 prompts/symbolic_oriented_ad_image_prompt.txt
+```
+
+The original prompts are preserved as `--prompt-version current`. A revised function-separation prompt set is available as `--prompt-version function_v2`:
+
+```text
+prompts/product_oriented_ad_image_prompt.function_v2.txt
+prompts/context_oriented_ad_image_prompt.function_v2.txt
+prompts/symbolic_oriented_ad_image_prompt.function_v2.txt
 ```
 
 The templates use CSV placeholders:
@@ -136,19 +173,31 @@ Usage:
 
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
-  --orientation Product-oriented \
+  --image-type product \
+  --selection-mode sequential \
   --limit 1
 
 python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-file prompts/context_oriented_ad_image_prompt.txt \
-  --orientation Context-oriented \
+  --image-type context \
+  --selection-mode sequential \
   --limit 1
 
 python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-file prompts/symbolic_oriented_ad_image_prompt.txt \
-  --orientation Symbolic-oriented \
+  --image-type symbolic \
+  --selection-mode sequential \
   --limit 1
+```
+
+Use the revised Function v2 prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --image-type product \
+  --prompt-version function_v2 \
+  --selection-mode random \
+  --sample-size 10 \
+  --random-seed 20260523 \
+  --api-key "sk-xxx"
 ```
 
 ## Output Files
@@ -156,22 +205,22 @@ python3 scripts/generate_images/generate_from_csv.py \
 Downloaded source images:
 
 ```text
-outputs/source_images/{id}.{ext}
+outputs/{model}_{selection_label}_{orientation_label}_{timestamp}/source_images/{id}.{ext}
 ```
 
 Generated images:
 
 ```text
-outputs/generated/{orientation}/{id}_{orientation}.png
+outputs/{model}_{selection_label}_{orientation_label}_{timestamp}/generated/{orientation}/{id}_{orientation}.png
 ```
 
 Manifest log:
 
 ```text
-outputs/generation_manifest.jsonl
+outputs/{model}_{selection_label}_{orientation_label}_{timestamp}/generation_manifest.jsonl
 ```
 
-The manifest records product id, category, brand, canonical orientation, requested orientation, source URL, local source path, output prefix, model, size, quality, output format, status, prompt, API usage when returned, and errors if any.
+The manifest records product id, category, brand, canonical orientation, requested orientation, selection mode, prompt version, run directory, source URL, local source path, output prefix, endpoint, model, size, quality, output format, status, prompt, API usage when returned, and errors if any.
 
 `outputs/` is ignored by Git except for `outputs/.gitkeep`.
 
@@ -180,7 +229,7 @@ The manifest records product id, category, brand, canonical orientation, request
 Render prompt only; no image download and no API call:
 
 ```bash
-python3 scripts/generate_images/generate_from_csv.py --dry-run --limit 1
+python3 scripts/generate_images/generate_from_csv.py --dry-run --selection-mode sequential --limit 1
 ```
 
 Download white-background image only; no API call:
@@ -195,7 +244,7 @@ Run one actual API call:
 export OPENAI_API_KEY="your_api_key"
 python3 scripts/generate_images/generate_from_csv.py \
   --csv data/experiment/white_bg_product_catalog_experiment.csv \
-  --prompt-file prompts/product_oriented_ad_image_prompt.txt \
   --orientation Product-oriented \
+  --selection-mode sequential \
   --limit 1
 ```

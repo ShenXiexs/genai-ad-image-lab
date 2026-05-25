@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import base64
 import csv
+from dataclasses import dataclass
 import json
 import mimetypes
 import os
@@ -40,12 +41,60 @@ REQUIRED_COLUMNS = [
     "is_white_image",
 ]
 
-DEFAULT_MODEL = "gpt-image-2"
-DEFAULT_ENDPOINT = "https://api.openai.com/v1/images/edits"
-DEFAULT_RANDOM_SEED = 20260523
 CANONICAL_ORIENTATIONS = ["Product-oriented", "Context-oriented", "Symbolic-oriented"]
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
 ORIENTATION_CHOICES = CANONICAL_ORIENTATIONS + sorted(ORIENTATION_ALIASES)
+IMAGE_TYPE_ALIASES = {
+    "product": "Product-oriented",
+    "product-oriented": "Product-oriented",
+    "function": "Product-oriented",
+    "functional": "Product-oriented",
+    "context": "Context-oriented",
+    "context-oriented": "Context-oriented",
+    "usage": "Context-oriented",
+    "symbolic": "Symbolic-oriented",
+    "symbolic-oriented": "Symbolic-oriented",
+    "symbol": "Symbolic-oriented",
+}
+DEFAULT_MODEL = "gpt-image-2"
+DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
+DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
+DEFAULT_RANDOM_SEED = 20260523
+DEFAULT_SELECTION_MODE = "previous-random10"
+DEFAULT_PROMPT_VERSION = "current"
+DEFAULT_PREVIOUS_SAMPLE_IDS = [
+    "79469",
+    "1562371",
+    "1241251",
+    "103728",
+    "1235091",
+    "1557798",
+    "1544158",
+    "1251674",
+    "28257",
+    "104207",
+]
+DEFAULT_ORIENTATION_PROMPT_FILES = {
+    "Product-oriented": "prompts/product_oriented_ad_image_prompt.txt",
+    "Context-oriented": "prompts/context_oriented_ad_image_prompt.txt",
+    "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.txt",
+}
+PROMPT_VERSION_FILES = {
+    "current": DEFAULT_ORIENTATION_PROMPT_FILES,
+    "function_v2": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.function_v2.txt",
+        "Context-oriented": "prompts/context_oriented_ad_image_prompt.function_v2.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.function_v2.txt",
+    },
+}
+
+
+@dataclass(frozen=True)
+class OrientationPlan:
+    requested_orientation: str
+    orientation: str
+    prompt_template: str
+    prompt_source: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,8 +108,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--prompt-file",
-        default="prompts/ad_image_prompt.txt",
-        help="Prompt template path. CSV columns can be used as {placeholders}.",
+        default=None,
+        help="Prompt template path. If omitted, the orientation-specific default prompt is used.",
     )
     parser.add_argument(
         "--prompt",
@@ -69,20 +118,75 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--orientation",
-        default="Product-oriented",
+        default=None,
         choices=ORIENTATION_CHOICES,
-        help="Creative orientation inserted into the prompt template. Affect-oriented is a deprecated alias for Symbolic-oriented.",
+        help="Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for Symbolic-oriented.",
     )
-    parser.add_argument("--output-dir", default="outputs/generated", help="Output directory.")
-    parser.add_argument("--source-dir", default="outputs/source_images", help="Downloaded source image directory.")
-    parser.add_argument("--manifest", default="outputs/generation_manifest.jsonl", help="JSONL manifest path.")
-    parser.add_argument("--model", default=os.environ.get("OPENAI_IMAGE_MODEL", DEFAULT_MODEL), help="OpenAI image model.")
-    parser.add_argument("--endpoint", default=os.environ.get("OPENAI_IMAGES_EDIT_ENDPOINT", DEFAULT_ENDPOINT), help="Images edit endpoint.")
+    parser.add_argument(
+        "--image-type",
+        default=None,
+        help="Short alias for generating one type only: product/function, context/usage, or symbolic.",
+    )
+    parser.add_argument(
+        "--orientations",
+        default="all",
+        help="Comma-separated orientations to generate, or 'all'. Defaults to all three canonical orientations.",
+    )
+    parser.add_argument(
+        "--prompt-version",
+        default=os.environ.get("GENAI_AD_IMAGE_PROMPT_VERSION", DEFAULT_PROMPT_VERSION),
+        choices=sorted(PROMPT_VERSION_FILES),
+        help="Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused.",
+    )
+    parser.add_argument(
+        "--run-dir",
+        default=None,
+        help=(
+            "Run root directory. Supports {model}, {selection_label}, {orientation_label}, "
+            "{prompt_version}, and {timestamp}. Defaults to "
+            "outputs/{model}_{selection_label}_{orientation_label}_{timestamp}."
+        ),
+    )
+    parser.add_argument(
+        "--timestamp",
+        default=None,
+        help="Timestamp suffix for default run directories. Defaults to current YYYYMMDD_HHMMSS.",
+    )
+    parser.add_argument(
+        "--no-timestamp",
+        action="store_true",
+        help="Do not append a timestamp to the default run directory.",
+    )
+    parser.add_argument("--output-dir", default=None, help="Generated image directory. Defaults to {run-dir}/generated.")
+    parser.add_argument("--source-dir", default=None, help="Downloaded source image directory. Defaults to {run-dir}/source_images.")
+    parser.add_argument("--manifest", default=None, help="JSONL manifest path. Defaults to {run-dir}/generation_manifest.jsonl.")
+    parser.add_argument("--model", default=os.environ.get("OPENAI_IMAGE_MODEL", DEFAULT_MODEL), help="Image model.")
+    parser.add_argument(
+        "--api-base-url",
+        default=os.environ.get("OPENAI_API_BASE") or os.environ.get("OPENAI_BASE_URL") or DEFAULT_API_BASE_URL,
+        help="OpenAI-compatible API base URL. Defaults to the configured VectorEngine base URL.",
+    )
+    parser.add_argument(
+        "--endpoint",
+        default=os.environ.get("OPENAI_IMAGES_EDIT_ENDPOINT"),
+        help="Images edit endpoint. If omitted, {api-base-url}/images/edits is used.",
+    )
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="Runtime API key. Prefer OPENAI_API_KEY when you do not want the key in shell history.",
+    )
     parser.add_argument("--size", default="1024x1024", help="Output size, e.g. 1024x1024, 1024x1536, 1536x1024.")
     parser.add_argument("--quality", default="medium", help="Model quality option, e.g. low, medium, high, auto.")
     parser.add_argument("--output-format", default="png", choices=["png", "jpeg", "webp"], help="Generated image format.")
     parser.add_argument("--n", type=int, default=1, help="Images to generate per row.")
-    parser.add_argument("--limit", type=int, default=1, help="Maximum rows to process after filtering.")
+    parser.add_argument(
+        "--selection-mode",
+        choices=["previous-random10", "sequential", "random"],
+        default=DEFAULT_SELECTION_MODE,
+        help="Row selection mode. Defaults to the previous fixed random-10 sample.",
+    )
+    parser.add_argument("--limit", type=int, default=None, help="Maximum rows to process. Sequential mode defaults to 1.")
     parser.add_argument("--start", type=int, default=0, help="Number of matching rows to skip before processing.")
     parser.add_argument("--sample-size", type=int, default=None, help="Randomly sample this many rows after filtering.")
     parser.add_argument(
@@ -100,6 +204,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sleep", type=float, default=0.0, help="Seconds to sleep between API calls.")
     parser.add_argument("--retries", type=int, default=2, help="Retry count for image download and API calls.")
     parser.add_argument("--timeout", type=int, default=120, help="HTTP timeout seconds.")
+    parser.add_argument("--no-progress", action="store_true", help="Disable progress bar and ETA output.")
     return parser.parse_args()
 
 
@@ -112,33 +217,119 @@ def read_rows(csv_path: pathlib.Path) -> list[dict[str, str]]:
         return list(reader)
 
 
+def effective_selection_mode(args: argparse.Namespace) -> str:
+    if args.ids:
+        return "ids"
+    if args.sample_size is not None and args.selection_mode == DEFAULT_SELECTION_MODE:
+        return "random"
+    return args.selection_mode
+
+
 def select_rows(rows: list[dict[str, str]], args: argparse.Namespace) -> list[dict[str, str]]:
     selected = rows
     if args.only_white:
         selected = [row for row in selected if str(row.get("is_white_image", "")).strip() == "1"]
 
     if args.ids:
-        wanted = {item.strip() for item in args.ids.split(",") if item.strip()}
-        selected = [row for row in selected if row.get("id") in wanted]
-    else:
+        wanted = [item.strip() for item in args.ids.split(",") if item.strip()]
+        by_id = {row.get("id"): row for row in selected}
+        selected = [by_id[item] for item in wanted if item in by_id]
+        if args.limit is not None and args.limit >= 0:
+            selected = selected[: args.limit]
+        return selected
+
+    mode = effective_selection_mode(args)
+    if mode == "previous-random10":
+        by_id = {row.get("id"): row for row in selected}
+        selected = [by_id[item] for item in DEFAULT_PREVIOUS_SAMPLE_IDS if item in by_id]
+        if args.limit is not None and args.limit >= 0:
+            selected = selected[: args.limit]
+        return selected
+
+    if mode == "random":
         selected = selected[args.start :]
-
-    if args.sample_size is not None:
-        if args.sample_size < 0:
+        sample_size = args.sample_size
+        if sample_size is None:
+            sample_size = args.limit if args.limit is not None else len(DEFAULT_PREVIOUS_SAMPLE_IDS)
+        if sample_size < 0:
             raise ValueError("--sample-size must be non-negative.")
-        sample_size = min(args.sample_size, len(selected))
+        sample_size = min(sample_size, len(selected))
         selected = random.Random(args.random_seed).sample(selected, sample_size)
+        return selected
 
-    if args.limit is not None and args.limit >= 0:
+    selected = selected[args.start :]
+    if args.limit is None:
+        selected = selected[:1]
+    elif args.limit >= 0:
         selected = selected[: args.limit]
     return selected
 
 
-def load_prompt_template(args: argparse.Namespace) -> str:
+def split_csv_values(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def normalize_image_type(image_type: str) -> str:
+    normalized = image_type.strip().lower()
+    if normalized not in IMAGE_TYPE_ALIASES:
+        allowed = ", ".join(sorted(IMAGE_TYPE_ALIASES))
+        raise ValueError(f"Unsupported --image-type {image_type!r}. Use one of: {allowed}")
+    return IMAGE_TYPE_ALIASES[normalized]
+
+
+def resolve_orientation_names(args: argparse.Namespace) -> list[tuple[str, str]]:
+    if args.image_type and args.orientation:
+        raise ValueError("Use either --image-type or --orientation, not both.")
+    if args.image_type:
+        requested = [normalize_image_type(args.image_type)]
+    elif args.orientation:
+        requested = [args.orientation]
+    elif str(args.orientations).strip().lower() in {"all", "three", "three-orientations"}:
+        requested = CANONICAL_ORIENTATIONS
+    else:
+        requested = split_csv_values(args.orientations)
+
+    if not requested:
+        raise ValueError("No orientations selected.")
+
+    resolved: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for item in requested:
+        canonical = canonical_orientation(item)
+        if canonical not in CANONICAL_ORIENTATIONS:
+            allowed = ", ".join(CANONICAL_ORIENTATIONS)
+            raise ValueError(f"Unsupported orientation {item!r}. Use one of: {allowed}")
+        if canonical in seen:
+            continue
+        resolved.append((item, canonical))
+        seen.add(canonical)
+    return resolved
+
+
+def load_prompt_template(args: argparse.Namespace, orientation: str) -> tuple[str, str]:
     if args.prompt:
-        return args.prompt
-    prompt_path = pathlib.Path(args.prompt_file)
-    return prompt_path.read_text(encoding="utf-8")
+        return args.prompt, "<inline>"
+    prompt_files = PROMPT_VERSION_FILES[args.prompt_version]
+    prompt_file = args.prompt_file or prompt_files[orientation]
+    prompt_path = pathlib.Path(prompt_file)
+    return prompt_path.read_text(encoding="utf-8"), str(prompt_path)
+
+
+def resolve_orientation_plans(args: argparse.Namespace) -> list[OrientationPlan]:
+    plans = []
+    for requested, orientation in resolve_orientation_names(args):
+        template, prompt_source = load_prompt_template(args, orientation)
+        plans.append(
+            OrientationPlan(
+                requested_orientation=requested,
+                orientation=orientation,
+                prompt_template=template,
+                prompt_source=prompt_source,
+            )
+        )
+    return plans
 
 
 def canonical_orientation(orientation: str) -> str:
@@ -166,6 +357,121 @@ def safe_name(value: str, max_len: int = 80) -> str:
     value = value.strip() or "unknown"
     value = re.sub(r"[^\w.-]+", "_", value, flags=re.UNICODE)
     return value[:max_len].strip("_") or "unknown"
+
+
+def endpoint_from_base_url(base_url: str) -> str:
+    return f"{base_url.rstrip('/')}{DEFAULT_IMAGES_EDIT_PATH}"
+
+
+def orientation_label(plans: list[OrientationPlan]) -> str:
+    orientations = [plan.orientation for plan in plans]
+    if orientations == CANONICAL_ORIENTATIONS:
+        return "three_orientations"
+    if len(orientations) == 1:
+        return safe_name(orientations[0].lower().replace("-", "_"))
+    return f"{len(orientations)}_orientations"
+
+
+def selection_label(args: argparse.Namespace, selected_rows: list[dict[str, str]]) -> str:
+    mode = effective_selection_mode(args)
+    if mode == "ids":
+        return f"ids{len(selected_rows)}"
+    if mode == "previous-random10":
+        return f"random{len(selected_rows)}_seed{DEFAULT_RANDOM_SEED}"
+    if mode == "random":
+        return f"random{len(selected_rows)}_seed{args.random_seed}"
+    if args.limit is None:
+        return f"sequential{len(selected_rows)}_start{args.start}"
+    return f"sequential{len(selected_rows)}_start{args.start}"
+
+
+def resolve_output_paths(
+    args: argparse.Namespace,
+    selected_rows: list[dict[str, str]],
+    plans: list[OrientationPlan],
+) -> None:
+    timestamp = args.timestamp or time.strftime("%Y%m%d_%H%M%S")
+    values = {
+        "model": safe_name(args.model),
+        "selection_label": selection_label(args, selected_rows),
+        "orientation_label": orientation_label(plans),
+        "prompt_version": safe_name(args.prompt_version),
+        "timestamp": "" if args.no_timestamp else timestamp,
+    }
+    if args.run_dir:
+        run_dir = pathlib.Path(args.run_dir.format_map(DefaultDict(values)))
+    else:
+        run_name = f"{values['model']}_{values['selection_label']}_{values['orientation_label']}"
+        if args.prompt_version != DEFAULT_PROMPT_VERSION:
+            run_name = f"{run_name}_{values['prompt_version']}"
+        if not args.no_timestamp:
+            run_name = f"{run_name}_{timestamp}"
+        run_dir = pathlib.Path("outputs") / run_name
+
+    args.timestamp = timestamp
+    args.run_dir = str(run_dir)
+    args.output_dir = args.output_dir or str(run_dir / "generated")
+    args.source_dir = args.source_dir or str(run_dir / "source_images")
+    args.manifest = args.manifest or str(run_dir / "generation_manifest.jsonl")
+    args.endpoint = args.endpoint or endpoint_from_base_url(args.api_base_url)
+
+
+def expected_output_paths(output_prefix: pathlib.Path, output_format: str, n: int) -> list[pathlib.Path]:
+    if n > 1:
+        return [
+            output_prefix.with_name(f"{output_prefix.name}_{index + 1}.{output_format}")
+            for index in range(n)
+        ]
+    return [output_prefix.with_suffix(f".{output_format}")]
+
+
+def format_duration(seconds: float | None) -> str:
+    if seconds is None:
+        return "--:--"
+    seconds = max(0, int(seconds))
+    hours, remainder = divmod(seconds, 3600)
+    minutes, secs = divmod(remainder, 60)
+    if hours:
+        return f"{hours:d}:{minutes:02d}:{secs:02d}"
+    return f"{minutes:02d}:{secs:02d}"
+
+
+class ProgressTracker:
+    def __init__(self, total: int, enabled: bool = True) -> None:
+        self.total = max(total, 1)
+        self.enabled = enabled
+        self.done = 0
+        self.started_at = time.monotonic()
+        self.last_line_len = 0
+        self.stream = sys.stderr
+        self.is_tty = self.stream.isatty()
+
+    def advance(self, status: str, label: str) -> None:
+        self.done += 1
+        if not self.enabled:
+            return
+
+        elapsed = time.monotonic() - self.started_at
+        rate = self.done / elapsed if elapsed > 0 else 0
+        eta = (self.total - self.done) / rate if rate > 0 else None
+        fraction = min(self.done / self.total, 1)
+        bar_width = 24
+        filled = int(bar_width * fraction)
+        bar = "#" * filled + "-" * (bar_width - filled)
+        line = (
+            f"[{bar}] {self.done}/{self.total} {fraction * 100:5.1f}% "
+            f"elapsed {format_duration(elapsed)} eta {format_duration(eta)} "
+            f"{status} {label}"
+        )
+
+        if self.is_tty:
+            self.stream.write("\r" + line.ljust(self.last_line_len))
+            self.last_line_len = len(line)
+            if self.done >= self.total:
+                self.stream.write("\n")
+        else:
+            self.stream.write(line + "\n")
+        self.stream.flush()
 
 
 def extension_from_url(url: str) -> str:
@@ -298,77 +604,104 @@ def append_manifest(manifest_path: pathlib.Path, record: dict) -> None:
         manifest_file.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
-def iter_records(rows: Iterable[dict[str, str]], args: argparse.Namespace, template: str) -> Iterable[dict]:
+def iter_records(
+    rows: Iterable[dict[str, str]],
+    args: argparse.Namespace,
+    plans: Iterable[OrientationPlan],
+) -> Iterable[dict]:
     for row in rows:
         product_id = safe_name(row.get("id", ""))
-        orientation = safe_name(args.orientation)
         source_url = row.get("creative_id_image", "").strip()
         source_ext = extension_from_url(source_url)
         source_path = pathlib.Path(args.source_dir) / f"{product_id}{source_ext}"
-        output_prefix = pathlib.Path(args.output_dir) / args.orientation / f"{product_id}_{orientation}"
-        prompt = render_prompt(template, row, args.orientation)
-        yield {
-            "row": row,
-            "product_id": product_id,
-            "source_url": source_url,
-            "source_path": source_path,
-            "output_prefix": output_prefix,
-            "prompt": prompt,
-        }
+        for plan in plans:
+            orientation = safe_name(plan.orientation)
+            output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}"
+            prompt = render_prompt(plan.prompt_template, row, plan.orientation)
+            yield {
+                "row": row,
+                "product_id": product_id,
+                "source_url": source_url,
+                "source_path": source_path,
+                "output_prefix": output_prefix,
+                "prompt": prompt,
+                "orientation": plan.orientation,
+                "requested_orientation": plan.requested_orientation,
+                "prompt_source": plan.prompt_source,
+            }
 
 
 def main() -> int:
     args = parse_args()
-    requested_orientation = args.orientation
-    args.orientation = canonical_orientation(args.orientation)
+    plans = resolve_orientation_plans(args)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
-    template = load_prompt_template(args)
+    resolve_output_paths(args, rows, plans)
 
     if not rows:
         print("No rows selected.", file=sys.stderr)
         return 1
 
-    api_key = os.environ.get("OPENAI_API_KEY")
+    api_key = args.api_key or os.environ.get("OPENAI_API_KEY")
     if not api_key and not (args.dry_run or args.download_only):
-        print("OPENAI_API_KEY is required unless --dry-run or --download-only is used.", file=sys.stderr)
+        print("OPENAI_API_KEY or --api-key is required unless --dry-run or --download-only is used.", file=sys.stderr)
         return 2
 
-    for record in iter_records(rows, args, template):
+    selected_ids = ", ".join(row.get("id", "") for row in rows)
+    print(f"RUN dir={args.run_dir}", flush=True)
+    print(f"MODEL {args.model}", flush=True)
+    print(f"ENDPOINT {args.endpoint}", flush=True)
+    print(f"PROMPT_VERSION {args.prompt_version}", flush=True)
+    print(f"ROWS {len(rows)} ids={selected_ids}", flush=True)
+    print(f"ORIENTATIONS {', '.join(plan.orientation for plan in plans)}", flush=True)
+
+    total_records = len(rows) * len(plans)
+    progress = ProgressTracker(total_records, enabled=not args.no_progress)
+
+    for record in iter_records(rows, args, plans):
         row = record["row"]
         output_prefix: pathlib.Path = record["output_prefix"]
-        expected_output = output_prefix.with_suffix(f".{args.output_format}")
+        expected_outputs = expected_output_paths(output_prefix, args.output_format, args.n)
+        label = f"id={row.get('id')} orientation={record['orientation']}"
         manifest_record = {
             "id": row.get("id"),
             "material_id": row.get("material_id"),
             "category": row.get("level_one_category_name"),
             "brand": row.get("creative_id_brand"),
-            "orientation": args.orientation,
-            "requested_orientation": requested_orientation,
+            "orientation": record["orientation"],
+            "requested_orientation": record["requested_orientation"],
             "source_url": record["source_url"],
             "source_path": str(record["source_path"]),
             "output_prefix": str(output_prefix),
+            "run_dir": args.run_dir,
+            "timestamp": args.timestamp,
+            "selection_mode": effective_selection_mode(args),
+            "prompt_version": args.prompt_version,
             "model": args.model,
+            "endpoint": args.endpoint,
             "size": args.size,
             "quality": args.quality,
             "output_format": args.output_format,
             "sample_size": args.sample_size,
             "random_seed": args.random_seed,
+            "prompt_source": record["prompt_source"],
             "status": "planned",
             "prompt": record["prompt"],
         }
 
         try:
-            if expected_output.exists() and not args.overwrite:
+            if all(path.exists() for path in expected_outputs) and not args.overwrite:
                 manifest_record["status"] = "skipped_exists"
                 append_manifest(pathlib.Path(args.manifest), manifest_record)
-                print(f"SKIP existing output for id={row.get('id')}: {expected_output}")
+                print(f"SKIP existing output for {label}: {expected_outputs}", flush=True)
+                progress.advance("skipped", label)
                 continue
 
-            print(f"PROCESS id={row.get('id')} category={row.get('level_one_category_name')} orientation={args.orientation}")
+            print(f"PROCESS {label} category={row.get('level_one_category_name')}", flush=True)
             if args.dry_run:
                 manifest_record["status"] = "dry_run"
                 append_manifest(pathlib.Path(args.manifest), manifest_record)
-                print(record["prompt"])
+                print(record["prompt"], flush=True)
+                progress.advance("dry_run", label)
                 continue
 
             source_path = download_image(
@@ -382,6 +715,7 @@ def main() -> int:
             if args.download_only:
                 manifest_record["status"] = "downloaded"
                 append_manifest(pathlib.Path(args.manifest), manifest_record)
+                progress.advance("downloaded", label)
                 continue
 
             response = call_openai_image_edit(
@@ -402,7 +736,8 @@ def main() -> int:
             manifest_record["outputs"] = [str(path) for path in saved_paths]
             manifest_record["api_usage"] = response.get("usage")
             append_manifest(pathlib.Path(args.manifest), manifest_record)
-            print(f"SAVED id={row.get('id')} outputs={saved_paths}")
+            print(f"SAVED id={row.get('id')} outputs={saved_paths}", flush=True)
+            progress.advance("generated", label)
             if args.sleep > 0:
                 time.sleep(args.sleep)
         except Exception as exc:  # noqa: BLE001 - keep batch processing robust.
@@ -411,6 +746,7 @@ def main() -> int:
             manifest_record["traceback"] = traceback.format_exc()
             append_manifest(pathlib.Path(args.manifest), manifest_record)
             print(f"ERROR id={row.get('id')}: {exc}", file=sys.stderr)
+            progress.advance("error", label)
 
     return 0
 

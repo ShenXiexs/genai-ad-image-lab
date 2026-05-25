@@ -1,0 +1,54 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, and unrealistic product geometry.
+
+Generate a Product-oriented advertising image with FUNCTION as the dominant construct.
+
+Primary route of persuasion: concrete functional utility, product operation, problem-solution value, and visible evidence of how the product helps the user. The image must communicate what the product DOES or enables, not merely how premium, beautiful, emotional, symbolic, or giftable it feels.
+
+Advertising mechanism:
+The image should help viewers quickly infer the product's practical job-to-be-done, key functional affordances, visible operating parts, handling logic, compatibility, fit, setup, storage, protection, freshness, care, performance, durability, or ease of use. Use the product title, brand, category, price, and promotion metadata to infer plausible functional cues, then translate those cues into non-text visual evidence.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Function reasoning instruction:
+- First infer the product type, practical user problem, likely use task, material or mechanism, and the main functional reason a consumer would buy it.
+- For electronics, tools, appliances, sports products, home goods, beauty devices, toys, pet products, food, medicine, books, accessories, fashion, jewelry, and gifts, infer category-appropriate functional evidence such as operation, interface, assembly, fit, fastening, portability, storage, cleaning, protection, compatibility, freshness, application, organization, comfort, durability, or care.
+- For decorative, wearable, luxury, or giftable products that have limited mechanical function, show practical function in terms of fit, fastening, scale, wearing support, safe storage, material handling, packaging protection, pairing, care, or gift-readiness. Do not turn these products into status, glamour, romance, or abstract aspiration images.
+- Do not invent functions that are not visually supported by the product title, category, or source image. When uncertain, use generic category affordances rather than fake features.
+
+Visual direction:
+- Make the product the dominant subject and show at least two concrete functional evidence cues.
+- Prefer a controlled product-demonstration composition: neutral tabletop, clean studio work surface, organized component layout, realistic open/closed state, visible mechanism, scale reference, accessory relationship, safe storage, material cross-surface contrast, or a hand form used only to clarify grip, fit, fastening, application, or scale.
+- The composition may include relevant neutral props only when they explain function. Props must behave like evidence, not like lifestyle decoration or symbolic atmosphere.
+- A secondary close-detail area is acceptable if it is integrated into one commercial product photograph and contains no labels, arrows, callouts, or text.
+- Lighting, shadows, reflections, and background should clarify shape, material, operating parts, affordance, and usability. Aesthetic polish is allowed only when it improves functional understanding.
+- Avoid a plain white or near-white packshot as the dominant visual solution. The image must add functional information beyond a cleaner product photo.
+- Ensure the visual content is semantically consistent with the product title, category, price level, and promotion context.
+- Leave clean negative space for possible controlled text overlay in later editing.
+
+Strict boundaries:
+- Do not create a lifestyle story, social scene, romantic scene, luxury mood portrait, or abstract symbolic composition.
+- Do not let beauty, premium feel, gift emotion, atmosphere, or brand personality become the main reason the image is persuasive.
+- Do not use visual metaphors as the primary device. Function must be visible through concrete product evidence.
+- Do not add generated text, slogans, fake labels, fake badges, certifications, prices, ratings, charts, arrows, or comparison claims inside the image.
+- Do not invent product functions, ingredients, awards, or brand messages.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+- If the image could mainly be described as a premium still life, symbolic mood image, lifestyle scene, or the same packshot with nicer lighting, the generation has failed.
+
+Verification standard:
+A viewer should be able to rate this image highly on "This image helps me understand what the product does" and "This image makes the product's functional value clear." The image should pass the 3-second function test: a viewer who has never heard of this product should quickly understand the practical task, affordance, or functional benefit the product supports, while not primarily reading the image as lifestyle imagination or symbolic brand mood.
+
+Output:
+One advertising image where functional utility and visible product function are the primary goals. Aesthetic quality should serve functional understanding, not replace it.
