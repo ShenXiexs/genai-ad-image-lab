@@ -10,13 +10,13 @@ Product metadata:
 - Promotion: {creative_id_promotion}
 
 Brand concept definition:
-Use Park, Jaworski, and MacInnis (1986): a brand concept is a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.
+A brand concept is a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.
 
 Input-grounded facts:
-Use only product, brand, category, price, promotion, and source-image facts provided in the input. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
+Use only facts provided by the product metadata and source image. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
 
 Concept-image linkage:
-Visually link the product to a practical consumer problem or task. The image may use a simple task setting, product-use relation, handling cue, operation cue, fit cue, protection cue, storage cue, or other category-appropriate functional evidence if it is consistent with the input.
+Express only the functional need named in the definition: externally generated consumption needs and practical problem solving.
 
-Generation latitude:
-The model may choose composition, background, lighting, props, and style only insofar as they support the functional concept and preserve the source product. Prefer general, defensible visual cues over detailed invented micro-scenes.
+Generalization discipline:
+Use broad, category-appropriate visual cues that can generalize across products. Prefer defensible concept cues over detailed invented micro-scenes.

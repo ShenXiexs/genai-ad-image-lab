@@ -10,13 +10,13 @@ Product metadata:
 - Promotion: {creative_id_promotion}
 
 Brand concept definition:
-Use Park, Jaworski, and MacInnis (1986): a brand concept is a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.
+A brand concept is a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.
 
 Input-grounded facts:
-Use only product, brand, category, price, promotion, and source-image facts provided in the input. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
+Use only facts provided by the product metadata and source image. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
 
 Concept-image linkage:
-Visually link the product to a felt consumption experience, such as sensory pleasure, tactile feel, freshness, comfort, relaxation, play, variety, discovery, immersion, or cognitive stimulation. A usage scene is useful only when it expresses the experience, not merely where the product is used.
+Express only the experiential needs named in the definition: sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.
 
-Generation latitude:
-The model may choose composition, background, lighting, props, atmosphere, and style only insofar as they support the experiential concept and preserve the source product. Prefer general, defensible experiential cues over detailed invented micro-scenes.
+Generalization discipline:
+Use broad, category-appropriate visual cues that can generalize across products. Prefer defensible concept cues over detailed invented micro-scenes.

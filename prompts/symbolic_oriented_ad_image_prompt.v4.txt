@@ -10,13 +10,13 @@ Product metadata:
 - Promotion: {creative_id_promotion}
 
 Brand concept definition:
-Use Park, Jaworski, and MacInnis (1986): a brand concept is a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+A brand concept is a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
 Input-grounded facts:
-Use only product, brand, category, price, promotion, and source-image facts provided in the input. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
+Use only facts provided by the product metadata and source image. Do not invent unsupported product attributes, claims, awards, certifications, user demographics, or new readable ad text.
 
 Concept-image linkage:
-Visually link the product to identity, role, group, self-image, taste, status, care, expertise, belonging, aspiration, or individuality. The product should act as a meaning carrier rather than a functional explainer.
+Express only the symbolic needs named in the definition: self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
-Generation latitude:
-The model may choose composition, background, lighting, props, atmosphere, and style only insofar as they support the symbolic concept and preserve the source product. Prefer general, defensible symbolic cues over detailed invented micro-scenes or unsupported audience stereotypes.
+Generalization discipline:
+Use broad, category-appropriate visual cues that can generalize across products. Prefer defensible concept cues over detailed invented micro-scenes or unsupported audience stereotypes.

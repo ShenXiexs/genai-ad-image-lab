@@ -152,6 +152,14 @@ prompts/symbolic_oriented_ad_image_prompt.v4.txt
 prompts/experiential_oriented_ad_image_prompt.v4.txt
 ```
 
+A concept-only Park-theory-grounded v5 prompt set is available as `--prompt-version v5`:
+
+```text
+prompts/product_oriented_ad_image_prompt.v5.txt
+prompts/symbolic_oriented_ad_image_prompt.v5.txt
+prompts/experiential_oriented_ad_image_prompt.v5.txt
+```
+
 The templates use CSV placeholders:
 
 ```text
@@ -175,7 +183,7 @@ Context-oriented
 Symbolic-oriented
 ```
 
-`v3` and `v4` use Park et al. brand concepts:
+`v3`, `v4`, and `v5` use Park et al. brand concepts:
 
 ```text
 Product-oriented
@@ -183,7 +191,7 @@ Symbolic-oriented
 Experiential-oriented
 ```
 
-`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`. Under `--prompt-version v3` or `v4`, `Context-oriented`, `context`, and `usage` are deprecated compatibility aliases for `Experiential-oriented`.
+`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, or `v5`, `Context-oriented`, `context`, and `usage` are deprecated compatibility aliases for `Experiential-oriented`.
 
 Usage:
 
@@ -221,6 +229,15 @@ python3 scripts/generate_images/generate_from_csv.py \
 python3 scripts/generate_images/generate_from_csv.py \
   --prompt-version v4 \
   --orientation Context-oriented \
+  --selection-mode sequential \
+  --limit 1
+```
+
+Use the v5 concept-only prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v5 \
   --selection-mode sequential \
   --limit 1
 ```

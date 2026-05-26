@@ -1,18 +1,18 @@
-# Three Orientation Prompt Design v4
+# Three Orientation Prompt Design v4/v5
 
-This document defines the v4 prompt logic for generating three controlled advertising-image orientations from the same white-background product image. Runtime API calls use the English `.txt` prompt files through `--prompt-version v4`; Chinese `.zh.md` files are companion review versions for research discussion.
+This document defines the v4 and v5 prompt logic for generating three controlled advertising-image orientations from the same white-background product image. Runtime API calls use the English `.txt` prompt files through `--prompt-version v4` or `--prompt-version v5`; Chinese `.zh.md` files are companion review versions for research discussion.
 
 ## Theoretical Basis
 
-The v4 prompt set is grounded in Park, Jaworski, and MacInnis (1986)'s brand concept-image management framework. In their framework, a brand concept is a firm-selected brand meaning derived from basic consumer needs. The prompt therefore starts from concept definitions rather than from long lists of visual micro-details.
+The v4 and v5 prompt sets are grounded in Park, Jaworski, and MacInnis (1986)'s brand concept-image management framework. In their framework, a brand concept is a firm-selected brand meaning derived from basic consumer needs. The prompt therefore starts from concept definitions rather than from long lists of visual micro-details.
 
-| Park et al. concept | v4 orientation | Advertising-image translation | Primary consumer response |
+| Park et al. concept | v4/v5 orientation | Advertising-image translation | Primary consumer response |
 | --- | --- | --- | --- |
 | Functional | `Product-oriented` | Product linked to externally generated consumption problems or practical tasks | Functional value clarity |
 | Symbolic | `Symbolic-oriented` | Product linked to self-image, role, group, identity, or ego-identification needs | Symbolic meaning and self-expression |
 | Experiential | `Experiential-oriented` | Product linked to sensory pleasure, variety, cognitive stimulation, or felt experience | Experiential value and stimulation |
 
-`Context-oriented` is not a v4 theory label. It remains accepted only as a deprecated alias that maps to `Experiential-oriented` when `--prompt-version v4` is used. Older `current` and `function_v2` runs keep their original `Product-oriented`, `Context-oriented`, and `Symbolic-oriented` orientation set.
+`Context-oriented` is not a v4/v5 theory label. It remains accepted only as a deprecated alias that maps to `Experiential-oriented` when `--prompt-version v4` or `--prompt-version v5` is used. Older `current` and `function_v2` runs keep their original `Product-oriented`, `Context-oriented`, and `Symbolic-oriented` orientation set.
 
 ## Shared Prompt Discipline
 
@@ -25,6 +25,8 @@ All three v4 prompts share the same experimental controls:
 - Allow composition, background, lighting, and style only when they support the selected brand concept and do not contradict the product facts.
 
 This follows the prompt-control logic summarized in `local_only/prompt-ref.md`: structured concept-image linkage should carry the experimental manipulation, while product identity and non-concept constraints stay stable across conditions.
+
+The v5 prompts are stricter concept-only prompts. They keep only the Park brand-concept definition block and remove input-grounded facts, concept-image linkage, and generation latitude.
 
 ## Orientation Separation Logic
 
@@ -45,9 +47,15 @@ This makes manipulation checks interpretable. A failed image is not just an aest
 | Product English runtime prompt v4 | `prompts/product_oriented_ad_image_prompt.v4.txt` |
 | Symbolic English runtime prompt v4 | `prompts/symbolic_oriented_ad_image_prompt.v4.txt` |
 | Experiential English runtime prompt v4 | `prompts/experiential_oriented_ad_image_prompt.v4.txt` |
+| Product English runtime prompt v5 | `prompts/product_oriented_ad_image_prompt.v5.txt` |
+| Symbolic English runtime prompt v5 | `prompts/symbolic_oriented_ad_image_prompt.v5.txt` |
+| Experiential English runtime prompt v5 | `prompts/experiential_oriented_ad_image_prompt.v5.txt` |
 | Product Chinese review prompt v4 | `prompts/product_oriented_ad_image_prompt.v4.zh.md` |
 | Symbolic Chinese review prompt v4 | `prompts/symbolic_oriented_ad_image_prompt.v4.zh.md` |
 | Experiential Chinese review prompt v4 | `prompts/experiential_oriented_ad_image_prompt.v4.zh.md` |
+| Product Chinese review prompt v5 | `prompts/product_oriented_ad_image_prompt.v5.zh.md` |
+| Symbolic Chinese review prompt v5 | `prompts/symbolic_oriented_ad_image_prompt.v5.zh.md` |
+| Experiential Chinese review prompt v5 | `prompts/experiential_oriented_ad_image_prompt.v5.zh.md` |
 | Structured prompt registry | `prompts/orientation_prompts.json` |
 
 ## Dry-Run Commands
@@ -85,6 +93,16 @@ python3 scripts/generate_images/generate_from_csv.py \
 ```
 
 In the last command, the manifest and rendered `{orientation}` value use `Experiential-oriented`, while `requested_orientation` records `Context-oriented`.
+
+Render the concept-only v5 prompts:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v5 \
+  --dry-run \
+  --limit 1 \
+  --no-progress
+```
 
 ## Manipulation-Check Anchors
 
