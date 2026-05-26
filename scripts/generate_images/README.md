@@ -7,13 +7,17 @@ Expected workflow:
 1. Read product rows from `data/raw/white_bg_product_catalog.csv` or `data/experiment/white_bg_product_catalog_experiment.csv`.
 2. Download or reference the white-background product image from `creative_id_image`.
 3. Generate prompts based on product category and creative orientation.
-4. Support three canonical creative orientations:
+4. Support three canonical creative orientations. `current` and `function_v2` use the legacy set:
    - `Product-oriented`
    - `Context-oriented`
    - `Symbolic-oriented`
+   `v3` and `v4` use the Park-theory-grounded set:
+   - `Product-oriented`
+   - `Symbolic-oriented`
+   - `Experiential-oriented`
 5. Save generated images to `outputs/`.
 
-`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`; new runs should use `Symbolic-oriented`.
+`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3` or `v4`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
 
 Recommended output naming:
 
@@ -46,6 +50,14 @@ Use the newer prompt set that separates Product as function from Symbolic as mea
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
   --prompt-version function_v2 \
+  --api-key "sk-xxx"
+```
+
+Use the concise v4 Park-theory-grounded prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v4 \
   --api-key "sk-xxx"
 ```
 
@@ -87,6 +99,18 @@ python3 scripts/generate_images/generate_from_csv.py \
   --api-key "sk-xxx"
 ```
 
+Generate only Experiential-oriented v4 images:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --image-type experiential \
+  --prompt-version v4 \
+  --selection-mode random \
+  --sample-size 10 \
+  --random-seed 20260523 \
+  --api-key "sk-xxx"
+```
+
 Generate only Product-oriented Function v2 images:
 
 ```bash
@@ -112,11 +136,11 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
-- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts.
+- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, and `v4` uses a concise definition-first Park-theory-grounded prompt.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
-- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`.
-- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, or `symbolic`.
-- `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations.
+- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3` or `v4`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
+- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3` or `v4`, `context` and `usage` resolve to `Experiential-oriented`.
+- `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations for the selected prompt version.
 - `--selection-mode`: `previous-random10`, `sequential`, or `random`; defaults to `previous-random10`.
 - `--limit`: maximum rows to process. Sequential mode defaults to 1 if `--limit` is omitted.
 - `--sample-size`: randomly sample N rows after white-image filtering and optional `--start` selection.
@@ -136,6 +160,8 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - Run root: `outputs/{model}_{selection_label}_{orientation_label}_{timestamp}/`
 - Function v2 run root: `outputs/{model}_{selection_label}_{orientation_label}_function_v2_{timestamp}/`
+- v3 run root: `outputs/{model}_{selection_label}_{orientation_label}_v3_{timestamp}/`
+- v4 run root: `outputs/{model}_{selection_label}_{orientation_label}_v4_{timestamp}/`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
 - Downloaded source images: `{run-dir}/source_images/{id}.{ext}`
 - Manifest JSONL: `{run-dir}/generation_manifest.jsonl`

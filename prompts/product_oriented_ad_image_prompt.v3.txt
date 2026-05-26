@@ -1,0 +1,47 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, unrealistic product geometry, and unsupported demographic assumptions.
+
+Generate a Product-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a firm-selected brand meaning derived from basic consumer needs. For this prompt, communicate a functional brand concept. A functional concept links the brand or product to externally generated consumption needs: solving a current problem, preventing a potential problem, reducing friction, supporting a task, or making consumption more reliable.
+
+Primary route of persuasion:
+The image should make the product's problem-solving role clear. Viewers should infer what consumption problem or practical task the product helps with. Do not make symbolic identity, lifestyle aspiration, sensory pleasure, novelty, or abstract atmosphere the main reason the image persuades.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- First infer only input-grounded product facts: product type, likely task, visible structure, relevant affordance, and plausible consumption problem.
+- Translate the functional concept into general visual evidence, not unsupported feature claims.
+- The image may use a product-in-use relation, task setting, handling cue, operation cue, fit cue, protection cue, storage cue, application cue, compatibility cue, or other category-appropriate evidence if it is consistent with the source product and metadata.
+- The product should remain the visual anchor. Any props, hands, surfaces, or background cues must explain the practical problem or task; they should not become lifestyle decoration.
+- Do not assume that a product category is inherently functional. Any product can be presented functionally only if the image visually links it to a practical consumption need.
+
+Generation latitude:
+The model may choose composition, camera angle, background, lighting, and style only when they support the functional concept and do not contradict the source product or metadata. Prefer general, defensible cues over detailed invented micro-scenes.
+
+Strict boundaries:
+- Do not create a symbolic identity portrait, prestige mood image, romantic scene, social belonging scene, or abstract aspiration image as the dominant impression.
+- Do not make sensory pleasure, novelty, fantasy, or immersion the main visual message.
+- Do not use labels, arrows, captions, charts, before-after text, comparison claims, fake badges, fake certifications, or new readable words.
+- Do not invent mechanisms, ingredients, product performance, awards, or brand messages not supported by the input.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate the image highly on "This image helps me understand what practical problem the product solves" and "This image makes the product's functional value clear." The image should pass a 3-second functional concept test: viewers should quickly infer the practical task or consumption problem, while not primarily reading the image as symbolic identity expression or experiential stimulation.
+
+Output:
+One advertising image where the functional brand concept and product-problem linkage are the primary goals. Aesthetic quality should clarify functional value, not replace it.

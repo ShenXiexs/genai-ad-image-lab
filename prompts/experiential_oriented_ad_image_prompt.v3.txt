@@ -1,0 +1,49 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, unrealistic product geometry, and unsupported demographic assumptions.
+
+Generate an Experiential-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a firm-selected brand meaning derived from basic consumer needs. For this prompt, communicate an experiential brand concept. An experiential concept links the brand or product to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.
+
+Primary route of persuasion:
+The image should make the product's experience value clear. Viewers should infer what it feels like to encounter, use, taste, wear, handle, explore, or consume the product. Do not make practical problem solving or symbolic self-image the main reason the image persuades.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- First infer only input-grounded product facts and the most plausible experiential need the product can support: sensory pleasure, tactile feel, freshness, taste, comfort, relaxation, play, variety, discovery, immersion, or cognitive stimulation.
+- Translate the experiential concept into general visual cues that evoke felt experience without making unsupported claims.
+- The image may use sensory atmosphere, material feel, motion implication, interaction, color, depth, rhythm, variety, immersive context, or discovery cues if they are consistent with the source product and metadata.
+- A concrete usage scene is allowed only when it expresses experiential value. Do not reduce this condition to a generic usage context that merely shows where the product is used.
+- The product should remain recognizable within the experience. Any people, props, environment, or styling must support sensory, variety-seeking, affective, or cognitive stimulation.
+- Do not assume that a product category is inherently experiential. Any product can be presented experientially only if the image visually links it to a felt consumption experience.
+
+Generation latitude:
+The model may choose composition, camera angle, background, lighting, and style only when they support the experiential concept and do not contradict the source product or metadata. Prefer general, defensible experiential cues over detailed invented micro-scenes.
+
+Strict boundaries:
+- Do not explain product mechanisms, setup, compatibility, durability, storage, or problem-solving as the dominant message.
+- Do not make status, group membership, role identity, prestige, or self-image the main visual message.
+- Do not use labels, arrows, captions, charts, fake badges, fake certifications, or new readable words.
+- Do not invent flavors, scents, textures, ingredients, health effects, performance claims, or brand messages not supported by the input.
+- Do not make the product too small, hidden, or unrecognizable within the atmosphere.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate the image highly on "This image communicates the experience the product can provide" and "This image evokes sensory pleasure, variety, or stimulation." The image should pass a 3-second experiential concept test: viewers should quickly infer the felt consumption experience, while not primarily reading the image as a functional explainer or symbolic identity signal.
+
+Output:
+One advertising image where experiential brand meaning and product-experience linkage are the primary goals. Aesthetic quality should evoke the experience, not replace it.

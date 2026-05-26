@@ -144,6 +144,14 @@ prompts/context_oriented_ad_image_prompt.function_v2.txt
 prompts/symbolic_oriented_ad_image_prompt.function_v2.txt
 ```
 
+A concise Park-theory-grounded v4 prompt set is available as `--prompt-version v4`:
+
+```text
+prompts/product_oriented_ad_image_prompt.v4.txt
+prompts/symbolic_oriented_ad_image_prompt.v4.txt
+prompts/experiential_oriented_ad_image_prompt.v4.txt
+```
+
 The templates use CSV placeholders:
 
 ```text
@@ -159,7 +167,7 @@ The rendered prompt tells the model to preserve product identity, avoid new gene
 
 ## Creative Orientation
 
-The script supports three canonical values:
+The script supports version-specific canonical values. `current` and `function_v2` use:
 
 ```text
 Product-oriented
@@ -167,7 +175,15 @@ Context-oriented
 Symbolic-oriented
 ```
 
-`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`.
+`v3` and `v4` use Park et al. brand concepts:
+
+```text
+Product-oriented
+Symbolic-oriented
+Experiential-oriented
+```
+
+`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`. Under `--prompt-version v3` or `v4`, `Context-oriented`, `context`, and `usage` are deprecated compatibility aliases for `Experiential-oriented`.
 
 Usage:
 
@@ -184,6 +200,27 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 python3 scripts/generate_images/generate_from_csv.py \
   --image-type symbolic \
+  --selection-mode sequential \
+  --limit 1
+```
+
+Use the v4 prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v4 \
+  --selection-mode sequential \
+  --limit 1
+
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v4 \
+  --image-type experiential \
+  --selection-mode sequential \
+  --limit 1
+
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v4 \
+  --orientation Context-oriented \
   --selection-mode sequential \
   --limit 1
 ```

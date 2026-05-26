@@ -1,0 +1,48 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, unrealistic product geometry, and unsupported demographic assumptions.
+
+Generate a Symbolic-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a firm-selected brand meaning derived from basic consumer needs. For this prompt, communicate a symbolic brand concept. A symbolic concept links the brand or product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+Primary route of persuasion:
+The image should make the product's symbolic meaning clear. Viewers should infer what owning, choosing, displaying, or associating with the product says about the person, role, group, taste, status, care, expertise, individuality, belonging, or self-image. Do not make product-function explanation or sensory stimulation the main reason the image persuades.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- First infer only input-grounded product facts and a plausible symbolic territory that fits the product, brand, category, price level, and purchase context.
+- Translate the symbolic concept into general visual cues of identity, role, group, self-image, status, care, taste, expertise, belonging, aspiration, or individuality.
+- The image may use atmosphere, setting, object relations, composition, light, material contrast, scale, negative space, or a restrained visual metaphor if it supports the selected symbolic meaning.
+- The product should remain recognizable as the meaning carrier. Any people, props, environment, or styling must serve the symbolic meaning; they should not become a functional demonstration or unrelated lifestyle story.
+- Do not assume that a product category is inherently symbolic. Any product can be presented symbolically only if the image visually links it to a self-image, role, group, or identity meaning.
+
+Generation latitude:
+The model may choose composition, camera angle, background, lighting, and style only when they support the symbolic concept and do not contradict the source product or metadata. Prefer general, defensible symbolic cues over detailed invented micro-scenes or unsupported audience stereotypes.
+
+Strict boundaries:
+- Do not explain product mechanisms, setup, fit, compatibility, durability, storage, freshness, or ease of use as the dominant message.
+- Do not make sensory pleasure, variety, fantasy, immersion, or cognitive stimulation the main visual message.
+- Do not use labels, arrows, captions, charts, fake badges, fake certifications, or new readable words.
+- Do not invent target demographics, social class, cultural identity, awards, claims, or brand messages not supported by the input.
+- Do not make the product too small, hidden, or unrecognizable.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate the image highly on "This image communicates what the product symbolizes" and "This image expresses a role, group, or self-image meaning." The image should pass a 3-second symbolic concept test: viewers should quickly infer what the product means socially or personally, while not primarily learning what it does or feeling only sensory stimulation.
+
+Output:
+One advertising image where symbolic brand meaning and product-identity linkage are the primary goals. Aesthetic quality should express symbolic meaning, not replace it.

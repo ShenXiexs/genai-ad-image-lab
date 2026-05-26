@@ -41,9 +41,16 @@ REQUIRED_COLUMNS = [
     "is_white_image",
 ]
 
-CANONICAL_ORIENTATIONS = ["Product-oriented", "Context-oriented", "Symbolic-oriented"]
+LEGACY_CANONICAL_ORIENTATIONS = ["Product-oriented", "Context-oriented", "Symbolic-oriented"]
+V3_CANONICAL_ORIENTATIONS = ["Product-oriented", "Symbolic-oriented", "Experiential-oriented"]
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
-ORIENTATION_CHOICES = CANONICAL_ORIENTATIONS + sorted(ORIENTATION_ALIASES)
+V3_ORIENTATION_ALIASES = {
+    "Affect-oriented": "Symbolic-oriented",
+    "Context-oriented": "Experiential-oriented",
+}
+ORIENTATION_CHOICES = sorted(
+    set(LEGACY_CANONICAL_ORIENTATIONS + V3_CANONICAL_ORIENTATIONS + list(ORIENTATION_ALIASES) + list(V3_ORIENTATION_ALIASES))
+)
 IMAGE_TYPE_ALIASES = {
     "product": "Product-oriented",
     "product-oriented": "Product-oriented",
@@ -55,6 +62,9 @@ IMAGE_TYPE_ALIASES = {
     "symbolic": "Symbolic-oriented",
     "symbolic-oriented": "Symbolic-oriented",
     "symbol": "Symbolic-oriented",
+    "experience": "Experiential-oriented",
+    "experiential": "Experiential-oriented",
+    "experiential-oriented": "Experiential-oriented",
 }
 DEFAULT_MODEL = "gpt-image-2"
 DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
@@ -85,6 +95,16 @@ PROMPT_VERSION_FILES = {
         "Product-oriented": "prompts/product_oriented_ad_image_prompt.function_v2.txt",
         "Context-oriented": "prompts/context_oriented_ad_image_prompt.function_v2.txt",
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.function_v2.txt",
+    },
+    "v3": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v3.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v3.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v3.txt",
+    },
+    "v4": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v4.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v4.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v4.txt",
     },
 }
 
@@ -120,12 +140,15 @@ def parse_args() -> argparse.Namespace:
         "--orientation",
         default=None,
         choices=ORIENTATION_CHOICES,
-        help="Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for Symbolic-oriented.",
+        help=(
+            "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
+            "Symbolic-oriented; under --prompt-version v3/v4, Context-oriented is a deprecated alias for Experiential-oriented."
+        ),
     )
     parser.add_argument(
         "--image-type",
         default=None,
-        help="Short alias for generating one type only: product/function, context/usage, or symbolic.",
+        help="Short alias for generating one type only: product/function, context/usage, symbolic, or experiential.",
     )
     parser.add_argument(
         "--orientations",
@@ -136,7 +159,10 @@ def parse_args() -> argparse.Namespace:
         "--prompt-version",
         default=os.environ.get("GENAI_AD_IMAGE_PROMPT_VERSION", DEFAULT_PROMPT_VERSION),
         choices=sorted(PROMPT_VERSION_FILES),
-        help="Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused.",
+        help=(
+            "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
+            "v3/v4 use Park et al. functional/symbolic/experiential brand concepts."
+        ),
     )
     parser.add_argument(
         "--run-dir",
@@ -279,15 +305,28 @@ def normalize_image_type(image_type: str) -> str:
     return IMAGE_TYPE_ALIASES[normalized]
 
 
+def canonical_orientations_for_version(prompt_version: str) -> list[str]:
+    if prompt_version in {"v3", "v4"}:
+        return V3_CANONICAL_ORIENTATIONS
+    return LEGACY_CANONICAL_ORIENTATIONS
+
+
+def orientation_aliases_for_version(prompt_version: str) -> dict[str, str]:
+    if prompt_version in {"v3", "v4"}:
+        return V3_ORIENTATION_ALIASES
+    return ORIENTATION_ALIASES
+
+
 def resolve_orientation_names(args: argparse.Namespace) -> list[tuple[str, str]]:
     if args.image_type and args.orientation:
         raise ValueError("Use either --image-type or --orientation, not both.")
+    canonical_orientations = canonical_orientations_for_version(args.prompt_version)
     if args.image_type:
         requested = [normalize_image_type(args.image_type)]
     elif args.orientation:
         requested = [args.orientation]
     elif str(args.orientations).strip().lower() in {"all", "three", "three-orientations"}:
-        requested = CANONICAL_ORIENTATIONS
+        requested = canonical_orientations
     else:
         requested = split_csv_values(args.orientations)
 
@@ -297,10 +336,12 @@ def resolve_orientation_names(args: argparse.Namespace) -> list[tuple[str, str]]
     resolved: list[tuple[str, str]] = []
     seen: set[str] = set()
     for item in requested:
-        canonical = canonical_orientation(item)
-        if canonical not in CANONICAL_ORIENTATIONS:
-            allowed = ", ".join(CANONICAL_ORIENTATIONS)
-            raise ValueError(f"Unsupported orientation {item!r}. Use one of: {allowed}")
+        canonical = canonical_orientation(item, args.prompt_version)
+        if canonical not in canonical_orientations:
+            allowed = ", ".join(canonical_orientations)
+            aliases = ", ".join(sorted(orientation_aliases_for_version(args.prompt_version)))
+            alias_hint = f" Deprecated aliases accepted for this version: {aliases}." if aliases else ""
+            raise ValueError(f"Unsupported orientation {item!r} for prompt version {args.prompt_version!r}. Use one of: {allowed}.{alias_hint}")
         if canonical in seen:
             continue
         resolved.append((item, canonical))
@@ -332,8 +373,8 @@ def resolve_orientation_plans(args: argparse.Namespace) -> list[OrientationPlan]
     return plans
 
 
-def canonical_orientation(orientation: str) -> str:
-    return ORIENTATION_ALIASES.get(orientation, orientation)
+def canonical_orientation(orientation: str, prompt_version: str) -> str:
+    return orientation_aliases_for_version(prompt_version).get(orientation, orientation)
 
 
 def render_prompt(template: str, row: dict[str, str], orientation: str) -> str:
@@ -365,7 +406,7 @@ def endpoint_from_base_url(base_url: str) -> str:
 
 def orientation_label(plans: list[OrientationPlan]) -> str:
     orientations = [plan.orientation for plan in plans]
-    if orientations == CANONICAL_ORIENTATIONS:
+    if orientations in (LEGACY_CANONICAL_ORIENTATIONS, V3_CANONICAL_ORIENTATIONS):
         return "three_orientations"
     if len(orientations) == 1:
         return safe_name(orientations[0].lower().replace("-", "_"))
