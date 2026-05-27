@@ -16,18 +16,20 @@ The v4, v5, and v6 prompt sets are grounded in Park, Jaworski, and MacInnis (198
 
 ## Shared Prompt Discipline
 
-All three v6 prompts restore a compact set of experimental controls after the concept-only v5 test:
+All three v6 prompts restore a compact set of experimental and image-quality controls after the concept-only v5 test:
 
 - Keep the source product identity constant: shape, material, color, packaging, logo, visible design, and physical structure.
+- Keep the product as the primary visual subject: sharp, well-lit, geometrically consistent, and easy to inspect.
+- Use clean composition, plausible lighting and shadows, an uncluttered background, and coherent object relations.
 - Do not invent product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
 - Do not generate new readable text inside the image.
-- Keep the product visually prominent and recognizable.
+- Avoid low-quality collage, screenshot or template-like layouts, distorted hands, broken packaging, unreadable synthetic text, and unrealistic product geometry.
 - Avoid unsupported demographic assumptions and overly specific visual micro-scenes.
 - Allow composition, background, lighting, and style only when they support the selected brand concept and do not contradict the product facts.
 
 This follows the prompt-control logic summarized in `local_only/prompt-ref.md`: structured concept-image linkage should carry the experimental manipulation, while product identity and non-concept constraints stay stable across conditions.
 
-The v4 prompts are concise definition-first prompts with input grounding and generalization discipline. The v5 prompts are concept-only prompts that keep only the Park brand-concept definition block. The v6 prompts are the recommended balanced version: they restore subject preservation, no unsupported claims/text, product prominence, and concept-image linkage while avoiding the long micro-detail lists from v3.
+The v4 prompts are concise definition-first prompts with input grounding and generalization discipline. The v5 prompts are concept-only prompts that keep only the Park brand-concept definition block. The v6 prompts are the recommended balanced version: they restore subject preservation, generic image-quality controls, no unsupported claims/text, product prominence, and concept-image linkage while avoiding the long micro-detail lists from v3/function_v2.
 
 ## Orientation Separation Logic
 
@@ -143,4 +145,5 @@ Suggested high-score items:
 - ControlNet, T2I-Adapter, GLIGEN, BoxDiff, DenseDiffusion, MultiDiffusion, InteractDiffusion, and Ranni support separating semantic intent, objects, layout, and interaction constraints instead of relying on ad hoc detail lists.
 - Prompt-to-Prompt, Attend-and-Excite, OPT2I, and RePrompt support minimal concept-specific prompt changes while keeping product facts and generation constraints stable.
 - DreamBooth, Textual Inversion, and VGD support treating the source product as a grounded/reference subject while the prompt focuses on brand meaning.
+- ControlNet-style generic quality prompts, Attend-and-Excite, and Ranni motivate the v6 quality/fidelity controls for product salience, attribute binding, instruction following, spatial relation coherence, and avoidance of visible generation artifacts.
 - Discrete Prompt Optimization, Learning to Sample Effective and Diverse Prompts, and DPO-Diff support avoiding unsupported style suffixes and optimizing for concept-image consistency.

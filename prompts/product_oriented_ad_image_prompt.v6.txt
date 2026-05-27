@@ -1,4 +1,4 @@
-You are generating controlled experimental stimuli for a consumer advertising study.
+You are generating one controlled advertising-image stimulus for a consumer study.
 
 Use the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.
 
@@ -12,11 +12,12 @@ Product metadata:
 Brand concept definition:
 Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.
 
-Shared experimental controls:
-Use only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.
-Keep the product visually prominent and recognizable. Any background, prop, hand, setting, lighting, or style must support the functional concept and must not contradict source product facts.
-Prefer broad, category-appropriate concept cues over detailed invented micro-scenes.
+General image-quality controls:
+Create a coherent, polished advertising image. The product should be the primary visual subject, sharp, well-lit, geometrically consistent, and easy to inspect. Use clean composition, plausible lighting and shadows, an uncluttered background, and visually coherent object relations. Avoid low-quality collage, screenshot or template-like layouts, distorted hands, broken packaging, unreadable synthetic text, and unrealistic product geometry.
+
+Evidence discipline:
+Use only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text. Prefer broad, category-appropriate concept cues over detailed invented micro-scenes.
 
 Concept-image linkage:
-Make the viewer infer the practical role of the product. Show a general, visually plausible relation between the product and a consumption problem, task, or affordance. Use visual evidence rather than text claims. If functional evidence is uncertain, choose a simple controlled product-demonstration relation instead of fabricating a specific feature.
-Keep symbolic self-image and experiential stimulation secondary; the dominant reading should be functional problem solving or task support.
+Make the viewer infer the practical role of the product. Show a general, visually plausible relation between the product and a consumption problem, task, or affordance. Any background, prop, hand, setting, lighting, or style must support the functional concept and must not contradict source product facts. Use visual evidence rather than text claims; if functional evidence is uncertain, choose a simple controlled product-demonstration relation instead of fabricating a specific feature.
+Keep symbolic self-image and experiential stimulation secondary. The dominant reading should be functional problem solving or task support.

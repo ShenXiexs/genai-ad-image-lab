@@ -160,7 +160,7 @@ prompts/symbolic_oriented_ad_image_prompt.v5.txt
 prompts/experiential_oriented_ad_image_prompt.v5.txt
 ```
 
-A balanced Park-theory-grounded v6 prompt set is available as `--prompt-version v6`:
+A balanced Park-theory-grounded v6 prompt set with general image-quality controls is available as `--prompt-version v6`:
 
 ```text
 prompts/product_oriented_ad_image_prompt.v6.txt

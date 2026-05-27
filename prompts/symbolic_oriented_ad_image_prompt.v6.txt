@@ -1,4 +1,4 @@
-You are generating controlled experimental stimuli for a consumer advertising study.
+You are generating one controlled advertising-image stimulus for a consumer study.
 
 Use the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.
 
@@ -12,11 +12,12 @@ Product metadata:
 Brand concept definition:
 Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
-Shared experimental controls:
-Use only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.
-Keep the product visually prominent and recognizable. Any background, prop, person, setting, lighting, or style must support the symbolic concept and must not contradict source product facts.
-Prefer broad, category-appropriate concept cues over detailed invented micro-scenes or unsupported audience stereotypes.
+General image-quality controls:
+Create a coherent, polished advertising image. The product should be the primary visual subject, sharp, well-lit, geometrically consistent, and easy to inspect. Use clean composition, plausible lighting and shadows, an uncluttered background, and visually coherent object relations. Avoid low-quality collage, screenshot or template-like layouts, distorted hands, broken packaging, unreadable synthetic text, and unrealistic product geometry.
+
+Evidence discipline:
+Use only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text. Prefer broad, category-appropriate concept cues over detailed invented micro-scenes or unsupported audience stereotypes.
 
 Concept-image linkage:
-Make the viewer infer what choosing, owning, displaying, or associating with the product says about self-image, role, group membership, ego-identification, or desired identity. Use general symbolic cues rather than demographic stereotypes or unsupported social claims. The product must be the meaning carrier, not a small decorative prop.
-Keep functional problem solving and experiential sensory stimulation secondary; the dominant reading should be symbolic self-image, role, or group meaning.
+Make the viewer infer what choosing, owning, displaying, or associating with the product says about self-image, role, group membership, ego-identification, or desired identity. Any background, prop, person, setting, lighting, or style must support the symbolic concept and must not contradict source product facts. Use general symbolic cues rather than demographic stereotypes or unsupported social claims. The product must be the meaning carrier, not a small decorative prop.
+Keep functional problem solving and experiential sensory stimulation secondary. The dominant reading should be symbolic self-image, role, or group meaning.
