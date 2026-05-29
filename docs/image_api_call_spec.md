@@ -200,6 +200,22 @@ prompts/symbolic_oriented_ad_image_prompt.v10.txt
 prompts/experiential_oriented_ad_image_prompt.v10.txt
 ```
 
+A v11 prompt set with stronger white-background source-image grounding is available as `--prompt-version v11`:
+
+```text
+prompts/product_oriented_ad_image_prompt.v11.txt
+prompts/symbolic_oriented_ad_image_prompt.v11.txt
+prompts/experiential_oriented_ad_image_prompt.v11.txt
+```
+
+A v12 prompt set that directly fuses function_v2-style image quality and visual direction with Park's three brand-concept definitions is available as `--prompt-version v12`:
+
+```text
+prompts/product_oriented_ad_image_prompt.v12.txt
+prompts/symbolic_oriented_ad_image_prompt.v12.txt
+prompts/experiential_oriented_ad_image_prompt.v12.txt
+```
+
 The templates use CSV placeholders:
 
 ```text
@@ -223,7 +239,7 @@ Context-oriented
 Symbolic-oriented
 ```
 
-`v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, and `v10` use Park et al. brand concepts:
+`v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, and `v12` use Park et al. brand concepts:
 
 ```text
 Product-oriented
@@ -231,7 +247,7 @@ Symbolic-oriented
 Experiential-oriented
 ```
 
-`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, or `v10`, `Context-oriented`, `context`, and `usage` are deprecated compatibility aliases for `Experiential-oriented`.
+`Affect-oriented` is accepted only as a deprecated compatibility alias. When supplied, the script normalizes it to `Symbolic-oriented`; output paths, manifest orientation, and `{orientation}` prompt values use `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, or `v12`, `Context-oriented`, `context`, and `usage` are deprecated compatibility aliases for `Experiential-oriented`.
 
 Usage:
 
@@ -323,6 +339,24 @@ Use the v10 integrated research prompt set:
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
   --prompt-version v10 \
+  --selection-mode sequential \
+  --limit 1
+```
+
+Use the v11 stronger-grounding prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v11 \
+  --selection-mode sequential \
+  --limit 1
+```
+
+Use the v12 function_v2-quality plus Park-definition prompt set:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v12 \
   --selection-mode sequential \
   --limit 1
 ```

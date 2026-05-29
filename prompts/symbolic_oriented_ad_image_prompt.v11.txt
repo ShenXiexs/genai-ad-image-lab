@@ -1,0 +1,56 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the grounded source product and as the primary factual anchor for generation. Before deciding the scene, first read the source image and extract only visible product facts: product form, components, material cues, color, packaging type, logo or printed elements, opening or closing structure, visible accessories, and any clearly observable physical affordances.
+
+Use the product metadata only as supporting context for interpretation, never as a license to invent invisible features.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Source-grounding requirements:
+- Keep the source product identity constant. Preserve visible shape, material, color, packaging, logo, design details, proportions, and physical structure from the white-background product image.
+- Any scene element, prop, person, or symbolic cue must be consistent with both the source image and the metadata.
+- If the title or category suggests a prestige or identity meaning that is not visually supportable from the source product, stay conservative and avoid overclaiming.
+- Treat the source product as the meaning carrier, not as loose inspiration.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing package text already present on the source product may remain visible, but do not add new ad copy or rewrite package text.
+
+Image fidelity controls:
+- Generate one coherent, polished commercial advertising image.
+- Make the product dominant, sharp, well-lit, proportional, physically plausible, and easy to inspect.
+- Use clean composition, plausible lighting, shadows, reflections, and coherent object relations.
+- Avoid screenshot-like layouts, banner-template look, low-quality collage, cluttered e-commerce mockups, distorted hands, broken packaging, unrealistic product geometry, impossible scale, and physically implausible interaction.
+- Do not leave the result as a plain white packshot; add advertising value only through grounded concept-image linkage.
+
+Generate a Symbolic-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+Primary route of persuasion:
+The dominant reading must be symbolic meaning. Viewers should quickly infer what choosing, owning, displaying, gifting, or associating with the product says about self-image, role, group membership, taste, belonging, aspiration, or identity. Functional explanation and experiential stimulation must remain clearly secondary.
+
+Grounded reasoning sequence:
+1. From the white-background source image, identify what the product visibly is and what design cues can be trusted.
+2. Combine those visible facts with title, brand, category, price, and promotion to infer one plausible symbolic territory.
+3. Build one simple visual relation that makes that symbolic territory legible without inventing unsupported brand lore or audience stereotypes.
+
+Concept-image linkage:
+- Prefer one coherent symbolic territory over multiple mixed moods.
+- Use atmosphere, setting, composition, light, depth, scale, negative space, or restrained metaphor only when they support the symbolic meaning and do not contradict the source image and metadata.
+- People, props, and environments may appear only when they clarify symbolic meaning. Avoid unsupported demographic stereotypes, social-class claims, cultural assumptions, or fake brand history.
+- The product must remain recognizable as the meaning carrier, not become a tiny prop inside decorative mood.
+
+Discriminant-validity guardrails:
+- Do not explain mechanism, setup, compatibility, durability, storage, freshness, or practical problem solving as the main message.
+- Do not let sensory thrill, novelty, play, immersion, or tactile atmosphere become the main message unless they clearly serve symbolic meaning.
+- Do not make the image so abstract that the viewer can no longer infer what the product stands for.
+
+Verification standard:
+The image should score high on symbolic meaning, self-expression, and role or identity fit. A viewer should quickly infer what the product symbolizes or what owning it expresses, while still recognizing the source product from the white-background image.

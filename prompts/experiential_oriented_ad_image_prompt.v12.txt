@@ -1,0 +1,57 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, and unrealistic product geometry.
+
+Generate an Experiential-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986), with EXPERIENTIAL brand concept as the dominant construct.
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, immersion, or felt consumption experience.
+
+Primary route of persuasion:
+Felt experience, sensory pleasure, variety, cognitive stimulation, and experiential immersion. The image must communicate what the product FEELS like to encounter, enjoy, wear, handle, taste, explore, or consume under an experiential brand concept, not merely where it is used or what practical function it serves.
+
+Advertising mechanism:
+The image should make viewers imagine the felt experience associated with the product: sensory pleasure, stimulation, novelty, immersion, relaxation, excitement, delight, curiosity, or experiential richness. The goal is not product-function explanation and not symbolic identity signaling.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Experiential reasoning instruction:
+- Infer one dominant experiential route from the Park experiential definition plus product title, brand, category, price level, and purchase occasion.
+- Commit to one clear experiential route throughout the image, such as sensory pleasure, freshness, tactile enjoyment, taste anticipation, immersion, comfort, play, stimulation, discovery, or relaxation.
+- Do not reduce this to a generic usage occasion. A usage situation may appear only when it helps the viewer infer how the experience feels.
+- Do not invent experiential qualities that are not visually or categorically defensible from the source image and metadata.
+
+Visual direction:
+- Place the product in a visually rich but coherent experiential context where the felt experience is the main message.
+- Make the product clearly visible and recognizable within the scene, but not isolated like a catalog still life.
+- Use atmosphere, motion implication, depth, rhythm, texture, light, color, interaction, immersion, and sensory context to communicate the chosen experiential route.
+- The composition may be cinematic, atmospheric, or immersive, but the product must remain recognizable and central to the experience.
+- Human-object interaction is allowed only when it supports the felt experience and remains physically realistic.
+- Use background and foreground elements only if they belong to the chosen experiential route.
+- Ensure the visual content is semantically consistent with the Park experiential definition, the product title, category, price level, promotion context, and source image.
+- Leave clean negative space for possible controlled text overlay in later editing.
+
+Strict boundaries:
+- Do not make the image a functional explainer, component layout, detail diagnostic shot, or product demonstration on a neutral studio surface.
+- Do not make the image mainly about prestige, symbolic meaning, status, role identity, or brand personality.
+- Do not reduce the product to a tiny decorative object in the background.
+- Do not add generated text, slogans, fake labels, fake badges, ratings, or unsupported claims.
+- Do not create unrealistic hands, distorted bodies, impossible product scale, or physically implausible interaction.
+- Do not alter the product's shape, color, logo, packaging, or physical structure.
+
+Verification standard:
+A viewer should be able to rate this image highly on "This image communicates the experience the product can provide" and "This image evokes sensory pleasure, variety, or stimulation." The image should pass the 3-second experiential concept test: viewers should infer a felt consumption experience without reading text, while not primarily reading the image as a functional explainer or symbolic mood piece.
+
+Output:
+One advertising image optimized for Park-style experiential brand meaning, felt experience, sensory stimulation, and immersion.

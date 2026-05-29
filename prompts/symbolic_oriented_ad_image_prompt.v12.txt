@@ -1,0 +1,58 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's core shape, material, color, packaging, logo, visible design, and physical structure.
+
+Do not invent unsupported product functions, ingredients, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text. Leave clean negative space for later controlled text overlay.
+
+Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, and unrealistic product geometry.
+
+Generate a Symbolic-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986), with SYMBOLIC brand concept as the dominant construct.
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+Primary route of persuasion:
+Symbolic meaning, self-expression, identity signaling, role meaning, group meaning, and visual rhetoric. The image must communicate what the product MEANS or says about the owner under a symbolic brand concept, not what the product does, how it works, or which visible features it has.
+
+Advertising mechanism:
+The image should shape viewers' attitude toward the product or brand by turning the product into a meaningful symbol: status, care, taste, intimacy, aspiration, celebration, expertise, naturalness, vitality, individuality, belonging, transformation, confidence, or another brand-compatible meaning. Aesthetics and mood are execution tools for symbolic meaning, not the classification by themselves.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Symbolic reasoning instruction:
+- Infer one dominant symbolic territory from the Park symbolic definition plus product title, brand, category, price level, and purchase occasion.
+- Choose one dominant brand-compatible symbolic territory and build the entire image around it.
+- If the product title and brand do not strongly imply a specific personality, infer from category conventions: skincare or beauty should lean sincere, natural, or refined; electronics should lean futuristic, premium, or sophisticated; food or beverage should lean warm, fun, or healthy; sportswear or outdoor products should lean rugged, energetic, or playful; jewelry or luxury goods should lean glamorous, sophisticated, premium, or refined.
+- State the chosen symbolic territory implicitly through visual treatment only. Do not write the personality word, slogan, or mood label as text in the image.
+
+Visual direction:
+- Keep the product recognizable as the visual anchor, but present it as an identity symbol or meaning carrier rather than an information object.
+- Use atmosphere, composition, color, light, shadow, texture, depth, reflection, scale, negative space, and visual metaphor to communicate the chosen symbolic meaning.
+- Include a clear symbolic visual device or metaphor. Examples: symmetry for prestige, horizon or elevation for aspiration, soft radiance for care or intimacy, organic forms for naturalness, precise geometry for futurism or expertise, celebratory light for joy, rugged terrain texture for resilience, or another category-compatible symbolic device.
+- The image may be atmospheric, editorial, cinematic, surreal-but-plausible, or campaign-like, as long as the product remains recognizable and the meaning is brand-compatible.
+- Premium beauty alone is not enough. A clean luxury still life that only shows material quality, craft, packaging, or display has failed unless it clearly communicates a symbolic territory.
+- Ensure the visual content is semantically consistent with the Park symbolic definition, the product title, category, price level, promotion context, and source image.
+- Leave clean negative space for possible controlled text overlay in later editing.
+
+Strict boundaries:
+- Do not explain product function, mechanism, setup, fit, compatibility, durability, storage, freshness, care, or ease of use as the main visual message.
+- Do not use component layouts, close-detail diagnostic areas, neutral demonstration props, scale references, feature exposition, comparison charts, labels, arrows, or product-information design.
+- Do not create a concrete everyday usage scene as the main focus.
+- Do not let visible functional evidence or practical use affordance become the dominant visual impression.
+- Do not add generated text, slogans, fake labels, fake badges, ratings, or unsupported claims.
+- Do not make the product hard to recognize, too small, overly abstract, or hidden in the atmosphere.
+- Do not use human faces or identity cues unless explicitly required by the symbolic meaning and product category.
+- Do not alter the product's shape, color, logo, packaging, or core appearance.
+
+Verification standard:
+A viewer should be able to rate this image highly on "This image gives me a clear sense of the product's symbolic meaning" and "This image communicates a distinctive self-expressive or identity-relevant meaning." The image should pass the 3-second symbolic concept test: viewers should infer what the product stands for or what owning it expresses, while not primarily learning what the product does or imagining a concrete usage situation.
+
+Output:
+One advertising image where Park-style symbolic brand meaning, self-expression, identity signaling, and attitude toward the ad are the primary goals. Aesthetic appeal should support symbolic persuasion, not replace it.

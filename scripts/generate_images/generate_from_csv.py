@@ -136,6 +136,16 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v10.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v10.txt",
     },
+    "v11": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v11.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v11.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v11.txt",
+    },
+    "v12": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v12.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v12.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v12.txt",
+    },
 }
 
 
@@ -191,7 +201,7 @@ def parse_args() -> argparse.Namespace:
         choices=sorted(PROMPT_VERSION_FILES),
         help=(
             "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
-            "v3/v4/v5/v6/v7/v8/v9/v10 use Park et al. functional/symbolic/experiential brand concepts."
+            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12 use Park et al. functional/symbolic/experiential brand concepts."
         ),
     )
     parser.add_argument(
@@ -336,13 +346,13 @@ def normalize_image_type(image_type: str) -> str:
 
 
 def canonical_orientations_for_version(prompt_version: str) -> list[str]:
-    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10"}:
+    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12"}:
         return V3_CANONICAL_ORIENTATIONS
     return LEGACY_CANONICAL_ORIENTATIONS
 
 
 def orientation_aliases_for_version(prompt_version: str) -> dict[str, str]:
-    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10"}:
+    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12"}:
         return V3_ORIENTATION_ALIASES
     return ORIENTATION_ALIASES
 

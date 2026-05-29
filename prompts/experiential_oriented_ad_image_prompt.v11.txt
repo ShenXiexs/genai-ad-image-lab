@@ -1,0 +1,56 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the grounded source product and as the primary factual anchor for generation. Before deciding the scene, first read the source image and extract only visible product facts: product form, components, material cues, color, packaging type, logo or printed elements, opening or closing structure, visible accessories, and any clearly observable physical affordances.
+
+Use the product metadata only as supporting context for interpretation, never as a license to invent invisible features.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Source-grounding requirements:
+- Keep the source product identity constant. Preserve visible shape, material, color, packaging, logo, design details, proportions, and physical structure from the white-background product image.
+- Any atmosphere, interaction, or usage cue must be consistent with both the source image and the metadata.
+- If the title or category implies a sensory property that is not visually supportable from the source product, stay conservative and avoid fabricating it.
+- Treat the source product as the experiential anchor, not as loose inspiration.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing package text already present on the source product may remain visible, but do not add new ad copy or rewrite package text.
+
+Image fidelity controls:
+- Generate one coherent, polished commercial advertising image.
+- Make the product dominant, sharp, well-lit, proportional, physically plausible, and easy to inspect.
+- Use clean composition, plausible lighting, shadows, reflections, and coherent object relations.
+- Avoid screenshot-like layouts, banner-template look, low-quality collage, cluttered e-commerce mockups, distorted hands, broken packaging, unrealistic product geometry, impossible scale, and physically implausible interaction.
+- Do not leave the result as a plain white packshot; add advertising value only through grounded concept-image linkage.
+
+Generate an Experiential-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, immersion, or felt consumption experience.
+
+Primary route of persuasion:
+The dominant reading must be felt experience. Viewers should quickly infer what it feels like to encounter, handle, taste, wear, explore, enjoy, or consume the product. Functional explanation and symbolic identity meaning must remain clearly secondary.
+
+Grounded reasoning sequence:
+1. From the white-background source image, identify what the product visibly is and which sensory or interaction cues can be reasonably inferred.
+2. Combine those visible facts with title, brand, category, price, and promotion to infer one plausible experiential need.
+3. Build one simple visual relation that makes that felt experience legible without inventing unsupported sensory claims.
+
+Concept-image linkage:
+- Prefer one clear felt-experience route over a generic lifestyle scene.
+- A usage scene is allowed only when it helps the viewer infer how the experience feels; do not reduce this orientation to where or when the product is used.
+- Use atmosphere, motion implication, depth, interaction, texture, variety, or immersive context only when they are supported by the source image and metadata and do not invent unsupported attributes.
+- The product must remain recognizable inside the experience, not hidden by cinematic atmosphere or decorative props.
+
+Discriminant-validity guardrails:
+- Do not make practical problem solving, feature explanation, setup, compatibility, or task support the main message.
+- Do not make status, belonging, identity display, prestige, or role signaling the main message.
+- Do not fabricate flavors, scents, textures, ingredients, or performance claims that are not supported by the source image and metadata.
+
+Verification standard:
+The image should score high on felt consumption experience, sensory pleasure, variety, or cognitive stimulation. A viewer should quickly infer the experience the product can provide, while still recognizing the source product from the white-background image.
