@@ -1,0 +1,45 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the grounded source product. Keep the source product identity constant. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+
+Use only input-grounded product and brand facts. Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing package text already visible on the source product may remain, but do not add new ad copy or rewrite packaging.
+
+Image fidelity and prompt-alignment controls:
+- Generate one coherent, polished commercial advertising image.
+- Keep the product as the dominant visual anchor: sharp, well-lit, proportional, physically plausible, and easy to inspect.
+- Use clean composition, plausible lighting, shadows, reflections, and coherent object relations.
+- Avoid screenshot-like layouts, banner-template look, low-quality collage, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable synthetic text, unrealistic geometry, impossible scale, and physically implausible interaction.
+- Do not leave the result as a plain white packshot. Add advertising value only through concept-relevant visual linkage.
+
+Generate a Product-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate a functional brand concept. Functional means the product is linked to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.
+
+Primary route of persuasion:
+The dominant reading must be functional problem solving, task support, or practical affordance. Viewers should quickly infer what job the product helps them do. Symbolic identity meaning and experiential stimulation must remain non-dominant.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- Infer one plausible functional need from the source image and metadata.
+- Translate that need into visible evidence rather than verbal explanation.
+- Prefer one clean product-task relation over many small details.
+- Use only category-appropriate cues such as handling, setup, protection, fit, storage, compatibility, organization, application, operation, freshness, or care when they are supported by the input.
+- Props, hands, surfaces, and background elements may appear only when they clarify the functional relation. They must behave as evidence, not decoration.
+- If the product's exact function is uncertain, choose a simple controlled product-demonstration relation rather than fabricating a feature.
+
+Discriminant-validity guardrails:
+- Do not let prestige, taste, status, belonging, romance, celebration, or abstract aspiration become the main message.
+- Do not let sensory pleasure, fantasy, immersion, or experiential atmosphere become the main message.
+- Do not use visual metaphor as the primary device if the practical role can no longer be inferred in 3 seconds.
+
+Verification standard:
+The image should score high on practical problem solving and functional value clarity. A viewer who has never seen the product should quickly infer what practical task or consumption problem it supports, while not primarily reading it as symbolic self-expression or experiential stimulation.

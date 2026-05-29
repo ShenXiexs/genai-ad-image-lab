@@ -1,0 +1,39 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text.
+
+Image quality and fidelity requirements:
+- Generate one coherent, polished commercial advertising image.
+- Make the product dominant, sharp, well-lit, proportional, physically plausible, and easy to inspect.
+- Use clean composition, plausible lighting, shadows, reflections, and coherent object relations.
+- Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, unrealistic product geometry, impossible scale, and physically implausible interaction.
+- Do not leave the result as a plain white packshot; add advertising value while preserving the source product.
+
+Generate a Symbolic-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+Primary route of persuasion:
+The image should make the product's symbolic meaning clear. Viewers should infer what choosing, owning, displaying, or associating with the product says about self-image, role, group membership, ego-identification, or desired identity. Do not make product-function explanation or sensory stimulation the main reason the image persuades.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- Infer one plausible symbolic meaning from the product title, brand, category, price, promotion, and source image.
+- Translate that meaning into broad visual cues of self-image, role, group membership, ego-identification, desired identity, aspiration, taste, belonging, or self-expression.
+- Use atmosphere, setting, composition, light, scale, contrast, negative space, or restrained visual metaphor only when it supports the symbolic meaning and does not contradict product facts.
+- People, props, or environments may appear only when they help express symbolic meaning; avoid unsupported demographic stereotypes, social-class claims, and cultural identity assumptions.
+- The product must remain recognizable as the meaning carrier, not a small decorative prop.
+
+Verification standard:
+The image should pass a 3-second symbolic concept test: viewers should quickly infer what the product symbolizes or what owning it expresses while not primarily learning what it does or feeling only sensory stimulation.

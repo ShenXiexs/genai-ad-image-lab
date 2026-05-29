@@ -1,0 +1,39 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product. Keep the source product identity constant. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+
+Do not invent unsupported product functions, ingredients, materials, certifications, awards, claims, slogans, ratings, prices, QR codes, badges, charts, arrows, or brand assets.
+
+Do not generate new readable text inside the image. Existing text, logo, or package information already present on the source product may remain visible, but do not add new ad copy or rewrite package text.
+
+Image quality and fidelity requirements:
+- Generate one coherent, polished commercial advertising image.
+- Make the product dominant, sharp, well-lit, proportional, physically plausible, and easy to inspect.
+- Use clean composition, plausible lighting, shadows, reflections, and coherent object relations.
+- Avoid screenshot-like layouts, banner-template look, low-quality collage, meme style, cluttered e-commerce mockups, distorted hands, broken packaging, unreadable characters, unrealistic product geometry, impossible scale, and physically implausible interaction.
+- Do not leave the result as a plain white packshot; add advertising value while preserving the source product.
+
+Generate a Product-oriented advertising image grounded in Park, Jaworski, and MacInnis (1986).
+
+Brand concept definition:
+Park et al. define a brand concept as a selected brand meaning based on consumer needs. For this prompt, communicate a functional brand concept. Functional means the product is linked to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.
+
+Primary route of persuasion:
+The image should make the product's practical role clear. Viewers should infer what consumption problem, task, or affordance the product helps with. Do not make symbolic self-image, lifestyle aspiration, sensory pleasure, novelty, or abstract atmosphere the main reason the image persuades.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Concept-image linkage:
+- Infer one plausible functional need from the product title, brand, category, price, promotion, and source image.
+- Translate that need into visual evidence, not labels or text claims.
+- Use a general, category-appropriate product-task, product-problem, product-affordance, handling, application, protection, organization, fit, operation, or care relation only when it is supported by the input.
+- Props, surfaces, hands, or background elements may appear only when they clarify the functional relation; they should not become lifestyle decoration.
+- If the product's function is uncertain, use a simple controlled product-demonstration composition rather than fabricating a specific feature.
+
+Verification standard:
+The image should pass a 3-second functional concept test: viewers should quickly understand the practical role of the product while not primarily reading the image as symbolic identity expression or experiential stimulation.

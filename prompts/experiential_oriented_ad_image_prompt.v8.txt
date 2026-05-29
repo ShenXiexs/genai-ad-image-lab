@@ -1,0 +1,22 @@
+You are generating one controlled advertising-image stimulus for a consumer study.
+
+Use the provided white-background product image as the exact source product. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Brand concept definition:
+Park, Jaworski, and MacInnis (1986) define a brand concept as a firm-selected brand meaning derived from basic consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. An experiential concept links the product to internally generated needs for sensory gratification, variety, or cognitive stimulation.
+
+Minimal quality controls:
+- Create one coherent advertising image.
+- Keep the product recognizable, visually important, and consistent with the source image.
+- Do not add new readable text, fake claims, prices, badges, or unsupported product features.
+- Do not distort the product, break the packaging, or use implausible object relations.
+
+Concept-image linkage:
+Visually link the product to one plausible felt experience supported by the source image and metadata. The model may choose composition, background, lighting, props, people, and setting only when they help express sensory pleasure, variety, or cognitive stimulation without contradicting known product facts. Keep functional explanation and symbolic identity meaning secondary.
