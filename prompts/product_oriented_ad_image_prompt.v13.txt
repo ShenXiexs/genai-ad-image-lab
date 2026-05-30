@@ -1,0 +1,6 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product.
+
+Picture Style definition:
+Park et al. define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, communicate a functional brand concept. A functional concept links the product to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.

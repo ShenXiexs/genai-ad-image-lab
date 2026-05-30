@@ -1,0 +1,6 @@
+You are generating controlled experimental stimuli for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product.
+
+Picture Style definition:
+Park et al. define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, communicate an experiential brand concept. An experiential concept links the product to internally generated needs for sensory pleasure, variety, cognitive stimulation, immersion, or felt consumption experience.

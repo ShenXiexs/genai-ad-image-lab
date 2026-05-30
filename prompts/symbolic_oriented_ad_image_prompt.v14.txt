@@ -1,0 +1,10 @@
+你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示的图片，尽可能确保摄影风格，生成图片要自然，不要出现价格相关的信息。
+
+广告图的风格基于 Park, Jaworski, and MacInnis (1986) 的象征导向概念。并让 SYMBOLIC 品牌概念成为主导构念。Park 等人将品牌概念定义为一种基于消费者基本需求而选择的品牌意义。在本 prompt 中，请传达象征型品牌概念。象征型概念将商品与内部产生的需求相连接，包括自我提升、角色位置、群体归属、ego-identification，或理想自我形象。
+
+商品元数据：
+- 标题：{ori_title}
+- 品牌：{creative_id_brand}
+- 类目：{level_one_category_name}
+- 价格：{creative_id_price}
+- 促销：{creative_id_promotion}

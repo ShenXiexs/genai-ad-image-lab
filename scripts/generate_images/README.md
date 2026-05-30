@@ -11,13 +11,13 @@ Expected workflow:
    - `Product-oriented`
    - `Context-oriented`
    - `Symbolic-oriented`
-   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, and `v12` use the Park-theory-grounded set:
+   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, and `v15` use the Park-theory-grounded set:
    - `Product-oriented`
    - `Symbolic-oriented`
    - `Experiential-oriented`
 5. Save generated images to `outputs/`.
 
-`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, or `v12`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
+`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
 
 Recommended output naming:
 
@@ -125,6 +125,31 @@ python3 scripts/generate_images/generate_from_csv.py \
   --api-key "sk-xxx"
 ```
 
+Use the v13 prompt set for the sharper-separation version that keeps v12-style execution discipline but strengthens source-image grounding and discriminant validity:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v13 \
+  --api-key "sk-xxx"
+```
+
+Use the v14 prompt set for the Chinese version of v13:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v14 \
+  --api-key "sk-xxx"
+```
+
+Use the v15 two-stage prompt set. The script first generates a neutral product-specific prompt from metadata plus the white-background source image, then injects that prompt into the three Park-theory-oriented image prompts:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v15 \
+  --selection-mode sequential \
+  --limit 14
+```
+
 Run the previous fixed sample explicitly:
 
 ```bash
@@ -200,10 +225,14 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
-- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, `v4` uses a concise definition-first prompt with grounding/generalization discipline, `v5` keeps only the brand-concept definition, `v6` restores compact experimental and quality controls, `v7` combines Park definitions with function_v2-style image quality/fidelity controls, `v8` returns to Park's original definition plus minimal quality controls, `v9` adds selected function_v2-style detail controls to the v8 logic, `v10` integrates Park with later prompt-alignment, artifact-control, and discriminant-validity guidance, `v11` further strengthens source-image grounding by explicitly extracting visible facts from the white-background image before concept inference, and `v12` uses function_v2-style visual direction, reasoning steps, and verification discipline while replacing the old route meanings with Park's functional, symbolic, and experiential definitions.
+- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, `v4` uses a concise definition-first prompt with grounding/generalization discipline, `v5` keeps only the brand-concept definition, `v6` restores compact experimental and quality controls, `v7` combines Park definitions with function_v2-style image quality/fidelity controls, `v8` returns to Park's original definition plus minimal quality controls, `v9` adds selected function_v2-style detail controls to the v8 logic, `v10` integrates Park with later prompt-alignment, artifact-control, and discriminant-validity guidance, `v11` further strengthens source-image grounding by explicitly extracting visible facts from the white-background image before concept inference, `v12` uses function_v2-style visual direction, reasoning steps, and verification discipline while replacing the old route meanings with Park's functional, symbolic, and experiential definitions, `v13` keeps the strong execution discipline while sharpening source-image-first grounding and three-way discriminant separation, `v14` is the Chinese version of v13, and `v15` first generates a neutral product-specific prompt from metadata plus the source image before applying each orientation's style definition.
+- `--base-prompt-file`: v15 neutral product prompt template, defaults to `prompts/neutral_product_ad_image_prompt.v15.txt`.
+- `--base-prompt-model`: text/vision model used by v15 for the neutral prompt, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
+- `--base-prompt-endpoint`: chat completions endpoint used by v15, defaults to `{api-base-url}/chat/completions`.
+- `--base-prompt-dir`: directory for saved neutral prompts, defaults to `{run-dir}/base_prompts`.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
-- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, or `v12`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
-- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, or `v12`, `context` and `usage` resolve to `Experiential-oriented`.
+- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
+- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, `context` and `usage` resolve to `Experiential-oriented`.
 - `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations for the selected prompt version.
 - `--selection-mode`: `previous-random10`, `sequential`, or `random`; defaults to `previous-random10`.
 - `--limit`: maximum rows to process. Sequential mode defaults to 1 if `--limit` is omitted.
@@ -234,6 +263,10 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v10 run root: `outputs/{model}_{selection_label}_{orientation_label}_v10_{timestamp}/`
 - v11 run root: `outputs/{model}_{selection_label}_{orientation_label}_v11_{timestamp}/`
 - v12 run root: `outputs/{model}_{selection_label}_{orientation_label}_v12_{timestamp}/`
+- v13 run root: `outputs/{model}_{selection_label}_{orientation_label}_v13_{timestamp}/`
+- v14 run root: `outputs/{model}_{selection_label}_{orientation_label}_v14_{timestamp}/`
+- v15 run root: `outputs/{model}_{selection_label}_{orientation_label}_v15_{timestamp}/`
+- v15 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
 - Downloaded source images: `{run-dir}/source_images/{id}.{ext}`
 - Manifest JSONL: `{run-dir}/generation_manifest.jsonl`

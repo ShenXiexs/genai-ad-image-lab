@@ -1,0 +1,10 @@
+你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示的图片，尽可能确保摄影风格，生成图片要自然，不要出现价格相关的信息。
+
+广告图的风格基于 Park, Jaworski, and MacInnis (1986) 的体验型品牌概念。体验型概念将商品与内部产生的需求相连接，包括感官愉悦、多样性、认知刺激、沉浸感，或被感受到的消费体验。
+
+商品元数据：
+- 标题：{ori_title}
+- 品牌：{creative_id_brand}
+- 类目：{level_one_category_name}
+- 价格：{creative_id_price}
+- 促销：{creative_id_promotion}

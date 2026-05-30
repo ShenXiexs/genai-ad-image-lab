@@ -69,9 +69,13 @@ IMAGE_TYPE_ALIASES = {
 DEFAULT_MODEL = "gpt-image-2"
 DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
 DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
+DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
+DEFAULT_BASE_PROMPT_MODEL = "gpt-4o-mini"
+DEFAULT_V15_BASE_PROMPT_FILE = "prompts/neutral_product_ad_image_prompt.v15.txt"
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
 DEFAULT_PROMPT_VERSION = "current"
+V15_NEUTRAL_PROMPT_PLACEHOLDER = "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]"
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
     "1562371",
@@ -146,7 +150,26 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v12.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v12.txt",
     },
+    "v13": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v13.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v13.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v13.txt",
+    },
+    "v14": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v14.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v14.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v14.txt",
+    },
+    "v15": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v15.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v15.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v15.txt",
+    },
 }
+PARK_PROMPT_VERSIONS = frozenset(
+    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15"}
+)
+GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15"})
 
 
 @dataclass(frozen=True)
@@ -182,7 +205,8 @@ def parse_args() -> argparse.Namespace:
         choices=ORIENTATION_CHOICES,
         help=(
             "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
-            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7, Context-oriented is a deprecated alias for Experiential-oriented."
+            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15, "
+            "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
     parser.add_argument(
@@ -201,7 +225,7 @@ def parse_args() -> argparse.Namespace:
         choices=sorted(PROMPT_VERSION_FILES),
         help=(
             "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
-            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12 use Park et al. functional/symbolic/experiential brand concepts."
+            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15 use Park et al. functional/symbolic/experiential brand concepts."
         ),
     )
     parser.add_argument(
@@ -236,6 +260,38 @@ def parse_args() -> argparse.Namespace:
         "--endpoint",
         default=os.environ.get("OPENAI_IMAGES_EDIT_ENDPOINT"),
         help="Images edit endpoint. If omitted, {api-base-url}/images/edits is used.",
+    )
+    parser.add_argument(
+        "--base-prompt-file",
+        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE", DEFAULT_V15_BASE_PROMPT_FILE),
+        help="Neutral product prompt template used by v15 before orientation-specific image generation.",
+    )
+    parser.add_argument(
+        "--base-prompt-model",
+        default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
+        help="Text/vision model used by v15 to generate the neutral product prompt.",
+    )
+    parser.add_argument(
+        "--base-prompt-endpoint",
+        default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
+        help="Chat completions endpoint for v15 neutral prompt generation. If omitted, {api-base-url}/chat/completions is used.",
+    )
+    parser.add_argument(
+        "--base-prompt-dir",
+        default=None,
+        help="Directory for saved v15 neutral product prompts. Defaults to {run-dir}/base_prompts.",
+    )
+    parser.add_argument(
+        "--base-prompt-max-tokens",
+        type=int,
+        default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
+        help="Maximum output tokens for v15 neutral prompt generation.",
+    )
+    parser.add_argument(
+        "--base-prompt-temperature",
+        type=float,
+        default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
+        help="Temperature for v15 neutral prompt generation.",
     )
     parser.add_argument(
         "--api-key",
@@ -346,13 +402,13 @@ def normalize_image_type(image_type: str) -> str:
 
 
 def canonical_orientations_for_version(prompt_version: str) -> list[str]:
-    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12"}:
+    if prompt_version in PARK_PROMPT_VERSIONS:
         return V3_CANONICAL_ORIENTATIONS
     return LEGACY_CANONICAL_ORIENTATIONS
 
 
 def orientation_aliases_for_version(prompt_version: str) -> dict[str, str]:
-    if prompt_version in {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12"}:
+    if prompt_version in PARK_PROMPT_VERSIONS:
         return V3_ORIENTATION_ALIASES
     return ORIENTATION_ALIASES
 
@@ -417,9 +473,16 @@ def canonical_orientation(orientation: str, prompt_version: str) -> str:
     return orientation_aliases_for_version(prompt_version).get(orientation, orientation)
 
 
-def render_prompt(template: str, row: dict[str, str], orientation: str) -> str:
+def render_prompt(
+    template: str,
+    row: dict[str, str],
+    orientation: str,
+    extra_values: dict[str, str] | None = None,
+) -> str:
     values = {key: clean_value(value) for key, value in row.items()}
     values["orientation"] = orientation
+    if extra_values:
+        values.update({key: "" if value is None else str(value) for key, value in extra_values.items()})
     return template.format_map(DefaultDict(values))
 
 
@@ -442,6 +505,14 @@ def safe_name(value: str, max_len: int = 80) -> str:
 
 def endpoint_from_base_url(base_url: str) -> str:
     return f"{base_url.rstrip('/')}{DEFAULT_IMAGES_EDIT_PATH}"
+
+
+def chat_endpoint_from_base_url(base_url: str) -> str:
+    return f"{base_url.rstrip('/')}{DEFAULT_CHAT_COMPLETIONS_PATH}"
+
+
+def uses_generated_base_prompt(prompt_version: str) -> bool:
+    return prompt_version in GENERATED_BASE_PROMPT_VERSIONS
 
 
 def orientation_label(plans: list[OrientationPlan]) -> str:
@@ -495,6 +566,8 @@ def resolve_output_paths(
     args.source_dir = args.source_dir or str(run_dir / "source_images")
     args.manifest = args.manifest or str(run_dir / "generation_manifest.jsonl")
     args.endpoint = args.endpoint or endpoint_from_base_url(args.api_base_url)
+    args.base_prompt_endpoint = args.base_prompt_endpoint or chat_endpoint_from_base_url(args.api_base_url)
+    args.base_prompt_dir = args.base_prompt_dir or str(run_dir / "base_prompts")
 
 
 def expected_output_paths(output_prefix: pathlib.Path, output_format: str, n: int) -> list[pathlib.Path]:
@@ -663,6 +736,160 @@ def call_openai_image_edit(
     raise RuntimeError(f"OpenAI image edit failed after {retries + 1} attempts: {last_error}")
 
 
+def image_data_url(image_path: pathlib.Path) -> str:
+    mime_type = mimetypes.guess_type(image_path.name)[0] or "image/jpeg"
+    encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def extract_chat_completion_text(response: dict) -> str:
+    if isinstance(response.get("output_text"), str) and response["output_text"].strip():
+        return response["output_text"].strip()
+
+    choices = response.get("choices") or []
+    if choices:
+        message = choices[0].get("message") or {}
+        content = message.get("content", "")
+        if isinstance(content, str):
+            return content.strip()
+        if isinstance(content, list):
+            parts: list[str] = []
+            for item in content:
+                if isinstance(item, str):
+                    parts.append(item)
+                elif isinstance(item, dict):
+                    text = item.get("text")
+                    if isinstance(text, str):
+                        parts.append(text)
+            joined = "\n".join(part.strip() for part in parts if part.strip())
+            if joined:
+                return joined
+
+    raise RuntimeError("Text API response did not contain a usable prompt.")
+
+
+def call_openai_chat_completion(
+    *,
+    api_key: str,
+    endpoint: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    temperature: float,
+    timeout: int,
+    retries: int,
+) -> dict:
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": "你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt},
+                    {"type": "image_url", "image_url": {"url": image_data_url(image_path)}},
+                ],
+            },
+        ],
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+    last_error: Exception | None = None
+    for attempt in range(retries + 1):
+        request = urllib.request.Request(
+            endpoint,
+            data=data,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(f"HTTP {exc.code}: {detail}")
+        except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
+            last_error = exc
+        if attempt < retries:
+            time.sleep(min(2**attempt, 8))
+    raise RuntimeError(f"OpenAI chat completion failed after {retries + 1} attempts: {last_error}")
+
+
+def base_prompt_output_path(args: argparse.Namespace, product_id: str) -> pathlib.Path:
+    return pathlib.Path(args.base_prompt_dir) / f"{product_id}_neutral_prompt.txt"
+
+
+def load_base_prompt_template(args: argparse.Namespace) -> tuple[str, str]:
+    prompt_path = pathlib.Path(args.base_prompt_file)
+    return prompt_path.read_text(encoding="utf-8"), str(prompt_path)
+
+
+def get_neutral_product_prompt(
+    *,
+    row: dict[str, str],
+    product_id: str,
+    source_path: pathlib.Path,
+    args: argparse.Namespace,
+    api_key: str,
+    base_prompt_template: str,
+    cache: dict[str, dict[str, object]],
+) -> dict[str, object]:
+    if product_id in cache:
+        return cache[product_id]
+
+    request_prompt = render_prompt(base_prompt_template, row, "Neutral")
+    output_path = base_prompt_output_path(args, product_id)
+    request_path = output_path.with_name(f"{output_path.stem}.request.txt")
+
+    if output_path.exists() and output_path.stat().st_size > 0 and not args.overwrite:
+        prompt_text = output_path.read_text(encoding="utf-8").strip()
+        result = {
+            "text": prompt_text,
+            "path": str(output_path),
+            "request_path": str(request_path) if request_path.exists() else "",
+            "source": "cache",
+            "request_prompt": request_prompt,
+        }
+        cache[product_id] = result
+        return result
+
+    response = call_openai_chat_completion(
+        api_key=api_key,
+        endpoint=args.base_prompt_endpoint,
+        image_path=source_path,
+        prompt=request_prompt,
+        model=args.base_prompt_model,
+        max_tokens=args.base_prompt_max_tokens,
+        temperature=args.base_prompt_temperature,
+        timeout=args.timeout,
+        retries=args.retries,
+    )
+    prompt_text = extract_chat_completion_text(response)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(prompt_text.strip() + "\n", encoding="utf-8")
+    request_path.write_text(request_prompt.strip() + "\n", encoding="utf-8")
+
+    result = {
+        "text": prompt_text,
+        "path": str(output_path),
+        "request_path": str(request_path),
+        "source": "api",
+        "request_prompt": request_prompt,
+        "api_usage": response.get("usage") or {},
+    }
+    cache[product_id] = result
+    return result
+
+
 def save_images(response: dict, output_prefix: pathlib.Path, output_format: str) -> list[pathlib.Path]:
     saved_paths: list[pathlib.Path] = []
     output_prefix.parent.mkdir(parents=True, exist_ok=True)
@@ -698,7 +925,10 @@ def iter_records(
         for plan in plans:
             orientation = safe_name(plan.orientation)
             output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}"
-            prompt = render_prompt(plan.prompt_template, row, plan.orientation)
+            extra_values = {}
+            if uses_generated_base_prompt(args.prompt_version):
+                extra_values["neutral_product_prompt"] = V15_NEUTRAL_PROMPT_PLACEHOLDER
+            prompt = render_prompt(plan.prompt_template, row, plan.orientation, extra_values)
             yield {
                 "row": row,
                 "product_id": product_id,
@@ -709,6 +939,7 @@ def iter_records(
                 "orientation": plan.orientation,
                 "requested_orientation": plan.requested_orientation,
                 "prompt_source": plan.prompt_source,
+                "prompt_template": plan.prompt_template,
             }
 
 
@@ -717,6 +948,10 @@ def main() -> int:
     plans = resolve_orientation_plans(args)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
     resolve_output_paths(args, rows, plans)
+    base_prompt_template = ""
+    base_prompt_source = ""
+    if uses_generated_base_prompt(args.prompt_version):
+        base_prompt_template, base_prompt_source = load_base_prompt_template(args)
 
     if not rows:
         print("No rows selected.", file=sys.stderr)
@@ -732,11 +967,15 @@ def main() -> int:
     print(f"MODEL {args.model}", flush=True)
     print(f"ENDPOINT {args.endpoint}", flush=True)
     print(f"PROMPT_VERSION {args.prompt_version}", flush=True)
+    if uses_generated_base_prompt(args.prompt_version):
+        print(f"BASE_PROMPT_MODEL {args.base_prompt_model}", flush=True)
+        print(f"BASE_PROMPT_ENDPOINT {args.base_prompt_endpoint}", flush=True)
     print(f"ROWS {len(rows)} ids={selected_ids}", flush=True)
     print(f"ORIENTATIONS {', '.join(plan.orientation for plan in plans)}", flush=True)
 
     total_records = len(rows) * len(plans)
     progress = ProgressTracker(total_records, enabled=not args.no_progress)
+    neutral_prompt_cache: dict[str, dict[str, object]] = {}
 
     for record in iter_records(rows, args, plans):
         row = record["row"]
@@ -768,6 +1007,13 @@ def main() -> int:
             "status": "planned",
             "prompt": record["prompt"],
         }
+        if uses_generated_base_prompt(args.prompt_version):
+            base_request_prompt = render_prompt(base_prompt_template, row, "Neutral")
+            manifest_record["base_prompt_source"] = base_prompt_source
+            manifest_record["base_prompt_model"] = args.base_prompt_model
+            manifest_record["base_prompt_endpoint"] = args.base_prompt_endpoint
+            manifest_record["base_prompt_generation_prompt"] = base_request_prompt
+            manifest_record["neutral_product_prompt"] = V15_NEUTRAL_PROMPT_PLACEHOLDER
 
         try:
             if all(path.exists() for path in expected_outputs) and not args.overwrite:
@@ -781,6 +1027,10 @@ def main() -> int:
             if args.dry_run:
                 manifest_record["status"] = "dry_run"
                 append_manifest(pathlib.Path(args.manifest), manifest_record)
+                if uses_generated_base_prompt(args.prompt_version):
+                    print("BASE_PROMPT_REQUEST", flush=True)
+                    print(manifest_record["base_prompt_generation_prompt"], flush=True)
+                    print("FINAL_IMAGE_PROMPT_WITH_PLACEHOLDER", flush=True)
                 print(record["prompt"], flush=True)
                 progress.advance("dry_run", label)
                 continue
@@ -798,6 +1048,31 @@ def main() -> int:
                 append_manifest(pathlib.Path(args.manifest), manifest_record)
                 progress.advance("downloaded", label)
                 continue
+
+            if uses_generated_base_prompt(args.prompt_version):
+                neutral_prompt = get_neutral_product_prompt(
+                    row=row,
+                    product_id=record["product_id"],
+                    source_path=source_path,
+                    args=args,
+                    api_key=api_key or "",
+                    base_prompt_template=base_prompt_template,
+                    cache=neutral_prompt_cache,
+                )
+                neutral_prompt_text = str(neutral_prompt["text"])
+                record["prompt"] = render_prompt(
+                    record["prompt_template"],
+                    row,
+                    record["orientation"],
+                    {"neutral_product_prompt": neutral_prompt_text},
+                )
+                manifest_record["prompt"] = record["prompt"]
+                manifest_record["neutral_product_prompt"] = neutral_prompt_text
+                manifest_record["neutral_product_prompt_path"] = neutral_prompt["path"]
+                manifest_record["base_prompt_request_path"] = neutral_prompt.get("request_path")
+                manifest_record["base_prompt_cache_status"] = neutral_prompt["source"]
+                if neutral_prompt.get("api_usage"):
+                    manifest_record["base_prompt_api_usage"] = neutral_prompt["api_usage"]
 
             response = call_openai_image_edit(
                 api_key=api_key or "",
