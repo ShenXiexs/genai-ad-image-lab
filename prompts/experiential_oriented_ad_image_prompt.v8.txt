@@ -1,6 +1,10 @@
-You are generating one controlled advertising-image stimulus for a consumer study.
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
 
-Use the provided white-background product image as the exact source product. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+Use the provided white-background product image as the source product identity reference. Preserve the product’s recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+
+The product does not need to keep the exact lighting from the white-background image. To make the image realistic, adapt the product’s lighting, shadows, reflections, perspective, exposure, and ambient color to the new scene. The product must look physically present in the experiential scene, not pasted into the image.
+
+Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
 
 Product metadata:
 - Title: {ori_title}
@@ -9,14 +13,63 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
-Brand concept definition:
-Park, Jaworski, and MacInnis (1986) define a brand concept as a firm-selected brand meaning derived from basic consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. An experiential concept links the product to internally generated needs for sensory gratification, variety, or cognitive stimulation.
+Generate an Experiential-oriented image where LIVED EXPERIENCE is the dominant message.
 
-Minimal quality controls:
-- Create one coherent advertising image.
-- Keep the product recognizable, visually important, and consistent with the source image.
-- Do not add new readable text, fake claims, prices, badges, or unsupported product features.
-- Do not distort the product, break the packaging, or use implausible object relations.
+First infer one plausible consumption experience from the product image, title, category, and metadata. The experience may involve discovering, capturing, listening, watching, gaming, creating, relaxing, cooking, tasting, learning, exploring, exercising, playing, caring, sharing, decorating, traveling, or spending meaningful time with others, depending on the product category.
 
-Concept-image linkage:
-Visually link the product to one plausible felt experience supported by the source image and metadata. The model may choose composition, background, lighting, props, people, and setting only when they help express sensory pleasure, variety, or cognitive stimulation without contradicting known product facts. Keep functional explanation and symbolic identity meaning secondary.
+The image should answer:
+“What enjoyable, immersive, memorable, sensory, creative, relaxing, playful, exploratory, or meaningful experience does this product help create?”
+
+Create a realistic candid advertising photograph, like a real moment captured by a photographer, not an AI-generated postcard. The product must actively participate in and enable the experience. It should not simply appear in front of a beautiful background.
+
+The image should clearly show the interaction among:
+1. the user or consumer;
+2. the source product;
+3. the experience, activity, place, content, object, person, or moment that the product helps the user access, capture, enjoy, create, share, or explore.
+
+The experience must be shown through action, not just atmosphere. The product may be used to capture, listen, watch, play, taste, cook, apply, wear, use, create, navigate, relax, share, discover, care, decorate, or interact with the surrounding environment.
+
+For smartphones, cameras, or recording devices, front/back orientation is a strict physical requirement.
+
+If the visible source product is mainly the phone or device back with rear cameras, do not automatically use a “person holding the phone to photograph distant people or scenery” composition. That often makes the phone appear reversed.
+
+If the scene shows the user photographing another person, scenery, food, an event, or an environment:
+- the rear camera lenses must face the subject being captured;
+- the screen side must face the user;
+- if the viewpoint is behind or beside the user, the viewer should usually see the screen side of the phone, not the back side with the logo and rear cameras;
+- never show the viewer seeing the phone back from behind the user while the user is supposedly photographing people or scenery in front of them.
+
+If the image must show the phone back, logo, and rear cameras, use only physically plausible experiential compositions:
+- selfie;
+- video call;
+- self-recording;
+- mirror recording;
+- the viewpoint is from the subject’s side looking toward the photographer;
+- the user has just finished taking a photo and is naturally lowering the phone;
+- the phone is being carried, shown, or integrated into the experience without pretending to photograph a distant subject.
+
+If the image shows the phone back and rear cameras facing the viewer, the scene must not imply that the phone is photographing distant people or scenery behind the phone. The rear cameras must face the actual captured subject.
+
+Realism is the highest priority. Use natural, physically consistent light and shadow. Avoid perfect postcard sunsets, fantasy glow, fake cinematic lighting, overprocessed HDR, plastic skin, fake bokeh, impossible highlights, and overly polished AI-advertising style.
+
+The scene should include real-camera imperfections: slight motion softness, natural depth of field, uneven ambient light, believable exposure, subtle sensor noise, imperfect framing, real skin texture, natural hand pressure, realistic contact shadows, and slight perspective imperfections.
+
+Use one coherent real scene. No collage, no split-screen, no floating product, no pasted product, no artificial magnifier effect. The product should be clearly visible and occupy about 20–40% of the image, while the experience remains easy to understand.
+
+Avoid pure functional demonstration, productivity scenes, technical proof, status signaling, luxury portraits, generic lifestyle posing, or scenes where the product is merely held without truly enabling the experience.
+
+Photographic style: real documentary-style advertising photography, natural gestures, realistic skin and hand details, believable object scale, authentic environmental texture, available light or natural window light, real camera look. Not CGI, not 3D render, not illustration, not AI-art-like.
+
+The image should pass the 3-second experiential test: viewers should quickly understand the enjoyable, immersive, memorable, creative, relaxing, playful, sensory, or exploratory experience associated with the product without reading any text.
+
+Generation fails if:
+- the phone is reversed;
+- the rear cameras face the wrong direction;
+- the screen faces the wrong direction;
+- the viewer sees the phone back from behind the user while the user is supposedly photographing people or scenery ahead;
+- the scene implies the user is photographing others, but the rear cameras face the viewer;
+- the product is merely held up as a prop and does not truly participate in the experience;
+- the image looks like an AI postcard rather than a real photograph.
+
+Negative prompt:
+reversed phone, phone held backwards, rear camera facing wrong direction, screen facing wrong direction, viewer sees phone back from behind the user, rear camera facing viewer while supposedly photographing others, phone back visible while photographing distant scenery, impossible camera orientation, fingers blocking lens, awkward face blocking, AI postcard, perfect sunset, fantasy glow, fake cinematic lighting, overprocessed HDR, plastic skin, fake bokeh, generic travel photo, product merely held, product pasted into scene, cutout look, floating product, unrealistic hand grip, deformed hands, extra fingers, missing fingers, readable text, slogan, labels, badges, arrows, charts, price tag, QR code, distorted logo, wrong product color, changed product shape, lifestyle pose with no real interaction, luxury status scene, productivity scene, technical demo, plain packshot, CGI, 3D render, illustration, cartoon, surreal, overly glossy AI look.

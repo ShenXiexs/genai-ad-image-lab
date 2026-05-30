@@ -1,6 +1,10 @@
-You are generating one controlled advertising-image stimulus for a consumer study.
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
 
-Use the provided white-background product image as the exact source product. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+Use the provided white-background product image as the source product identity reference. Preserve the product’s recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+
+The product does not need to keep the exact lighting from the white-background image. To make the image realistic, adapt the product’s lighting, shadows, reflections, perspective, exposure, and ambient color to the new scene. The product must look physically photographed, not pasted from a cutout.
+
+Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
 
 Product metadata:
 - Title: {ori_title}
@@ -9,14 +13,34 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
-Brand concept definition:
-Park, Jaworski, and MacInnis (1986) define a brand concept as a firm-selected brand meaning derived from basic consumer needs. Generate a Product-oriented image that communicates a functional brand concept. A functional concept links the product to externally generated consumption needs such as solving a current problem, preventing a potential problem, reducing friction, supporting a practical task, or making consumption more reliable.
+Generate a Product-oriented image where FUNCTION and PRODUCT UNDERSTANDING are the dominant message.
 
-Minimal quality controls:
-- Create one coherent advertising image.
-- Keep the product recognizable, visually important, and consistent with the source image.
-- Do not add new readable text, fake claims, prices, badges, or unsupported product features.
-- Do not distort the product, break the packaging, or use implausible object relations.
+First infer the product type, practical use task, user problem, material, structure, and the main functional reason a consumer would buy it. Show only plausible functions and affordances supported by the product image, title, category, and metadata. When uncertain, use generic category-appropriate affordances rather than fake features.
 
-Concept-image linkage:
-Visually link the product to one plausible practical problem, task, or affordance supported by the source image and metadata. The model may choose composition, background, lighting, props, and setting only when they help express the functional concept without contradicting known product facts. Keep symbolic identity meaning and experiential stimulation secondary.
+Create a realistic multi-view commercial product display, not a lifestyle scene.
+
+The composition should mainly show the product from several functional dimensions:
+1. one dominant hero view of the product;
+2. two or three secondary views, such as front view, back view, side view, top view, close-up detail, open/closed state, material texture, lens, button, cap, connector, compartment, strap, handle, package structure, scale reference, accessory relationship, storage state, or handling detail;
+3. a clean studio tabletop, neutral work surface, organized product demonstration board, or controlled commercial product layout.
+
+The image should look like a professional product-demonstration photograph with multiple coordinated product views, not a person-centered usage story.
+
+Show at least three concrete product evidence cues in total. The cues should help viewers understand the product’s structure, usability, material, operation, storage, protection, portability, fit, comfort, compatibility, care, or practical affordance.
+
+Multiple instances or views of the product are allowed only to show different dimensions, angles, details, or functional affordances. Every instance must match the source product identity exactly.
+
+People, hands, or body parts may appear only as scale, grip, fit, fastening, application, or handling references. Do not create a lifestyle scene, travel scene, emotional scene, social scene, symbolic identity scene, or experiential moment.
+
+Props may appear only when they clarify product function, scale, storage, compatibility, use, or material. Props must behave like functional evidence, not lifestyle decoration.
+
+The product should dominate the image and occupy about 45–70% of the total visual area. Use physically accurate lighting, contact shadows, reflections, product weight, lens perspective, surface texture, slight real-camera imperfections, and believable object scale.
+
+Avoid plain white packshot, beauty still life, lifestyle story, symbolic identity scene, luxury mood, emotional experience, entertainment scene, romance, travel, or abstract metaphor. The image must help viewers understand what the product is, what parts it has, and what practical value it provides.
+
+Photographic style: real professional commercial product photography, high-resolution, realistic material texture, accurate scale, natural shadows, clean composition, soft studio or natural window light, not CGI, not 3D render, not illustration, not AI-art-like.
+
+The image should pass the 3-second product-function test: viewers should quickly understand the product’s practical task, structure, affordance, or functional benefit without reading any text.
+
+Negative prompt:
+lifestyle usage scene, person-centered story, travel scene, emotional moment, social scene, symbolic identity scene, experiential scene, product used as prop, single ordinary use scene, low-quality collage, screenshot layout, banner template, infographic, arrows, charts, labels, badges, readable text, slogan, fake claim, price tag, sale tag, QR code, distorted logo, wrong product color, changed product shape, broken packaging, unrealistic geometry, floating product, pasted product, cutout look, impossible shadows, fake reflections, deformed hands, extra fingers, missing fingers, plain white packshot, premium still life with no function, luxury mood, CGI, 3D render, illustration, cartoon, surreal, overly glossy AI look.

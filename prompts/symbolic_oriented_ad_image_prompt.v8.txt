@@ -1,6 +1,10 @@
-You are generating one controlled advertising-image stimulus for a consumer study.
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
 
-Use the provided white-background product image as the exact source product. Preserve the product's visible shape, material, color, packaging, logo, design details, and physical structure.
+Use the provided white-background product image as the source product identity reference. Preserve the product’s recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+
+The product does not need to keep the exact lighting from the white-background image. To make the image realistic, adapt the product’s lighting, shadows, reflections, perspective, exposure, and ambient color to the new scene. The product must look physically integrated into the person’s style, space, or routine, not pasted into the image.
+
+Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
 
 Product metadata:
 - Title: {ori_title}
@@ -9,14 +13,44 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
-Brand concept definition:
-Park, Jaworski, and MacInnis (1986) define a brand concept as a firm-selected brand meaning derived from basic consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+Generate a Symbolic-oriented image where IDENTITY EXPRESSION is the dominant message.
 
-Minimal quality controls:
-- Create one coherent advertising image.
-- Keep the product recognizable, visually important, and consistent with the source image.
-- Do not add new readable text, fake claims, prices, badges, or unsupported product features.
-- Do not distort the product, break the packaging, or use implausible object relations.
+First infer one plausible symbolic meaning from the product image, title, category, and metadata. The meaning may involve modern identity, creative taste, professional confidence, refined everyday style, independence, artistic identity, intellectual identity, social confidence, leadership, adventurous identity, caring identity, organized lifestyle, playful personality, or belonging to a desirable group, depending on the product category.
 
-Concept-image linkage:
-Visually link the product to one plausible self-image, role, group, or identity meaning supported by the source image and metadata. The model may choose composition, background, lighting, props, people, and setting only when they help express the symbolic concept without contradicting known product facts. Keep functional explanation and experiential stimulation secondary.
+The image should answer:
+“What kind of person chooses, owns, carries, wears, displays, gifts, uses, or values this product?”
+
+Create a realistic editorial advertising photograph in which the product works as a visible identity signal. The product must be intentionally integrated into the person’s style, role, space, routine, values, taste, or social context. It should not be a passive prop.
+
+The image should clearly show the symbolic relationship among:
+1. the person, owner, giver, or user;
+2. the source product;
+3. identity cues around them, such as personal styling, workspace, tools, accessories, posture, social context, curated personal objects, creative environment, professional setting, minimalist home, organized routine, caring routine, urban daily life, hobby setting, or community context.
+
+Use two or three product-category-specific identity cues that support the same symbolic meaning. The product should visibly contribute to the identity expression and look deliberately chosen.
+
+For products with limited obvious symbolic value, infer symbolic meaning from category-appropriate ownership signals, such as being practical, organized, caring, thoughtful, tasteful, prepared, playful, creative, refined, independent, or attentive to daily life. Do not force luxury, glamour, status, or romance if the product category does not support it.
+
+Realism is critical. Use believable natural light, physically consistent shadows, realistic hand contact, natural posture, real fabric texture, true object scale, authentic environmental details, slight real-camera imperfections, and natural color grading. Avoid overly polished fashion fantasy, plastic skin, perfect showroom lighting, fake luxury glow, and artificial cinematic effects.
+
+Use one coherent photographic scene. No collage, no split-screen, no floating product, no pasted product, no artificial magnifier effect. The product should be clearly visible and occupy about 15–35% of the image.
+
+Avoid generic luxury shortcuts. Do not rely only on attractive models, formal suits, rooftops, city skylines, sports cars, champagne, mansions, glamorous lighting, or fashion poses. These cues may appear only if they are category-relevant and the product itself still carries the symbolic meaning.
+
+For smartphones, cameras, or personal devices:
+The device may signal creative taste, modern identity, personal independence, social confidence, refined everyday style, or connected life. It should be visible as part of the person’s chosen look, routine, or role. Do not turn the scene into a camera-function demo, travel snapshot, video call, entertainment moment, or productivity proof.
+
+Photographic style: real editorial advertising photography, natural human posture, realistic skin and hand details, believable scale, authentic styling, natural window light or real urban available light, real camera look, shallow-to-moderate depth of field. Not CGI, not 3D render, not illustration, not AI-art-like.
+
+The image should pass the 3-second symbolic test: viewers should quickly understand the identity, role, taste, group belonging, confidence, value, or desired self associated with the product without reading any text.
+
+Generation fails if:
+- the product is merely held with no identity meaning;
+- the image relies only on a good-looking model or luxury background;
+- the image becomes a functional demo;
+- the image becomes an experiential scene;
+- the product looks pasted into the scene;
+- the symbolic meaning would remain equally strong if the product were removed.
+
+Negative prompt:
+generic attractive model, fake luxury, rooftop cliché, sports car, champagne, mansion, perfect showroom, plastic skin, fantasy glow, overly cinematic lighting, product merely held, passive prop, product pasted into scene, cutout look, floating product, impossible shadows, fake reflections, lifestyle pose with no identity meaning, technical demo, productivity proof, travel experience, entertainment scene, emotional scene, romantic scene, unrealistic hand grip, deformed hands, extra fingers, missing fingers, readable text, slogan, labels, badges, arrows, charts, price tag, QR code, distorted logo, wrong product color, changed product shape, plain packshot, CGI, 3D render, illustration, cartoon, surreal, overly glossy AI look.
