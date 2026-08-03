@@ -1,6 +1,6 @@
 # GenAI 广告图片研究：CHI/HCI Background、Related Work 与研究定位文献综述
 
-> 2026-07-31
+> 最后更新：2026-08-03
 > 研究对象：同一去品牌产品的功能型（functional）、体验型（experiential）与象征型（symbolic）GenAI 广告图片；Study 1 中并列随机分配的 AI 来源披露组与来源未披露组；产品实用／享乐取向与象征承载力；消费者对广告和产品的评价。
 
 ## 总结
@@ -9,35 +9,86 @@
 
 现有文献形成了四条相邻但尚未真正闭合的研究链：
 
-1. CHI/UIST/IUI 主要研究创作者如何提示、控制和迭代生成图片，以及界面怎样支持共同创作（Liu & Chilton, 2022; Liu et al., 2022; Chung & Adar, 2023; Dang et al., 2023; Fan et al., 2024）。
+1. 广告图片生产经历了从摄影／插画与 Photoshop 式数字编辑、任务专用的算法处理，到深度生成模型、大规模 T2I 与 VLM 的演进；CHI/UIST/IUI 则主要研究创作者如何提示、控制和迭代这些模型，以及界面怎样支持共同创作（Hertzmann et al., 2001; Pérez et al., 2003; Goodfellow et al., 2014; Ho et al., 2020; Ramesh et al., 2021; Alayrac et al., 2022; Li et al., 2023; Liu & Chilton, 2022; Chung & Adar, 2023）。
 2. 计算机视觉与生成模型评估主要研究画质、文本—图像对齐、构图正确性和总体偏好，却很少验证图片是否向终端受众传达了预期的商业意义（Otani et al., 2023; Hu et al., 2023; Lee et al., 2023; Corneanu et al., 2025）。
 3. 品牌概念、视觉修辞与消费者研究提供了本研究的策略内容：品牌意义可以围绕 functional、symbolic 与 experiential needs 组织，而图片是需要被受众解码的符号系统；视觉意义可能被误读，并会影响广告态度、心理模拟和自我联结（Park et al., 1986; Scott, 1994; McQuarrie & Mick, 1999; Petridis & Chilton, 2019; Elder & Krishna, 2012）。
 4. AI 来源与披露研究发现的不是单一“披露惩罚”：结果会随任务主观性、内容情感性、产品类型、标签形式和评价对象变化，可能为负、为零、形成正负双路径，或通过透明度提高平台信任（Jakesch et al., 2019; Kirkby et al., 2023; Wu et al., 2025; Koning & Voorveld, 2025; Shi & Jiang, 2026; Trattner et al., 2026）。
 
 框架：**品牌概念(Park) → GenAI 视觉策略与生成控制 → 视觉意义是否被正确读出 → 心理机制 → 行为评价，并把 AI 披露作为 Study 1 中并列操纵的界面／来源线索，而不是孤立的道德标签。**
 
+### Background 思维导图
+
+```mermaid
+mindmap
+  root((GenAI 广告图片研究 Background))
+    应用现状
+      人工制作与数字图像编辑
+      专用算法与深度生成模型
+      T2I 与 VLM 形成多模态工作流
+      广告图成为重要应用场景
+    现有研究
+      创作者端关注生成控制
+      模型端关注画质与对齐
+      消费者端多评价既成广告
+    理论依据
+      Park 等 1986 品牌概念管理
+        Functional
+        Experiential
+        Symbolic
+      同一商品可以表达不同意义
+    核心缺口
+      缺少理论驱动的广告生图体系
+      缺少受众端的意义保真验证
+    AI 披露情境
+      平台已开始标注 AI 内容
+      广告披露仍然碎片化
+      来源标签可能改变内容解释
+    本研究回应
+      构造三类视觉意义策略
+      预检验产品与图片
+      Study 1 比较 AI 已披露与来源未披露
+      检验意义理解 心理机制与行为评价
+```
+
+主线是：**GenAI 图片已快速进入商业应用，但现有研究尚未把理论驱动的生成策略与受众意义理解连成一条完整链条；AI 披露则作为随后需要检验的来源情境。**
+
 ## 1. 大模型生成（广告）图片的现状、目的、困惑与本研究 Motivation
 
-### 1.1 现状：能力与应用扩张快，但研究对象仍以“通用生成”或“生成结果评价”为主
+广告图片的生产方式经历了从人工制作、数字编辑、任务专用的算法生成，到大规模生成式视觉模型的连续变化。技术能力的扩展不仅改变了图片如何被制作，也改变了广告创意可以被生产、试验和分发的规模。由此产生的关键问题已不再只是系统能否生成一张可用图片，而是生成过程能否被广告策略约束，受众能否读出预期意义，以及 AI 来源信息是否会改变这种意义的解释。
 
-大模型生成图片已经从一次性 text-to-image output，发展为包含提示编写、局部控制、草图／区域输入、上下文提取和多轮迭代的人机共同创作过程。相关 HCI 工作分别研究 prompt 设计规则、类似绘画媒介的交互、世界构建、上下文感知创作和专业设计师工作流（Liu & Chilton, 2022; Chung & Adar, 2023; Dang et al., 2023; Fan et al., 2024; Park et al., 2024）。这条研究线的主要应用与目的可以概括为：降低视觉表达门槛、帮助用户把抽象意图转化为图像、加快候选方案探索，以及提高创作者对生成过程的可控性。
+### 1.1 从数字图像编辑到大规模生成式视觉模型
 
-领域化应用也已经出现。Opal 将多模态生成组织为新闻插图工作流，说明具体任务域需要自己的概念提取、视觉搜索和编辑结构，而不能只依赖通用 prompt 框（Liu, Qiao, & Chilton, 2022）。在营销和传播领域，已有研究则更多从结果端考察 AI 生成视觉内容的真实性、信任、广告态度和购买反应，或研究 AI 来源、诉求与产品类型的匹配（Brüns & Meißner, 2024; Bui et al., 2024; Shi & Jiang, 2026; Gu et al., 2026）。因此，创作系统研究与消费者反应研究分别向前推进，却尚未形成一套连接两端的广告图生成体系。
+广告视觉长期建立在摄影、插画、排版和后期制作的组合之上。Photoshop 等桌面图像编辑软件把修图、图层式合成、色彩校正和局部修改集中到数字工作台；Adobe 于 1990 年发布 Photoshop 1.0 后，这类软件逐渐成为摄影、设计和广告制作的重要基础设施（Adobe, 2025）。这一阶段已经深刻改变了视觉生产，但作品的构图、素材选择与传播意图仍主要由创作者逐项决定，软件承担的是编辑、组合与执行功能。
 
-| 现有研究方向               | 主要应用／目的                                   | 已解决的问题                         | 对广告图仍留下的问题                                                   |
-| -------------------------- | ------------------------------------------------ | ------------------------------------ | ---------------------------------------------------------------------- |
-| 通用 T2I prompt 与交互系统 | 将文字、草图、区域和上下文转为图像               | 提高表达效率、迭代能力与局部控制     | 控制成功通常由创作者判断，未验证广告受众是否读出预期产品意义           |
-| 领域化图片生成             | 新闻插图、世界构建、专业视觉设计                 | 把生成流程嵌入具体任务               | 新闻“主题—插图”流程不能直接回答商品应突出功能、体验还是象征意义     |
-| T2I 基准与人类评价         | 检查画质、对象、构图、文本—图像一致性与总体偏好 | 提升输出质量与可比较性               | 字面对齐不等于传播意义对齐；“图做对了”不等于“广告有效”             |
-| AI 广告与消费者反应        | 研究真实性、信任、态度、购买及披露效应           | 发现 AI 效应依赖内容、产品和披露情境 | 多数研究把既成广告当作刺激，较少公开可复用的、理论驱动的生成与筛选协议 |
+随后出现的计算机图形学与图像处理方法开始把部分视觉操作交给算法完成。Image Analogies 可以从成对示例中学习一种图像变换，再把该变换应用到新的目标图像；Poisson image editing 则利用梯度域优化实现更自然的区域融合与无缝合成（Hertzmann et al., 2001; Pérez et al., 2003）。这些方法扩展了数字编辑的能力，却通常依赖已有素材、示例或特定任务定义。系统能够自动完成某类变换，并不意味着它能够根据开放的语言描述创造新的场景，更不意味着它能够理解广告意图。
 
-### 1.2 核心困惑：广告图的成功标准不能只停留在“像不像”和“好不好看”
+深度生成模型把图像合成进一步转化为学习数据分布的问题。GAN 通过生成器与判别器的对抗训练合成逼真样本（Goodfellow et al., 2014），扩散模型则学习从噪声逐步恢复数据，并显著提高了图像生成的稳定性与质量（Ho et al., 2020）。不过，早期生成模型通常围绕固定数据集、特定领域或预先定义的条件开发。Ramesh et al. (2021) 将当时的 text-to-image 研究概括为在固定数据集上改进建模假设，并依赖复杂架构、辅助损失或分割标签等训练侧信息。模型已经能够生成新图像，但新类别、新领域和新控制目标仍常需要专门的数据与工程配置。
 
-第一，生成控制仍具有随机性。prompt 措辞、style modifier、输入组织和 random seed 都可能改变输出；专业设计师也报告难以仅靠语言稳定表达视觉意图（Liu & Chilton, 2022; Oppenlaender, 2024; Grimal et al., 2024; Park et al., 2024）。第二，现有评估主要覆盖视觉质量、对象和空间关系、文本—图像 alignment 与总体偏好（Hu et al., 2023; Lee et al., 2023; Otani et al., 2023; Corneanu et al., 2025），但广告是一种需要受众解码的视觉传播。图片即使写实、完整且符合字面 prompt，也可能没有让消费者理解预期的功能、体验或身份意义；视觉修辞和视觉隐喻研究已经表明，隐含意义并不会被所有观看者一致理解（Scott, 1994; Petridis & Chilton, 2019; Mohanty & Ratneshwar, 2015）。第三，披露研究进一步说明，同一内容会因来源线索而被重新解释，因此广告内容策略与 AI 来源信念必须被因果分离（Jakesch et al., 2019; Koning & Voorveld, 2025; Shi & Jiang, 2026）。
+大规模语言模型的发展使任务描述和少量示例能够直接通过文本交互提供给模型，推动自然语言成为调用通用模型能力的重要接口（Brown et al., 2020）。几乎同期，大规模视觉—语言预训练把这一接口扩展到图像领域。CLIP 在 4 亿组网络图文对上学习视觉概念与自然语言之间的对应关系，并展示了 zero-shot transfer（Radford et al., 2021）；DALL·E 将文本与图像表示为统一的 token 流，在足够的数据和规模下实现了跨任务的 zero-shot image generation（Ramesh et al., 2021）。Imagen 进一步表明，更强的语言编码器能够改善图像保真度与文本—图像对齐（Saharia et al., 2022）；latent diffusion 通过潜空间建模和 cross-attention，使高分辨率生成能够接受文本、边界框等更一般的条件，同时显著降低计算成本（Rombach et al., 2022）。大规模 T2I 的关键变化因此不是单纯增加参数，而是把广泛图文预训练、开放词汇条件、跨领域复用和自然语言控制结合在同一生成接口中。
 
-这些困惑共同暴露出一个体系性缺口：现有工作尚未提供一套同时回答以下问题的商业 GenAI 图片框架：**生成时依据什么传播理论划分策略；如何在同一商品上稳定实现策略；如何区分技术质量、产品保真与意义保真；受众是否按设计意图解码；这种解码如何进一步影响广告和消费者结果。**
+视觉语言模型又把图像从生成结果转变为可以被语言模型读取和推理的输入。Flamingo 能够处理交错的图像、视频与文本，并通过少量示例适应视觉问答、描述和分类等任务（Alayrac et al., 2022）；BLIP-2 则通过连接冻结的图像编码器与大型语言模型，展示了遵循自然语言指令的 zero-shot image-to-text 能力（Li et al., 2023）。T2I 与 VLM 并非同一种模型，但两条技术路线的汇合使视觉工作流同时具备“按语言生成”和“围绕图片理解、反馈与修订”的条件。对于广告制作而言，参考商品图、策略说明、生成候选和多轮评价由此可以进入同一套可迭代流程。
 
-### 1.3 核心理论依据：从品牌概念管理到生图策略
+这种变化重新分配了广告图生产中的时间与劳动。传统流程通常要求在拍摄、绘制、素材搜集、合成和返工之间往复；大规模 T2I 则把相当一部分工作转化为“表达意图、生成候选、比较结果、局部修改和冻结成品”。同一基础模型可以跨越新闻插图、概念设计、社交内容和产品视觉，不必为每个商品类别从头训练。HCI 研究也随之把 prompt、草图、区域、上下文和多轮反馈设计为创作界面，支持创作者探索与修订生成结果（Liu & Chilton, 2022; Chung & Adar, 2023; Dang et al., 2023; Fan et al., 2024; Park et al., 2024）。生成式视觉模型由此不再只是加快原有编辑步骤的工具，而成为能够批量提出视觉方案、改变创意搜索空间的人机协作系统。
+
+### 1.2 GenAI 图片进入广告工作流后形成的新研究对象
+
+通用生成能力进入具体行业后，需要被重新组织为领域工作流。Opal 将概念提取、视觉检索和多模态生成组合为新闻插图流程，说明专业任务不能只依赖一个通用 prompt 输入框（Liu, Qiao, & Chilton, 2022）。广告生产同样需要领域化，但其目标具有明确的说服性：图片不仅要完整、美观和符合文本描述，还要让商品与特定消费者需要、使用体验或身份意义建立联系。截至 2026 年，IAB 已把产品图、个性化内容和其他广告创意列为 GenAI 的实际应用场景，表明生成式视觉技术已进入商业制作和治理框架（Interactive Advertising Bureau, 2026）。
+
+相关研究开始考察 AI 视觉内容的真实性、品牌评价、广告态度和购买反应。AI 参与社交媒体内容制作可能削弱品牌真实性，AI 生成的旅游图片所带来的行为反应也受到感知真实性影响，而更近期的广告研究进一步显示，披露效应会随诉求类型、品牌和产品情境变化（Brüns & Meißner, 2024; Bui et al., 2024; Shi & Jiang, 2026; Gu et al., 2026）。这条文献主要从受众端评价已经生成的内容。与之相邻的 HCI 文献则更多关注创作者能否表达意图、控制结果和高效迭代。两条研究流之间仍缺少广告生成的策略层：技术系统可以快速产生候选，消费者也可以评价成品，但什么样的广告意义应当被写入生成过程，以及这一意义是否真正到达受众，仍未得到系统回答。
+
+### 1.3 从 prompt 控制到广告策略：内容、意义与产品情境
+
+Prompt 研究已经对如何向模型表达视觉意图给出一系列方法。Liu and Chilton (2022) 研究 subject、style 等提示成分及其组合方式；Oppenlaender (2024) 系统整理了影响输出的 prompt modifiers；PromptPaint、WorldSmith 和 ContextCam 分别通过媒介式混合、空间与层级控制以及情境输入改善迭代创作（Chung & Adar, 2023; Dang et al., 2023; Fan et al., 2024）。这些研究帮助创作者控制画面包含什么、采用何种视觉形式以及如何修订结果。广告策略还包含另一项要求：同一商品为何应当突出某一种消费者价值，以及这种价值应通过哪些视觉线索被受众识别。
+
+内容、形式、交互和广告策略因此构成不同的控制层级。商品、人物与场景属于内容层；光线、色彩、镜头和构图属于形式层；草图、区域选择、prompt mixing 和多轮 refinement 属于交互层。Functional、experiential 与 symbolic 则属于广告意义层。诸如 cinematic、luxury 或 minimalist 的 style modifier 可以改变视觉形式，却不能直接替代理论上的体验、象征或功能价值；创作者认为图片符合 prompt，也不能证明目标消费者以相同方式理解成品。
+
+现有 prompt 研究的优化对象主要是字面内容、视觉形式、可控性与创作体验，而不是广告战略构念。相关工作尚未把 functional、experiential 与 symbolic 作为三种彼此可区分的广告生成策略，并同时独立测量商品的 utilitarian／hedonic orientation 与 symbolic affordance。若实验只比较宽泛 prompt、风格词或最终成图，所谓“prompt effect”会同时包含图像形式是否更讨喜、广告意义是否改变，以及该意义是否适合当前商品。观察到的平均差异因而很难被解释为可迁移的广告策略。
+
+现有评价体系也强化了这一限制。生成控制具有随机性，prompt 措辞、modifier、输入组织和 random seed 都可能改变输出；专业设计师仍报告难以仅靠语言稳定表达视觉意图（Liu & Chilton, 2022; Oppenlaender, 2024; Grimal et al., 2024; Park et al., 2024）。与此同时，主流评估覆盖视觉质量、对象和空间关系、文本—图像 alignment 与总体偏好（Hu et al., 2023; Lee et al., 2023; Otani et al., 2023; Corneanu et al., 2025），但广告是需要受众解码的视觉传播。图片即使写实、完整且符合字面 prompt，也可能没有让消费者理解预期的功能、体验或身份意义；视觉修辞和视觉隐喻研究已经表明，隐含意义并不会被所有观看者一致理解（Scott, 1994; Petridis & Chilton, 2019; Mohanty & Ratneshwar, 2015）。
+
+现有工作尚未形成一套贯通广告理论、受控生成和受众评价的商业 GenAI 图片框架。这样的框架需要说明策略依据何种传播理论区分，如何在同一商品上实现不同策略，商品本身的功能、享乐与象征属性如何形成边界条件，以及技术质量、产品保真和意义保真如何分别验证。只有受众能够按设计意图解码图片，生成控制才可能进一步转化为广告态度、购买意愿和传播意愿等结果。
+
+#### 品牌概念管理与“商品属性 × 生图策略”
 
 Park et al. (1986) 是**策略分类与策略内容的首要理论依据**。该文把 brand concept 定义为企业从基本消费者需要中选择的品牌意义，并认为这一上位概念应当约束 positioning strategies，进而塑造消费者感知到的 brand image。作者区分 functional、symbolic 与 experiential 三类概念，并主张不同概念需要不同的传播与定位做法（Park et al., 1986, pp. 135–140）。因此，本研究先依据三类消费者需要规定广告图应表达的主导意义，再把该意义写入生成 prompt、筛选标准和 manipulation validation。
 
@@ -49,13 +100,34 @@ Park et al. (1986) 是**策略分类与策略内容的首要理论依据**。该
 
 这篇论文还给出本研究“同一商品生成三种策略”的直接理论理由。Park et al. (1986, p. 136) 特别说明，functional、symbolic 与 experiential 指的是品牌管理所创造的 **image**，而不是固定的 product class；同一种产品理论上可以被定位为三种不同形象。由此，产品的 utilitarian／hedonic orientation 与 symbolic affordance 应作为被预检的产品属性和潜在 moderator，而不能用来定义或替代图片策略。换言之，**商品是什么**与**广告图让商品意味着什么**是两个需要在实验中分开的层级。
 
-Park et al. (1986, pp. 136–139) 同时提醒，多概念的 generic image 可能导致定位指引不一致，并增加消费者识别品牌基本意义的难度。这支持本研究在每个生成条件中突出一条主导意义路线，并对其他两条路线设置共享限制，以获得可区分的实验操纵。不过，该文是规范性的长期品牌管理框架，不是 T2I 论文、现成图片量表或三策略效果的实验比较。因此，本研究对它的贡献应表述为**理论到生成操作的转译与受众验证**，而不是声称 Park et al. 已经验证了三类 GenAI 图片。
+广告研究也说明，这种分层不是形式上的复杂化，而是识别策略效果的必要条件。Johar and Sirgy (1991) 论证，value-expressive appeal 更适合 value-expressive product，utilitarian appeal 更适合 utilitarian product，作用路径分别涉及 self-congruity 与 functional congruity。Voss et al. (2003) 进一步表明，hedonic 与 utilitarian 是可分别测量的产品／品牌态度维度；Homburg et al. (2015) 和 Candi et al. (2017) 则把产品的 functionality、aesthetics 与 symbolism 区分为不同设计维度，并发现这些维度与消费者反应及产品情境相联系。它们共同支持一个条件化命题：**不存在脱离商品属性而普遍最优的广告图片策略，策略效果应当通过商品—意义匹配来检验。**
 
-### 1.4 Motivation：提出理论驱动、可审计、受众验证的广告图生成策略体系
+| 分析层级 | 本研究如何定义与测量 | 在实验中的角色 | 为什么不能混在一起 |
+| --- | --- | --- | --- |
+| 图片意义策略（image meaning strategy） | 对每个保留商品分别生成 functional、experiential、symbolic 三类图片；使用共同技术约束、策略专属正向线索和跨策略排除规则 | 被操纵的核心自变量 | 若用不同商品代表三种策略，策略效应会与商品差异完全混淆 |
+| 商品实用／享乐取向（utilitarian／hedonic product orientation） | 用独立预检样本按 Voss et al. (2003) 的维度评价每个候选商品，并保留连续得分 | 产品层 moderator／边界条件 | “享乐型商品”不是 experiential 图片，“实用型商品”也不是 functional 图片；前者是商品属性，后者是传播处理 |
+| 商品象征承载力（product symbolic affordance） | 独立测量商品在身份表达、角色、群体归属或理想自我方面的承载程度，参考 Park et al. (1986)、Homburg et al. (2015) 与 Candi et al. (2017) | 产品层 moderator／边界条件 | symbolic strategy 可以施加在所有商品上，但其可被接受和产生效果的程度可能随商品象征承载力变化 |
+| 受众读出的意义（audience-perceived meaning） | 在正式刺激冻结前，由独立目标受众分别评价三类意义，而不是只由研究者或生成者命名 | manipulation validation 与机制起点 | prompt 中写入某种意义，并不保证该意义已经到达受众 |
 
-本研究的 Motivation 不应写成“GenAI 能快速生成广告，所以比较哪张图更好”，而应写成：**生成能力已经普及，Park et al. (1986) 也早已提供以消费者需要组织品牌形象的策略框架，但广告图研究仍缺少把这一传播理论转化为可复现生成控制、再由目标受众验证意义是否到达的中间层。** 为填补这一缺口，本研究将 Park 的三类 brand concepts 转化为同一去品牌商品上的三类视觉意义策略；随后用固定源图、共享技术约束、版本化 prompt、候选生成记录和独立人类验证，检验这些策略是否真正产生不同的受众阅读路径。
+产品精细化与策略精细化共同构成这一研究设计。同一商品接受三种策略处理，商品的实用／享乐取向和象征承载力则通过独立预检形成连续、可检验的产品画像。该交叉结构可以分别估计策略主效应和 `strategy × product attribute` 交互，区分哪种图片平均更有效与哪种策略对哪类商品更有效。象征策略的作用不会被商品本身更适合身份表达所替代，功能策略的作用也不会被商品本身更偏实用所混淆。
 
-这一策略体系的意义有三层。理论上，它检验经典 brand concept-image management 能否成为生成式视觉系统的策略层，而不只是事后解释广告效果的分类框架；方法上，它把 creator-side control 与 audience-side meaning fidelity 连起来；设计上，它能够形成条件化知识：对于什么类型的商品和传播目标，应使用何种视觉策略，以及 AI 来源披露是否改变该策略的作用路径。更稳妥的新颖性表述是：**既有研究已经涉及 AI 广告图片及披露，但尚缺少一个以 Park et al. (1986) 的 brand concepts 为明确生成依据、在固定商品基础上生成并筛选三类视觉意义、再由受众验证其意义保真的端到端框架。**
+Park et al. (1986, pp. 136–139) 同时提醒，多概念的 generic image 可能导致定位指引不一致，并增加消费者识别品牌基本意义的难度。这一论述支持在每个生成条件中突出一条主导意义路线，并对其他两条路线设置共享限制，以形成可区分的实验操纵。Park et al. 提供的是规范性的长期品牌管理框架，而不是 T2I 模型、现成图片量表或三策略效果比较。本研究据此完成三项转译：把经典品牌意义理论转化为可审计的生成策略，把商品属性与图片策略分为两个分析层级，再由目标受众验证意义是否到达并检验二者的匹配效果。
+
+### 1.4 AI Disclosure 作为广告图片的来源线索
+
+生成图片进入平台和广告界面后，内容与来源信息会同时参与用户判断。Meta、TikTok 和 YouTube 已经采用不同形式的 AI 内容标签，IAB 也在 2026 年发布面向广告生态的 AI transparency and disclosure framework（Interactive Advertising Bureau, 2026; Meta, 2024/2025, 2025/2026; TikTok, n.d.; YouTube Help, n.d.）。这些实践表明，AI 来源披露正在从抽象的伦理讨论转化为用户可见的界面元素。与此同时，各平台在适用范围、标签位置、自动识别与广告覆盖方面仍存在差异，用户可能看到明确的 AI 提示，也可能只看到没有来源说明的图片。
+
+来源标签能够在不改变图片像素的情况下改变用户如何解释内容。AI-mediated communication、品牌声音与广告披露研究发现，人们对 AI 来源的知觉会影响真实性、信任、说服知识和广告评价，但效应方向并不一致；它可能表现为负面评价、零效应、相反的间接路径，或由透明度带来的信任提升（Jakesch et al., 2019; Kirkby et al., 2023; Koning & Voorveld, 2025; Shi & Jiang, 2026）。AI Disclosure 因而属于作用于既有视觉意义的来源解释层，而不是替代 functional、experiential 与 symbolic 内容策略的另一种图片策略。
+
+这一关系形成两个相互衔接的问题：functional、experiential 与 symbolic 视觉意义能否被稳定生成并由受众正确理解；当同一类图片被明确说明为 AI 生成时，来源线索是否会改变不同意义路径及其行为后果。Study 1 据此在首次看图前将参与者并列随机分配至 AI 来源已披露组或来源未披露组，并对两组进行 post-only 比较。来源未披露表示实验界面没有提供创作来源信息，并不构成人类制作声明。
+
+### 1.5 研究缺口与 Motivation：建立“内容策略 × 产品情境 × 来源线索”的研究框架
+
+大规模 T2I 已把跨领域图像生成转化为自然语言可调用的通用能力，却没有自动提供广告策略。现有研究能够控制主体、风格、构图和编辑过程，但较少区分 functional、experiential 与 symbolic 意义，也没有系统地把这些图片策略与商品的 utilitarian／hedonic orientation 和 symbolic affordance 分层测量。更快地产生更多、更美观的候选图，并不能保证广告传递了预期价值，也不能说明某种策略适合哪类商品。进入传播界面后，AI 来源标签还可能进一步改变受众对同一视觉意义的解释。
+
+本研究将 Park et al. (1986) 的三类 brand concepts 转化为同一去品牌商品上的三类视觉意义策略，并将商品的实用／享乐取向与象征承载力作为独立预检、连续保留的产品属性。固定源图、共享技术约束、版本化 prompt、候选生成记录和独立人类验证共同用于检验策略意义是否真正到达受众，并估计 `strategy × product attribute` 的条件化效果。在图片内容和真实生成来源保持一致的基础上，并列随机分组进一步识别 AI Disclosure 的来源线索效应。
+
+这一框架把经典 brand concept-image management 引入生成式视觉系统的策略层，并考察产品属性匹配与来源线索如何改变不同视觉意义的作用。在方法上，creator-side control、product-side profiling、audience-side meaning fidelity 与 source-cue interpretation 被连接为一条可审计链条。由此形成的知识不是脱离情境的“最佳 prompt”排序，而是不同商品和传播目标应采用何种视觉策略，以及 AI 来源披露后这些策略是否仍然有效。既有研究已经分别涉及大规模 T2I、prompt 控制、AI 广告图片、消费者意义反应和 AI 披露，但仍缺少一个以 Park et al. (1986) 的 brand concepts 为策略层，在同一商品上生成并验证三类视觉意义，将商品属性与生成策略完整交叉，再检验来源披露如何改变这些意义路径的端到端框架。
 
 ## 2. 从新闻刺激选择到本研究广告图片选择
 
@@ -201,6 +273,25 @@ Khatiwada et al. (2026) 的 *When AI Rewrites the News* 提供了一个有用范
 
 ### 4.4 AI 披露、来源判断、真实性与信任
 
+#### 社会与行业背景：AI 标签进入信息流，而广告披露仍不统一
+
+今天的普通用户不必进入专门的 AI 社区，已经可能在一次日常的信息流浏览中遇到多种 AI 来源提示：在 Facebook、Instagram 或 Threads 上，图片可能带有 “Imagined with AI” 等可见标记或平台识别出的 AI 来源标签；在 TikTok 上，创作者需要标注看起来真实的 AI 生成内容，平台也结合检测模型与 C2PA Content Credentials 自动识别；在 YouTube 上，看起来真实且经过实质性生成或修改的内容需要披露，标签可能出现在播放器或展开后的说明中（Meta, 2024/2025; TikTok, n.d.; YouTube Help, n.d.）。AI 标签因而不再只是政策文件中的抽象原则，而正在成为用户会看到、会忽略、也会据此重新解释内容的界面元素。
+
+付费广告却呈现出更复杂的图景。用户看到 “Sponsored／赞助”只能知道这是一条广告，并不能自动知道其中的产品、人物或场景是否由 GenAI 生成。Meta 已将部分广告的 “AI info” 放入 “About this ad” 或直接置于 “Sponsored” 旁边，但是否显示以及显示在哪里，会随所用工具、平台能否检测到行业标准信号、修改是否“显著”，以及是否包含逼真人物而变化（Meta, 2025/2026）。IAB 在 2026 年发布的行业框架也指出，GenAI 已经进入产品图、配音、虚拟人物和个性化内容等广告工作流，但广告创意的披露实践仍不一致：有的活动会标注轻微 AI 参与，有的则只在法律要求时披露；其建议框架本身也是自愿性的（IAB, 2026）。
+
+| 用户所处场景                            | 当前可核验的现实做法                                                                    | 用户实际可能看到什么                                                                 | 对本研究的启示                                                                         |
+| --------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Facebook／Instagram／Threads 的普通内容 | Meta 依据自家工具信息以及 C2PA／IPTC 等行业信号识别并标注部分 AI 图片                   | 图片上的可见标记或附近的 AI 来源标签，但前提是平台获得可识别信号                     | 标签是否出现不仅取决于真实生成来源，也取决于检测与元数据链条                           |
+| TikTok 短视频／图片内容                 | 对逼真的 AIGC 设置创作者标注要求，并结合自动检测与 Content Credentials                  | 创作者标签或平台自动添加的 AI 提示                                                   | 披露既可能来自上传者，也可能来自平台；两者代表不同的责任与可信度线索                   |
+| YouTube 视频内容                        | 要求披露看起来真实的合成／实质性修改内容，并可依据平台工具、C2PA 或检测结果自动加注     | 播放器内较醒目的标签，或展开说明后才可见的标签                                       | 标签的内容相同并不意味着显著性相同；位置和可见性属于 HCI 设计变量                      |
+| 付费数字广告                            | Meta 已对部分广告提供条件式 AI 标注；IAB 提出风险导向的自愿披露框架，但行业做法尚未统一 | 可能紧邻 “Sponsored”，也可能藏在三点菜单／“About this ad” 中，或没有可见来源提示 | “有无披露”之外，还应关注谁披露、在哪里披露、披露何种 AI 参与，以及用户是否真正注意到 |
+
+这构成了本研究的披露情境：**AI 正在广告生产端变得日常化，来源透明也正在平台治理端制度化，但消费者面对的仍不是一个稳定、统一的标签环境。**
+
+#### 从社会情境到实验操纵
+
+从现实界面看，AI 披露不是单一标签，而是一个分层的 **labeling ecology**：创作者可以主动声明，平台可以根据检测结果自动加注，C2PA 等 provenance 机制可以携带机器可读的生成历史，而最终提示又可能紧邻内容、位于说明区域或藏在菜单中。这意味着实验中的 disclosure 不应只被当成一句文本内容，而应被定义为具有发送者、位置、显著性和可验证程度的界面组件。本研究先固定这些界面属性，识别“明确披露 vs. 未提供来源信息”的因果差异；后续研究再比较菜单式提示、邻近标签和可验证 provenance。来源未披露组只表示界面没有提供来源信息，绝不等同于声称“由人类制作”。
+
 | 文献                                           | 情境与主要结果                                                                                       | 本研究应如何使用                                                                                                                  |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Jakesch et al. (2019)                          | CHI；同一人类文本在“可能由 AI 写”环境中被不同评价；混合来源时出现 Replicant Effect                 | 披露改变的是接收者对来源和信号可操纵性的理解，不只是技术态度                                                                      |
@@ -276,6 +367,7 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 | 贡献类型       | 可主张的贡献                                                                                                                                                              | 必须有的实证支撑                                                                                                         |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | 理论转译贡献   | 以 Park et al. (1986) 的 brand concept-image management 为策略母体，将 functional、experiential、symbolic 从品牌定位原则转译为 GenAI 广告图的生成约束与受众可感知视觉意义 | prompt 与排除规则可追溯到 Park 的需要和定位定义；明确原理论不是图片量表或生成模型理论                                    |
+| 产品—策略分层贡献 | 将被操纵的 functional／experiential／symbolic 图片策略，与被测量的 utilitarian／hedonic product orientation 和 symbolic affordance 分开，并在同一商品上完整交叉三种策略 | 独立商品预检；每个保留商品都有三种策略刺激；报告连续产品属性与 `strategy × product attribute` 交互，而不是用商品类别替代策略 |
 | 概念贡献       | 将 GenAI 广告图片定义为需要跨越 creator intent 与 audience interpretation 的 AI-mediated visual communication；区分理论概念、生成操作与受众读出的意义                     | 三类操纵在受众中可区分；不是仅由研究者或 prompt 命名                                                                     |
 | 方法贡献       | 提出商业 T2I 图片的多层人评协议：质量、产品保真、意义保真、受众后果                                                                                                       | Study 0A/0B 透明报告、刺激级数据、随机化、标注人数和一致性                                                               |
 | 实证贡献       | 在固定产品和真实生成来源的条件下，通过 Study 1 的 AI 已披露／来源未披露并列组间随机化，估计视觉意义策略、产品取向、象征承载力与披露的主效应和交互                         | 披露采用 post-only between-subject 分组；有足够产品和刺激重复；模型正确处理 participant、product、image 的层级结构       |
@@ -285,17 +377,17 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 
 ### 可直接使用的中文贡献段落
 
-> 本研究以 Park、Jaworski 和 MacInnis（1986）的 brand concept-image management 为理论起点，将 functional、experiential 与 symbolic 从品牌定位原则转译为商业 GenAI 图片的生成约束、筛选规则和受众可感知的视觉意义。由此，文本到图像生成的 HCI 研究从创作者端的提示控制与共同创作，扩展到受众端的视觉意义理解与决策。研究通过多阶段人类评估分别验证视觉质量、产品保真与意义保真；随后在 Study 1 中，于参与者首次看图前将其随机分配到 AI 来源已披露组或来源未披露组，以 post-only 并列组间设计考察这一界面来源线索如何与视觉意义策略、产品的实用／享乐取向及象征承载力共同影响广告评价、购买、推荐与分享，并比较可诊断性、产品使用心理模拟和产品—自我联结三条机制。由此，本研究的贡献不是提出一个脱离既有理论的新三分类，而是建立并检验一条从经典广告策略理论、生成系统控制到受众意义与行为结果的可审计链条。
+> 本研究以 Park、Jaworski 和 MacInnis（1986）的 brand concept-image management 为理论起点，将 functional、experiential 与 symbolic 从品牌定位原则转译为商业 GenAI 图片的生成约束、筛选规则和受众可感知的视觉意义。不同于把商品类型直接当作图片策略，本研究让同一商品接受三种意义处理，并以独立预检分别测量商品的实用／享乐取向与象征承载力；由此能够检验策略主效应及商品—策略匹配，而不是把“策略有效”与“恰好选对商品”混在一起。研究通过多阶段人类评估分别验证视觉质量、产品保真与意义保真；随后在 Study 1 中，于参与者首次看图前将其随机分配到 AI 来源已披露组或来源未披露组，以 post-only 并列组间设计考察这一界面来源线索如何与视觉意义策略和产品属性共同影响广告评价、购买、推荐与分享，并比较可诊断性、产品使用心理模拟和产品—自我联结三条机制。由此，本研究建立并检验一条从经典广告策略理论、产品精细画像、生成系统控制到受众意义与行为结果的可审计链条。
 
 ### 可直接使用的英文贡献段落
 
-> Grounded in Park, Jaworski, and MacInnis’s (1986) brand concept-image management framework, this work translates functional, experiential, and symbolic brand concepts from positioning principles into generation constraints, curation rules, and audience-perceived meanings for commercial GenAI imagery. It thereby extends HCI research on text-to-image generation from creator-side prompting and control to audience-side interpretation and decision making. A staged human-evaluation protocol separates visual quality, product fidelity, and meaning fidelity. In Study 1, participants are randomly assigned before their first image exposure to parallel AI-disclosed or source-not-disclosed arms; disclosure is therefore a post-only between-subject manipulation rather than a pre–post intervention. We examine how this interface-level source cue interacts with visual meaning, utilitarian–hedonic product orientation, and symbolic affordance to shape advertising evaluations and behavioral intentions. The contribution is not a theory-free three-style taxonomy, but an auditable link from established advertising strategy theory through generative control to audience interpretation and downstream outcomes.
+> Grounded in Park, Jaworski, and MacInnis’s (1986) brand concept-image management framework, this work translates functional, experiential, and symbolic brand concepts from positioning principles into generation constraints, curation rules, and audience-perceived meanings for commercial GenAI imagery. Rather than using product categories to stand in for image strategies, we render every retained product under all three strategies and independently measure utilitarian–hedonic orientation and symbolic affordance as continuous product-level contingencies. This design separates strategy effects from product selection and enables tests of product–strategy fit. A staged human-evaluation protocol further distinguishes visual quality, product fidelity, and meaning fidelity. In Study 1, participants are randomly assigned before their first image exposure to parallel AI-disclosed or source-not-disclosed arms; disclosure is therefore a post-only between-subject manipulation rather than a pre–post intervention. The contribution is an auditable link from established advertising strategy theory and fine-grained product profiling through generative control to audience interpretation and downstream outcomes.
 
 ## 7. 建议的 Background / Related Work 章节结构
 
 ### 7.1 Generative AI Image Creation as a Human–AI Interaction Problem
 
-先综述 prompt engineering、迭代控制、多模态输入、专业设计工作流和 context-aware co-creation。结尾不要说“生成不可控”，而要写：现有研究显著改善了创作者对生成过程的控制，但很少把成功定义为目标受众是否正确理解输出所承载的意义（Liu & Chilton, 2022; Ko et al., 2023; Chung & Adar, 2023; Fan et al., 2024; Park et al., 2024）。
+先用一段简短技术谱系说明 GAN／diffusion 如何发展为大规模、zero-shot、自然语言条件的 T2I，再综述 prompt engineering、迭代控制、多模态输入、专业设计工作流和 context-aware co-creation（Goodfellow et al., 2014; Ho et al., 2020; Radford et al., 2021; Ramesh et al., 2021; Saharia et al., 2022; Rombach et al., 2022）。结尾不要说“生成不可控”，而要写：现有研究显著改善了创作者对内容、形式和交互过程的控制，但很少把 functional／experiential／symbolic 作为广告策略层，更少把成功定义为目标受众是否正确理解输出所承载的意义（Liu & Chilton, 2022; Ko et al., 2023; Chung & Adar, 2023; Fan et al., 2024; Park et al., 2024）。
 
 ### 7.2 From Image Quality to Meaning Fidelity
 
@@ -325,18 +417,24 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 
 ## 8. 证据—主张对应表
 
-| 拟写入论文的主张                             | 主要证据                                                                               | 安全写法                                                                                                                                                                                                                                                                                        | 不应写法                                                                    |
-| -------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| T2I 已降低图像创作门槛，但 prompt 控制仍困难 | Liu & Chilton (2022); Chung & Adar (2023); Oppenlaender et al. (2025)                  | “Existing work documents persistent challenges in expressing and refining visual intent.”                                                                                                                                                                                                     | “T2I systems are uncontrollable.”                                         |
-| HCI 现有研究偏创作者端                       | Ko et al. (2023); Park et al. (2024); Fan et al. (2024)                                | “Much of the HCI literature evaluates creator workflows, control, or co-creative experience.”                                                                                                                                                                                                 | “HCI has ignored users.”                                                  |
-| 三类生图策略具有明确广告理论来源             | Park et al. (1986, pp. 135–140)                                                       | “We translate Park et al.’s functional, experiential, and symbolic brand concepts into controlled visual-generation strategies; the original framework treats these concepts as managed images rather than fixed product classes.”                                                           | “Park et al. developed or validated three GenAI image-generation styles.” |
-| 现有相关工作尚未形成端到端广告图策略体系     | Liu, Qiao, & Chilton (2022); Otani et al. (2023); Shi & Jiang (2026); Gu et al. (2026) | “Prior work separately advances domain-specific generation workflows, reproducible image evaluation, and consumer responses to AI advertising; an unresolved problem is how to connect advertising theory, controlled generation, audience-side meaning validation, and downstream outcomes.” | “There is no research on AI-generated advertising images.”                |
-| 自动指标不能替代人评                         | Otani et al. (2023); Lee et al. (2023)                                                 | “Common automatic metrics do not fully align with human perception and omit some dimensions.”                                                                                                                                                                                                 | “Automatic metrics are useless.”                                          |
-| 生成刺激应经过候选池、独立验证与冻结         | Khatiwada et al. (2026); Otani et al. (2023)                                           | “Controlled generative experiments benefit from a documented candidate pool, construct-specific human validation, and a frozen stimulus set.”                                                                                                                                                 | “Researchers may select whichever generated outputs look best.”           |
-| 视觉意义可能被误读                           | Petridis & Chilton (2019); Mohanty & Ratneshwar (2015)                                 | “Implicit visual meaning is neither automatic nor uniform across viewers.”                                                                                                                                                                                                                    | “Most people cannot understand visual ads.”                               |
-| AI 披露效应具有条件性                        | Kirkby et al. (2023); Wu et al. (2025); Koning & Voorveld (2025); Shi & Jiang (2026)   | “Disclosure effects vary in direction and mechanism across tasks, content, and label designs.”                                                                                                                                                                                                | “Disclosure always lowers trust.”                                         |
-| 最近研究已涉及产品类型／诉求                 | Shi & Jiang (2026); Gu et al. (2026); Kirk & Givi (2025)                               | “Recent work has begun to identify content and product contingencies.”                                                                                                                                                                                                                        | “No study has examined content × disclosure.”                            |
-| 本研究仍有新增量                             | 上述四条文献流的交叉综合                                                               | “The unresolved issue is whether controlled visual meaning is recovered by audiences and how disclosure changes distinct meaning pathways.”                                                                                                                                                   | “This is the first study of AI advertising images.”                       |
+| 拟写入论文的主张                             | 主要证据                                                                               | 安全写法                                                                                                                                                                                                                                                                                        | 不应写法                                                                         |
+| -------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| 数字图像制作先经历了人工编辑与任务专用算法阶段 | Adobe (2025); Hertzmann et al. (2001); Pérez et al. (2003) | “Desktop image editors digitized manual retouching and compositing, while later algorithms automated bounded transformations from source images or examples.” | “Before generative AI, computers could not create or transform images.” |
+| 大模型生图相对专用生成的关键变化             | Brown et al. (2020); Goodfellow et al. (2014); Ho et al. (2020); Radford et al. (2021); Ramesh et al. (2021); Saharia et al. (2022); Rombach et al. (2022) | “Large-scale T2I combines broad image–text pretraining, reusable natural-language conditioning, and zero-shot generation; its difference is not parameter count alone.” | “Traditional models could not generate images”或“所有大模型都具备通用理解” |
+| VLM 扩展了图像理解与语言交互能力             | Alayrac et al. (2022); Li et al. (2023)                                                | “VLMs accept visual inputs and support language-conditioned tasks such as captioning and visual question answering, complementing T2I generation.” | “VLM and T2I are the same model”或“VLM 已完全理解广告意义。” |
+| T2I 已降低图像创作门槛，但 prompt 控制仍困难 | Liu & Chilton (2022); Chung & Adar (2023); Oppenlaender et al. (2025)                  | “Existing work documents persistent challenges in expressing and refining visual intent.”                                                                                                                                                                                                     | “T2I systems are uncontrollable.”                                              |
+| 现有 prompt 控制不等于广告策略               | Liu & Chilton (2022); Chung & Adar (2023); Dang et al. (2023); Oppenlaender (2024)      | “The reviewed prompt literature primarily structures depicted content, visual form, and interaction; it does not by itself operationalize functional, experiential, and symbolic advertising meanings.” | “Prior prompt studies have no strategy”或“style prompts are useless.” |
+| HCI 现有研究偏创作者端                       | Ko et al. (2023); Park et al. (2024); Fan et al. (2024)                                | “Much of the HCI literature evaluates creator workflows, control, or co-creative experience.”                                                                                                                                                                                                 | “HCI has ignored users.”                                                       |
+| 三类生图策略具有明确广告理论来源             | Park et al. (1986, pp. 135–140)                                                       | “We translate Park et al.’s functional, experiential, and symbolic brand concepts into controlled visual-generation strategies; the original framework treats these concepts as managed images rather than fixed product classes.”                                                           | “Park et al. developed or validated three GenAI image-generation styles.”      |
+| 商品属性与图片策略必须分层                   | Park et al. (1986); Johar & Sirgy (1991); Voss et al. (2003); Homburg et al. (2015); Candi et al. (2017) | “We manipulate image meaning within product and measure utilitarian–hedonic orientation and symbolic affordance as product-level contingencies.” | “Utilitarian products are functional images”或“symbolic products define the symbolic condition.” |
+| 现有相关工作尚未形成端到端广告图策略体系     | Liu, Qiao, & Chilton (2022); Otani et al. (2023); Shi & Jiang (2026); Gu et al. (2026) | “Prior work separately advances domain-specific generation workflows, reproducible image evaluation, and consumer responses to AI advertising; an unresolved problem is how to connect advertising theory, controlled generation, audience-side meaning validation, and downstream outcomes.” | “There is no research on AI-generated advertising images.”                     |
+| 自动指标不能替代人评                         | Otani et al. (2023); Lee et al. (2023)                                                 | “Common automatic metrics do not fully align with human perception and omit some dimensions.”                                                                                                                                                                                                 | “Automatic metrics are useless.”                                               |
+| 生成刺激应经过候选池、独立验证与冻结         | Khatiwada et al. (2026); Otani et al. (2023)                                           | “Controlled generative experiments benefit from a documented candidate pool, construct-specific human validation, and a frozen stimulus set.”                                                                                                                                                 | “Researchers may select whichever generated outputs look best.”                |
+| 视觉意义可能被误读                           | Petridis & Chilton (2019); Mohanty & Ratneshwar (2015)                                 | “Implicit visual meaning is neither automatic nor uniform across viewers.”                                                                                                                                                                                                                    | “Most people cannot understand visual ads.”                                    |
+| AI 披露效应具有条件性                        | Kirkby et al. (2023); Wu et al. (2025); Koning & Voorveld (2025); Shi & Jiang (2026)   | “Disclosure effects vary in direction and mechanism across tasks, content, and label designs.”                                                                                                                                                                                                | “Disclosure always lowers trust.”                                              |
+| AI 标签已进入平台界面，但广告披露仍不统一    | Meta (2024/2025, 2025/2026); TikTok (n.d.); YouTube Help (n.d.); IAB (2026)            | “AI-content labeling is becoming institutionalized across major platforms, while advertising disclosure remains conditional and heterogeneous in coverage, placement, and provenance.”                                                                                                        | “All AI content is now labeled”或“AI advertising is almost never disclosed.” |
+| 最近研究已涉及产品类型／诉求                 | Shi & Jiang (2026); Gu et al. (2026); Kirk & Givi (2025)                               | “Recent work has begun to identify content and product contingencies.”                                                                                                                                                                                                                        | “No study has examined content × disclosure.”                                 |
+| 本研究仍有新增量                             | 上述四条文献流的交叉综合                                                               | “The unresolved issue is whether controlled visual meaning is recovered by audiences and how disclosure changes distinct meaning pathways.”                                                                                                                                                   | “This is the first study of AI advertising images.”                            |
 
 ## 9. 对当前实验设计的具体建议
 
@@ -354,10 +452,14 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 
 ## 参考文献
 
+### 学术文献
+
+- Alayrac, J.-B., Donahue, J., Luc, P., Miech, A., Barr, I., Hasson, Y., Lenc, K., Mensch, A., Millican, K., Reynolds, M., Ring, R., Rutherford, E., Cabi, S., Han, T., Gong, Z., Samangooei, S., Monteiro, M., Menick, J. L., Borgeaud, S., Brock, A., Nematzadeh, A., Sharifzadeh, S., Bińkowski, M., Barreira, R., Vinyals, O., Zisserman, A., & Simonyan, K. (2022). Flamingo: A visual language model for few-shot learning. In *Advances in Neural Information Processing Systems, 35*. https://doi.org/10.52202/068431-1723
 - Aziz, M., Rehman, U., Safi, S. A., & Abbasi, A. Z. (2024). *Visual verity in AI-generated imagery: Computational metrics and human-centric analysis* [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2408.12762
 - Belk, R. W. (1988). Possessions and the extended self. *Journal of Consumer Research, 15*(2), 139–168. https://doi.org/10.1086/209154
 - Bellaiche, L., Shahi, R., Turpin, M. H., Ragnhildstveit, A., Sprockett, S., Barr, N., Christensen, A., & Seli, P. (2023). Humans versus AI: Whether and why we prefer human-created compared to AI-created artwork. *Cognitive Research: Principles and Implications, 8*, Article 42. https://doi.org/10.1186/s41235-023-00499-6
 - Brakus, J. J., Schmitt, B. H., & Zarantonello, L. (2009). Brand experience: What is it? How is it measured? Does it affect loyalty? *Journal of Marketing, 73*(3), 52–68. https://doi.org/10.1509/jmkg.73.3.052
+- Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., & Amodei, D. (2020). Language models are few-shot learners. In *Advances in Neural Information Processing Systems, 33* (pp. 1877–1901). https://proceedings.neurips.cc/paper_files/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html
 - Brüns, J. D., & Meißner, M. (2024). Do you create your content yourself? Using generative artificial intelligence for social media content creation diminishes perceived brand authenticity. *Journal of Retailing and Consumer Services, 79*, 103790. https://doi.org/10.1016/j.jretconser.2024.103790
 - Bui, H. T., Filimonau, V., & Sezerel, H. (2024). AI-thenticity: Exploring the effect of perceived authenticity of AI-generated visual content on tourist patronage intentions. *Journal of Destination Marketing & Management, 34*, 100956. https://doi.org/10.1016/j.jdmm.2024.100956
 - Candi, M., Jae, H., Makarem, S., & Mohan, M. (2017). Consumer responses to functional, aesthetic and symbolic product design in online reviews. *Journal of Business Research, 81*, 31–39. https://doi.org/10.1016/j.jbusres.2017.08.006
@@ -375,15 +477,19 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 - Friestad, M., & Wright, P. (1994). The persuasion knowledge model: How people cope with persuasion attempts. *Journal of Consumer Research, 21*(1), 1–31. https://doi.org/10.1086/209380
 - Gangadharbatla, H. (2022). The role of AI attribution knowledge in the evaluation of artwork. *Empirical Studies of the Arts, 40*(2), 125–142. https://doi.org/10.1177/0276237421994697
 - Ghosh, D., Hajishirzi, H., & Schmidt, L. (2023). GenEval: An object-focused framework for evaluating text-to-image alignment. In *Advances in Neural Information Processing Systems, 36*. https://doi.org/10.52202/075280-2270
+- Goodfellow, I. J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., & Bengio, Y. (2014). Generative adversarial nets. In *Advances in Neural Information Processing Systems, 27*. https://papers.nips.cc/paper_files/paper/2014/hash/f033ed80deb0234979a61f95710dbe25-Abstract.html
 - Grigsby, J. L., Michelsen, M., & Zamudio, C. (2025). Service ads in the era of generative AI: Disclosures, trust, and intangibility. *Journal of Retailing and Consumer Services, 84*, 104231. https://doi.org/10.1016/j.jretconser.2025.104231
 - Grimal, P., Le Borgne, H., Ferret, O., & Tourille, J. (2024). TIAM—A metric for evaluating alignment in text-to-image generation. In *Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision* (pp. 2890–2899). https://openaccess.thecvf.com/content/WACV2024/html/Grimal_TIAM_-_A_Metric_for_Evaluating_Alignment_in_Text-to-Image_Generation_WACV_2024_paper.html
 - Gu, C., Li, X., & Xiang, Q. (2026). Aligning source, appeal, and brand: Resolving the disclosure–effect dilemma in AIGC advertising. *Electronic Commerce Research and Applications, 77*, 101598. https://doi.org/10.1016/j.elerap.2026.101598
 - Hancock, J. T., Naaman, M., & Levy, K. (2020). AI-mediated communication: Definition, research agenda, and ethical considerations. *Journal of Computer-Mediated Communication, 25*(1), 89–100. https://doi.org/10.1093/jcmc/zmz022
+- Hertzmann, A., Jacobs, C. E., Oliver, N., Curless, B., & Salesin, D. H. (2001). Image analogies. In *Proceedings of the 28th Annual Conference on Computer Graphics and Interactive Techniques* (pp. 327–340). Association for Computing Machinery. https://doi.org/10.1145/383259.383295
+- Ho, J., Jain, A., & Abbeel, P. (2020). Denoising diffusion probabilistic models. In *Advances in Neural Information Processing Systems, 33*. https://proceedings.neurips.cc/paper/2020/hash/4c5bcfec8584af0d967f1ab10179ca4b-Abstract.html
 - Homburg, C., Schwemmle, M., & Kuehnl, C. (2015). New product design: Concept, measurement, and consequences. *Journal of Marketing, 79*(3), 41–56. https://doi.org/10.1509/jm.14.0199
 - Hong, J.-W., & Curran, N. M. (2019). Artificial intelligence, artists, and art: Attitudes toward artwork produced by humans vs. artificial intelligence. *ACM Transactions on Multimedia Computing, Communications, and Applications, 15*(2s), Article 58, 1–16. https://doi.org/10.1145/3326337
 - Hu, Y., Liu, B., Kasai, J., Wang, Y., Ostendorf, M., Krishna, R., & Smith, N. A. (2023). TIFA: Accurate and interpretable text-to-image faithfulness evaluation with question answering. In *Proceedings of the IEEE/CVF International Conference on Computer Vision* (pp. 20406–20417). https://openaccess.thecvf.com/content/ICCV2023/html/Hu_TIFA_Accurate_and_Interpretable_Text-to-Image_Faithfulness_Evaluation_with_Question_Answering_ICCV_2023_paper.html
 - Jakesch, M., French, M., Ma, X., Hancock, J. T., & Naaman, M. (2019). AI-mediated communication: How the perception that profile text was written by AI affects trustworthiness. In *Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems* (Article 239, pp. 1–13). Association for Computing Machinery. https://doi.org/10.1145/3290605.3300469
 - Jiang, Z., & Benbasat, I. (2007). Research note—Investigating the influence of the functional mechanisms of online product presentations. *Information Systems Research, 18*(4), 454–470. https://doi.org/10.1287/isre.1070.0124
+- Johar, J. S., & Sirgy, M. J. (1991). Value-expressive versus utilitarian advertising appeals: When and why to use which appeal. *Journal of Advertising, 20*(3), 23–33. https://doi.org/10.1080/00913367.1991.10673345
 - Khatiwada, P., Pappu, V., Bagozzi, B. E., & Mauriello, M. L. (2026). When AI rewrites the news: How sentiment, framing, and LLM disclosure shape perceptions. In *Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems* (pp. 1–25). Association for Computing Machinery. https://doi.org/10.1145/3772318.3791527
 - Kirk, C. P., & Givi, J. (2025). The AI-authorship effect: Understanding authenticity, moral disgust, and consumer responses to AI-generated marketing communications. *Journal of Business Research, 186*, 114984. https://doi.org/10.1016/j.jbusres.2024.114984
 - Kirkby, A., Baumgarth, C., & Henseler, J. (2023). To disclose or not disclose, is no longer the question—Effect of AI-disclosed brand voice on brand authenticity and attitude. *Journal of Product & Brand Management, 32*(7), 1108–1122. https://doi.org/10.1108/JPBM-02-2022-3864
@@ -391,6 +497,7 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 - Ko, H.-K., Park, G., Jeon, H., Jo, J., Kim, J., & Seo, J. (2023). Large-scale text-to-image generation models for visual artists’ creative works. In *Proceedings of the 28th International Conference on Intelligent User Interfaces* (pp. 919–933). Association for Computing Machinery. https://doi.org/10.1145/3581641.3584078
 - Koning, B., & Voorveld, H. A. M. (2025). Disclaimer! This content is AI-generated: How AI-disclosures influence trust in advertisements and organizations. *Journal of Interactive Advertising, 25*(3), 240–253. https://doi.org/10.1080/15252019.2025.2554149
 - Lee, T., Yasunaga, M., Meng, C., Mai, Y., Park, J. S., Gupta, A., Zhang, Y., Narayanan, D., Teufel, H., Bellagente, M., Kang, M., Park, T., Leskovec, J., Zhu, J.-Y., Li, F.-F., Wu, J., Ermon, S., & Liang, P. (2023). Holistic evaluation of text-to-image models. In *Advances in Neural Information Processing Systems, 36*. https://proceedings.neurips.cc/paper_files/paper/2023/hash/dd83eada2c3c74db3c7fe1c087513756-Abstract-Datasets_and_Benchmarks.html
+- Li, J., Li, D., Savarese, S., & Hoi, S. (2023). BLIP-2: Bootstrapping language-image pre-training with frozen image encoders and large language models. In *Proceedings of the 40th International Conference on Machine Learning* (Vol. 202, pp. 19730–19742). PMLR. https://proceedings.mlr.press/v202/li23q.html
 - Liu, V., & Chilton, L. B. (2022). Design guidelines for prompt engineering text-to-image generative models. In *Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems* (Article 384, pp. 1–23). Association for Computing Machinery. https://doi.org/10.1145/3491102.3501825
 - Liu, V., Qiao, H., & Chilton, L. (2022). Opal: Multimodal image generation for news illustration. In *Proceedings of the 35th Annual ACM Symposium on User Interface Software and Technology* (pp. 1–17). Association for Computing Machinery. https://doi.org/10.1145/3526113.3545621
 - Longoni, C., & Cian, L. (2022). Artificial intelligence in utilitarian vs. hedonic contexts: The “word-of-machine” effect. *Journal of Marketing, 86*(1), 91–108. https://doi.org/10.1177/0022242920957347
@@ -405,10 +512,15 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 - Park, C. W., Jaworski, B. J., & MacInnis, D. J. (1986). Strategic brand concept-image management. *Journal of Marketing, 50*(4), 135–145. https://doi.org/10.1177/002224298605000401
 - Park, H., Eirich, J., Luckow, A., & Sedlmair, M. (2024). “We are visual thinkers, not verbal thinkers!”: A thematic analysis of how professional designers use generative AI image generation tools. In *Proceedings of the 13th Nordic Conference on Human-Computer Interaction* (Article 35, pp. 1–14). Association for Computing Machinery. https://doi.org/10.1145/3679318.3685370
 - Pawelczyk, F., Dimmery, D., & Yan, P. (2026). Implied authenticity effect? The impact of explicit labels on AI-generated content. *Proceedings of the International AAAI Conference on Web and Social Media, 20*(1), 1738–1766. https://doi.org/10.1609/icwsm.v20i1.42721
+- Pérez, P., Gangnet, M., & Blake, A. (2003). Poisson image editing. *ACM Transactions on Graphics, 22*(3), 313–318. https://doi.org/10.1145/882262.882269
 - Petridis, S., & Chilton, L. B. (2019). Human errors in interpreting visual metaphor. In *Proceedings of the 2019 Conference on Creativity and Cognition* (pp. 187–197). Association for Computing Machinery. https://doi.org/10.1145/3325480.3325503
 - Phillips, B. J. (2000). The impact of verbal anchoring on consumer response to image ads. *Journal of Advertising, 29*(1), 15–24. https://doi.org/10.1080/00913367.2000.10673600
 - Phillips, B. J., & McQuarrie, E. F. (2004). Beyond visual metaphor: A new typology of visual rhetoric in advertising. *Marketing Theory, 4*(1–2), 113–136. https://doi.org/10.1177/1470593104044089
+- Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I. (2021). Learning transferable visual models from natural language supervision. In *Proceedings of the 38th International Conference on Machine Learning* (Vol. 139, pp. 8748–8763). PMLR. https://proceedings.mlr.press/v139/radford21a.html
 - Ragot, M., Martin, N., & Cojean, S. (2020). AI-generated vs. human artworks: A perception bias towards artificial intelligence? In *Extended Abstracts of the 2020 CHI Conference on Human Factors in Computing Systems* (pp. 1–10). Association for Computing Machinery. https://doi.org/10.1145/3334480.3382892
+- Ramesh, A., Pavlov, M., Goh, G., Gray, S., Voss, C., Radford, A., Chen, M., & Sutskever, I. (2021). Zero-shot text-to-image generation. In *Proceedings of the 38th International Conference on Machine Learning* (Vol. 139, pp. 8821–8831). PMLR. https://proceedings.mlr.press/v139/ramesh21a.html
+- Rombach, R., Blattmann, A., Lorenz, D., Esser, P., & Ommer, B. (2022). High-resolution image synthesis with latent diffusion models. In *Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition*. https://doi.org/10.1109/CVPR52688.2022.01042
+- Saharia, C., Chan, W., Saxena, S., Li, L., Whang, J., Denton, E. L., Ghasemipour, S. K. S., Lopes, R. G., Ayan, B. K., Salimans, T., Ho, J., Fleet, D. J., & Norouzi, M. (2022). Photorealistic text-to-image diffusion models with deep language understanding. In *Advances in Neural Information Processing Systems, 35*. https://doi.org/10.52202/068431-2643
 - Scott, L. M. (1994). Images in advertising: The need for a theory of visual rhetoric. *Journal of Consumer Research, 21*(2), 252–273. https://doi.org/10.1086/209396
 - Scott, L. M., & Vargas, P. (2007). Writing with pictures: Toward a unifying theory of consumer response to images. *Journal of Consumer Research, 34*(3), 341–356. https://doi.org/10.1086/519145
 - Shi, Y., & Jiang, Z. (2026). Consumer responses to AI disclosure labels: The role of novelty and authenticity. *SAGE Open, 16*(1). https://doi.org/10.1177/21582440261417793
@@ -418,3 +530,14 @@ GenAI 提供了一个新的实验能力：把 Park 的三种 positioning logics 
 - Wu, L., Dodoo, N. A., & Wen, T. J. (2025). Disclosing AI’s involvement in advertising to consumers: A task-dependent perspective. *Journal of Advertising, 54*(1), 20–38. https://doi.org/10.1080/00913367.2024.2309929
 - Xu, J., Liu, X., Wu, Y., Tong, Y., Li, Q., Ding, M., Tang, J., & Dong, Y. (2023). ImageReward: Learning and evaluating human preferences for text-to-image generation. In *Advances in Neural Information Processing Systems, 36*. https://doi.org/10.52202/075280-0700
 - Zhang, Z., Kou, T., Wang, S., Li, C., Sun, W., Wang, W., Li, X., Wang, Z., Cao, X., Min, X., Liu, X., & Zhai, G. (2025). Q-Eval-100K: Evaluating visual quality and alignment level for text-to-vision content. In *Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition* (pp. 10621–10631). https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_Q-Eval-100K_Evaluating_Visual_Quality_and_Alignment_Level_for_Text-to-Vision_Content_CVPR_2025_paper.html
+
+### 平台与行业资料
+
+> 以下资料仅用于描述截至 2026-08-01 的平台实践、界面政策与行业治理背景，不替代同行评审研究所提供的因果证据。
+
+- Adobe. (2025, February 19). *Celebrating 35 years of creativity, community, and innovation with Adobe Photoshop*. https://blog.adobe.com/en/publish/2025/02/19/celebrating-35-years-of-creativity-community-innovation-with-adobe-photoshop
+- Interactive Advertising Bureau. (2026, January). *AI transparency and disclosure framework*. https://www.iab.com/wp-content/uploads/2026/01/IAB_AI_Transparency_and_Disclosure_Framerwork_January_2026.pdf
+- Meta. (2024, February 6; updated 2025, April 1). *Labeling AI-generated images on Facebook, Instagram and Threads*. https://about.fb.com/news/2024/02/labeling-ai-generated-images-on-facebook-instagram-and-threads/
+- Meta. (2025, February 3; updated 2026, June 1). *Expanding GenAI transparency for Meta's ads products*. https://about.fb.com/news/2025/02/gen-ai-transparency-metas-ads-products/
+- TikTok. (n.d.). *More ways to spot, shape and understand AI-generated content*. Retrieved August 1, 2026, from https://newsroom.tiktok.com/more-ways-to-spot-shape-and-understand-ai-generated-content?lang=en-GB
+- YouTube Help. (n.d.). *Disclosing use of altered or synthetic content*. Retrieved August 1, 2026, from https://support.google.com/youtube/answer/14328491
